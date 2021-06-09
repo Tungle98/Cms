@@ -19,8 +19,18 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+//role route
+Route::resource('roles','Backend\RoleController');
+Route::get('roles/edit/{id}','Backend\RoleController@edit');
+//permission route
+Route::resource('permissions','Backend\PermissionController');
 //voucher route
 Route::resource('vouchers','Backend\VoucherController');
-Route::get('vouchers/{id}/edit/','VoucherController@edit');
+Route::get('/voucher/edit/{id}','VoucherController@edit');
 
+//userVoucher route
+Route::resource('user_vouchers','Backend\UserVoucherController');
+Route::get('/user_voucher/edit/{id}','UserVoucherController@edit');
+//user route
+Route::resource('users','Backend\UserController');
+Route::get('users/edit/{id}','UserController@edit');

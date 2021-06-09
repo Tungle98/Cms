@@ -6,12 +6,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Voucher Page</h1>
+                        <h1>Permission Page</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Voucher</li>
+                            <li class="breadcrumb-item active">Permission</li>
                         </ol>
                     </div>
                 </div>
@@ -37,76 +37,50 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <span class="h4">Voucher List</span>
-                            @can('add voucher')
-                                <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
+                            <span class="h4">Permission List</span>
+                            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addUserModal">
                                 <i class="fa fa-plus"><b> Add New</b></i>
-                                </button>
-                            @endcan
+                            </button>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="VoucherDatatable" class="table table-bordered table-striped">
+                            <table id="brandDatatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Tên voucher</th>
-                                    <th>Loai voucher</th>
-                                    <th>Ngày tạo</th>
-                                    <th>Ngày hết hạn</th>
-                                    <th>Sân golf</th>
-                                    <th>Image</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Sl No.</th>
+                                    <th>Name</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($voucher_db as $vouchers)
+                                @php($sl = 1)
+                                @foreach($permissions as $p)
                                     <tr>
-                                        <td>{{$vouchers->id}}</td>
-                                        <td>{{$vouchers->name_voucher}}</td>
-                                        <td>{{$vouchers->name}}</td>
-                                        <td>{{$vouchers->date_create}}</td>
-                                        <td>{{$vouchers->date_ex}}</td>
-                                        <td>{{$vouchers->golf_course}}</td>
-                                        <td>
-                                            <img src="{{asset($vouchers->image)}}" height="100px" alt="image">
-                                        </td>
+                                        <td>{{$sl++}}</td>
 
-                                        <td>{{$vouchers->status=='1'?'Active':'Inactive'}}</td>
+                                        <td>{{$p->name}}</td>
                                         <td>
-                                            @can('edit voucher')
-                                            <a  id="{{$vouchers->id}}" href="#editVoucherModal"  class="edit btn btn-success" title="Edit">
+                                            <a  id="{{$p->id}}" href="#editPermissionModal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            @endcan
-
-
-
-
+                                            <a id="{{$p->id}}" href="#" class="btn btn-danger delete">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
-
                             </table>
                         </div>
                         <!-- /.card-body -->
-
                     </div>
                 </div>
             </div>
         </section>
     </div>
-
-    {{--Add Product modal here--}}
-    @include('Admin.voucher.add_voucher')
-
+    @include('Admin.permission.add_permission')
     {{--Edit Product modal here--}}
-    @include('Admin.voucher.edit_voucher')
-
-
-
+    @include('Admin.permission.edit_permission')
 @endsection
 @push('script')
 
@@ -120,7 +94,7 @@
             //load table via ajax
             //show data for edit modal
             $(document).on('click', '.edit', function (e) {
-                $('#editVoucherModal').modal('show');
+                $('#editPermissionModal').modal('show');
                 e.preventDefault();
                 var id = $(this).attr('id');
                 $.ajax({

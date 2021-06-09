@@ -6,12 +6,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Voucher Page</h1>
+                        <h1>Customer information</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Voucher</li>
+                            <li class="breadcrumb-item active">user voucher</li>
                         </ol>
                     </div>
                 </div>
@@ -37,53 +37,51 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <span class="h4">Voucher List</span>
-                            @can('add voucher')
-                                <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
+                            <span class="h4">Voucher user List</span>
+                            @can('add voucherUser')
+                            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                 <i class="fa fa-plus"><b> Add New</b></i>
-                                </button>
+                            </button>
                             @endcan
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="VoucherDatatable" class="table table-bordered table-striped">
+                            <table id="userDatatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Tên voucher</th>
-                                    <th>Loai voucher</th>
-                                    <th>Ngày tạo</th>
-                                    <th>Ngày hết hạn</th>
-                                    <th>Sân golf</th>
-                                    <th>Image</th>
-                                    <th>Status</th>
+                                    <th>Tên khách</th>
+                                    <th>Tổng số vé</th>
+                                    <th>voucher</th>
+                                    <th>code</th>
+                                    <th>Trạng thái</th>
+                                    <th>Phương thức TT</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($voucher_db as $vouchers)
-                                    <tr>
-                                        <td>{{$vouchers->id}}</td>
-                                        <td>{{$vouchers->name_voucher}}</td>
-                                        <td>{{$vouchers->name}}</td>
-                                        <td>{{$vouchers->date_create}}</td>
-                                        <td>{{$vouchers->date_ex}}</td>
-                                        <td>{{$vouchers->golf_course}}</td>
-                                        <td>
-                                            <img src="{{asset($vouchers->image)}}" height="100px" alt="image">
-                                        </td>
 
-                                        <td>{{$vouchers->status=='1'?'Active':'Inactive'}}</td>
+                                @foreach($voucher_user as $vou)
+                                    <tr>
+                                        <td>{{$vou->user_id}}</td>
+                                        <td>{{$vou->full_name}}</td>
+                                        <td>{{$vou->total_voucher}}</td>
+                                        <td>{{$vou->name_voucher}}</td>
+                                        <td>{{$vou->code}}</td>
+                                        <td>{{$vou->status}}</td>
+                                        <td>{{$vou->method_paid}}</td>
+
                                         <td>
-                                            @can('edit voucher')
-                                            <a  id="{{$vouchers->id}}" href="#editVoucherModal"  class="edit btn btn-success" title="Edit">
+                                            @can('view voucherUser')
+                                            <a href="user-voucher/show/{{$vou->id}}" class="btn btn-info" data-toggle="modal" data-target="#viewVoucherModal{{$vou->id}}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            @endcan
+                                            @can('edit voucherUser')
+                                            <a href="#editVoucherUserModal"  id="{{$vou->id}}" data-target="" class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             @endcan
-
-
-
-
                                         </td>
                                     </tr>
                                 @endforeach
@@ -92,6 +90,31 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
+                        <div class="modal fade" id="viewVoucherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">View User Voucher</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <form  method="post" action="">
+
+
+                                                <button type="submit" class="btn btn-primary" >Đồng ý</button>
+
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
@@ -100,12 +123,13 @@
     </div>
 
     {{--Add Product modal here--}}
-    @include('Admin.voucher.add_voucher')
+    @include('Admin.voucherUser.add_voucher_user')
 
     {{--Edit Product modal here--}}
-    @include('Admin.voucher.edit_voucher')
+    @include('Admin.voucherUser.edit_voucher_user')
 
-
+    {{--View Product modal here--}}
+    @include('Admin.voucherUser.show_voucher_user')
 
 @endsection
 @push('script')
@@ -124,7 +148,7 @@
                 e.preventDefault();
                 var id = $(this).attr('id');
                 $.ajax({
-                    url: "{{url('vouchers/edit')}}/" + id,
+                    url: "{{url('')}}/" + id,
                     method: "GET",
                     success: function (data) {
                         $('#edit_id').val(data.id);
@@ -144,7 +168,7 @@
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     method: "POST",
-                    url: "{{ url('vouchers.update') }}",
+                    url: "{{ url('') }}",
                     data: new FormData(this),
                     contentType: false,
                     cache: false,
@@ -164,4 +188,5 @@
             });
         });
     </script>
+
 @endpush

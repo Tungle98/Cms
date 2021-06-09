@@ -113,6 +113,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/infyomlabs/laravel-generator-helpers" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/infyomlabs/laravel-ui-adminlte" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/ui" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/laravel-permission" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/laravelcollective/html" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

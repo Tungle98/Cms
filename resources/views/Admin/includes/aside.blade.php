@@ -34,7 +34,8 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+
+                    <li class="nav-item">
                     <a href="{{url('vouchers')}}" class="nav-link">
                         <i class="nav-icon fa fa-arrow-right"></i>
                         <p>
@@ -42,8 +43,9 @@
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{url('user_vouchers')}}" class="nav-link">
                         <i class="nav-icon fa fa-arrow-right"></i>
                         <p>
                             List book voucher
@@ -51,15 +53,31 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                @role('admin') <li class="nav-item">
+                    <a href="{{url('users')}}" class="nav-link">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <p>
                             User
                         </p>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="{{url('permissions')}}" class="nav-link">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p>
+                            Permissions
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('roles')}}" class="nav-link">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p>
+                            Role
+                        </p>
+                    </a>
+                </li>
+                @endrole
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

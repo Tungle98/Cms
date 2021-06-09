@@ -6,4 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 class VoucherType extends Model
 {
     //
+    protected $fillable = ['name','voucher_property_id'];
 }

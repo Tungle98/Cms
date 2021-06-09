@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Model\Voucher;
+use App\Model\Property;
+use App\Model\VoucherType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 class VoucherController extends Controller
 {
     /**
@@ -14,8 +17,20 @@ class VoucherController extends Controller
     public function index()
     {
         //
-        $vouchers = Voucher::latest()->paginate(8);
-        return view('Admin.voucher.list_voucher',compact('vouchers'))->with('i', (request()->input('page', 1) - 1) * 4);
+        $voucher_db = DB::table('vouchers')
+            ->join('voucher_types','vouchers.voucher_type_id', '=', 'voucher_types.id')
+            ->select('vouchers.*','voucher_types.name')
+            ->get();
+        //dd($voucher_db);
+        $property = Property::all();
+        $voucher_type = VoucherType::all();
+        //$voucherWithProperties = Voucher::query()->with('properties')->find(14);
+        //dd($voucherWithProperties);
+        return view('Admin.voucher.list_voucher',[
+            'voucher_db'=>$voucher_db,
+            'voucher_type'=>$voucher_type,
+            'property'=>$property,
+        ]);
     }
 
     /**
@@ -38,19 +53,36 @@ class VoucherController extends Controller
     public function store(Request $request)
     {
         //
-        $r=$request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-        ]);
+        $voucher_db = new Voucher();
+        $imageUrl = '';
+        if ($file = $request->file('image')) {
+            $fileName = date("YmdHis")."_".$file->getClientOriginalName();
+            $directory = 'admin/images/product_images/';
+            $imageUrl = $directory.$fileName;
+            $file->move($directory, $fileName);
+            $voucher_db->image = $imageUrl;
+        }
+        if ($request->file('gallery_image')) {
+            foreach ($request->file('gallery_image') as $image) {
+                $fileName = $image->getClientOriginalName();
+                $directory = 'admin/images/product_images/';
+                $g_imageUrl = $directory.$fileName;
+                $image->move($directory, $fileName);
+                $data[] = $g_imageUrl;
+            }
+            $voucher_db->gallery_image = json_encode($data);
+        }
+        $voucher_db->name_voucher = $request->name_voucher;
+        $voucher_db->date_create = $request->date_create;
+        $voucher_db->date_ex = $request->date_ex;
+        $voucher_db->golf_course = $request->golf_course;
+        $voucher_db->voucher_type_id = $request->voucher_type_id;
+        $voucher_db->status = $request->status;
+        $voucher_db->save();
+        $voucher_db->properties()->attach($request->properties);
 
-        $custId = $request->cust_id;
-        Voucher::updateOrCreate(['id' => $custId],['name' => $request->name, 'email' => $request->email,'address'=>$request->address]);
-        if(empty($request->cust_id))
-            $msg = 'Customer entry created successfully.';
-        else
-            $msg = 'Customer data is updated successfully';
-        return redirect()->route('vouchers.index')->with('success',$msg);
+        return redirect()->route('vouchers.index')
+            ->with('success','Voucher created successfully.');
     }
 
     /**
@@ -62,7 +94,8 @@ class VoucherController extends Controller
     public function show($id)
     {
         //
-        return view('vouchers.show',compact('vouchers'));
+        $voucher_find = Voucher::where('id', '=', $id)->select('*')->first();
+        return view('admin.voucher.view-voucher',[ 'voucher_find'=>$voucher_find,]);
     }
 
     /**
@@ -75,9 +108,8 @@ class VoucherController extends Controller
     {
         //
 
-        $where = array('id' => $id);
-        $voucher = Voucher::where($where)->first();
-        return Response::json($voucher);
+        $voucher = Voucher::find($id);
+        return response()->json($voucher);
     }
 
     /**
@@ -90,6 +122,35 @@ class VoucherController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'name_voucher' => 'required|max:255',
+            'date_create' => '',
+            'image' => 'image',
+            'date_ex' => '',
+            'golf_course' => '',
+            'voucher_type_id' => '',
+            'status' => '',
+        ]);
+        $voucher_db = Voucher::find($request->id);
+
+        if ($file = $request->file('image')) {
+            $fileName = $file->getClientOriginalName();
+            $directory = 'admin/images/';
+            $imageUrl = $directory.$fileName;
+            $file->move($directory, $fileName);
+
+            $voucher_db->image = $imageUrl;
+        }
+
+        $voucher_db->name_voucher = $request->name_voucher;
+        $voucher_db->date_create = $request->date_create;
+        $voucher_db->date_ex = $request->date_ex;
+        $voucher_db->golf_course = $request->golf_course;
+        $voucher_db->voucher_type_id = $request->voucher_type_id;
+        $voucher_db->save();
+        $voucher_db->properties()->sync($request->properties);
+
+        echo "done";
     }
 
     /**

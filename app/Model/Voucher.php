@@ -12,4 +12,11 @@ class Voucher extends Model
     {
         return $this->hasOne('VoucherType::class');
     }
+    public function properties() {
+        return $this->belongsToMany('App\Model\Property', 'property_voucher', 'voucher_id', 'property_id');
+    }
+    public function vuser()
+    {
+        return $this->belongsToMany(VoucherUser::class);
+    }
 }

@@ -34576,7 +34576,7 @@ a.disabled.mailbox-attachment-close {
 
 .login-logo,
 .register-logo {
-  font-size: 2.1rem;
+  font-size: 1.8rem;
   font-weight: 300;
   margin-bottom: 0.9rem;
   text-align: center;
@@ -34593,7 +34593,7 @@ a.disabled.mailbox-attachment-close {
   background-color: #e9ecef;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 80vh;
   justify-content: center;
 }
 
@@ -34621,6 +34621,7 @@ a.disabled.mailbox-attachment-close {
   border-top: 0;
   color: #666;
   padding: 20px;
+    border-radius: 20px;
 }
 
 .login-card-body .input-group .form-control,
