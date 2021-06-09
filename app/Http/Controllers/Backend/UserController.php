@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Model\Role;
+use Hash;
 class UserController extends Controller
 {
     /**
@@ -17,7 +18,7 @@ class UserController extends Controller
     {
         //
         $data = User::orderBy('id','DESC')->paginate(5);
-        $roles = Role::all();
+        $roles = Role::pluck('name','name')->all();
         return view('Admin.users.list_user',compact('data','roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -50,15 +51,15 @@ class UserController extends Controller
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
         ]);
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
+
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+
+        $user = User::create($input);
         $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
-            ->with('success','User created successfully');
+                        ->with('success','User created successfully');
     }
 
     /**

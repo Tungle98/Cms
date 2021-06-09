@@ -8,35 +8,43 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('users.store')}}" method="post">
-                    @csrf
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">User Name</label>
-                        <input type="text" name="name" class="form-control" id="exampleInputEmail1">
+                {!! Form::open(array('route' => 'users.store','method'=>'POST')) !!}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Name:</strong>
+                            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">User Email Address</label>
-                        <input type="email" name="email" class="form-control">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Email:</strong>
+                            {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Password</label>
-                        <input type="password" name="password" class="form-control">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Password:</strong>
+                            {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="product_status">Role</label>
-                        <select class="form-control" name="role" id="product_cat" >
-                            @foreach($roles as $r)
-                                <option value="{{$r->id}}">{{$r->name}}</option>
-                            @endforeach
-                        </select>
-
-
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Confirm Password:</strong>
+                            {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add User</button>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Role:</strong>
+                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                        </div>
                     </div>
-                </form>
+                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

@@ -38,11 +38,11 @@
                     <div class="card">
                         <div class="card-header">
                             <span class="h4">Voucher List</span>
-                            @can('add voucher')
+
                                 <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                 <i class="fa fa-plus"><b> Add New</b></i>
                                 </button>
-                            @endcan
+
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -75,15 +75,10 @@
 
                                         <td>{{$vouchers->status=='1'?'Active':'Inactive'}}</td>
                                         <td>
-                                            @can('edit voucher')
-                                            <a  id="{{$vouchers->id}}" href="#editVoucherModal"  class="edit btn btn-success" title="Edit">
+
+                                            <a  href="#editVoucherModal{{$vouchers->id}}" id="{{$vouchers->id}}"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            @endcan
-
-
-
-
                                         </td>
                                     </tr>
                                 @endforeach
@@ -124,7 +119,7 @@
                 e.preventDefault();
                 var id = $(this).attr('id');
                 $.ajax({
-                    url: "{{url('vouchers/edit')}}/" + id,
+                    url: "{{url('voucher/edit')}}/" + id,
                     method: "GET",
                     success: function (data) {
                         $('#edit_id').val(data.id);
@@ -144,7 +139,7 @@
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     method: "POST",
-                    url: "{{ url('vouchers.update') }}",
+                    url: "{{ url('voucher/update') }}",
                     data: new FormData(this),
                     contentType: false,
                     cache: false,

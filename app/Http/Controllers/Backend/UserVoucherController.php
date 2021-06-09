@@ -86,7 +86,7 @@ class UserVoucherController extends Controller
     {
         //
 
-        $user_v = User::find($id);
+        $user_v = VoucherUser::find($id);
         return view('user_vouchers.show',compact('$user_v'));
     }
 

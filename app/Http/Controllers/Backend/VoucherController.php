@@ -41,7 +41,7 @@ class VoucherController extends Controller
     public function create()
     {
         //
-        return view('vouchers.create');
+
     }
 
     /**
@@ -81,8 +81,8 @@ class VoucherController extends Controller
         $voucher_db->save();
         $voucher_db->properties()->attach($request->properties);
 
-        return redirect()->route('vouchers.index')
-            ->with('success','Voucher created successfully.');
+
+        return back();
     }
 
     /**
@@ -163,7 +163,6 @@ class VoucherController extends Controller
     {
         //
 
-        $cust = Voucher::where('id',$id)->delete();
-        return Response::json($cust);
+
     }
 }

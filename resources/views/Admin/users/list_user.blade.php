@@ -85,6 +85,7 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
+
                     </div>
                 </div>
             </div>
@@ -111,7 +112,7 @@
                 e.preventDefault();
                 var id = $(this).attr('id');
                 $.ajax({
-                    url: "{{url('users/edit')}}/" + id,
+                    url: "{{url('users.edit')}}/" + id,
                     method: "GET",
                     success: function (data) {
                         $('#edit_id').val(data.id);

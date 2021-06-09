@@ -36,7 +36,7 @@
                 </li>
 
                     <li class="nav-item">
-                    <a href="{{url('vouchers')}}" class="nav-link">
+                    <a href="{{route('admin.voucher')}}" class="nav-link">
                         <i class="nav-icon fa fa-arrow-right"></i>
                         <p>
                             Voucher
@@ -53,7 +53,7 @@
                     </a>
                 </li>
 
-                @role('admin') <li class="nav-item">
+                 <li class="nav-item">
                     <a href="{{url('users')}}" class="nav-link">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <p>
@@ -77,7 +77,7 @@
                         </p>
                     </a>
                 </li>
-                @endrole
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
