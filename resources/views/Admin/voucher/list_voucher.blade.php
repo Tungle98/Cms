@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="content-wrapper">
+    <div class="container">
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
@@ -38,7 +38,7 @@
                         <div class="card-header">
                             <span class="h4">Voucher List</span>
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
-                                <i class="fa fa-plus"><b> Add New</b></i>
+                                <i class="fa fa-plus"><b> Add voucher</b></i>
                             </button>
                         </div>
                         <!-- /.card-header -->
@@ -71,11 +71,13 @@
                                         </td>
 
                                         <td>{{$vouchers->status=='1'?'Active':'Inactive'}}</td>
+
                                         <td>
+                                            @can('edit voucher')
                                             <a  id="{{$vouchers->id}}" href="#editVoucherModal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

@@ -4,7 +4,7 @@
     <div class="container">
         <a class="btn btn-success" href="javascript:void(0)" id="createNewBook"> Create New role</a>
         <br>
-        <table class="table table-bordered data-table">
+        <table class="table table-bordered data-table" >
             <thead>
             <tr>
                 <th>No</th>

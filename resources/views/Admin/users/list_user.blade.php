@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="content-wrapper">
+    <div class="container">
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
@@ -40,12 +40,12 @@
                         <div class="card-header">
                             <span class="h4">User List</span>
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addUserModal">
-                                <i class="fa fa-plus"><b> Add New</b></i>
+                                <i class="fa fa-plus"><b> Add User</b></i>
                             </button>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="brandDatatable" class="table table-bordered table-striped">
+                            <table id="UserDatatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Sl No.</th>
@@ -72,7 +72,7 @@
                                         </td>
                                         <td></td>
                                         <td>
-                                            <a  href="#editVoucherModal"  id="{{$user->id}}" data-toggle="modal" data-target="#editUserModal" class="edit btn btn-success" title="Edit">
+                                            <a  id="{{$user->id}}" href="#editUserModal"   data-toggle="modal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                         </td>
@@ -93,14 +93,14 @@
 
 
 @endsection
-@push('script')
+@push('page_scripts')
 
     <script>
         //for datatable
 
         $(document).ready( function () {
             //for datatable
-            $('#VoucherDatatable').DataTable();
+            $('#UserDatatable').DataTable();
 
             //load table via ajax
             //show data for edit modal
@@ -109,22 +109,24 @@
                 e.preventDefault();
                 var id = $(this).attr('id');
                 $.ajax({
-                    url: "{{url('users.edit')}}/" + id,
+                    url: "{{url('admin/voucher/edit')}}/" + id,
                     method: "GET",
                     success: function (data) {
                         $('#edit_id').val(data.id);
-                        $('#edit_user_name').val(data.name);
-                        $('#edit_user_email').val(data.email);
+                        $('#edit_name').val(data.name);
+                        $('#edit_email').val(data.email);
+                        $('#edit_role').val(data.role);
+
                     }
                 })
             });
-            //update voucher
+            //update user
             $('#updateUserForm').on('submit', function (e) {
                 e.preventDefault();
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     method: "POST",
-                    url: "{{ url('users.edit') }}",
+                    url: "{{ route('admin.user.update') }}",
                     data: new FormData(this),
                     contentType: false,
                     cache: false,

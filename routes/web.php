@@ -29,9 +29,7 @@ Route::post('permissions/update', 'Backend\PermissionController@update')->name('
 Route::get('permissions/destroy/{id}', 'Backend\PermissionController@destroy');
 
 
-//user route
-Route::resource('users','Backend\UserController');
-Route::get('users/{id}/edit/','UserController@edit');
+
 Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], function (){
     //voucher route
     Route::get('/voucher','VoucherController@index')->name('admin.voucher');
@@ -46,4 +44,13 @@ Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], f
     Route::get('/user_voucher/edit/{id}','UserVoucherController@edit');
     Route::post('/user_voucher/update','UserVoucherController@update')->name('admin.voucher_user.update');
     Route::get('/user_voucher/delete/{id}','UserVoucherController@delete');
+
+    //user route
+    Route::get('/user','UserController@index')->name('admin.user');
+    Route::post('/user','UserController@store');
+    Route::get('/user/edit/{id}','UserController@edit');
+    Route::post('/user/update','UserController@update')->name('admin.user.update');
+    Route::get('/user/delete/{id}','UserController@delete');
+
+
 });

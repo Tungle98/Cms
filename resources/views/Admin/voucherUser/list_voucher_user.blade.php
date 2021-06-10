@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="content-wrapper">
+    <div class="container">
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
@@ -40,7 +40,7 @@
                             <span class="h4">Voucher user List</span>
                            @can('voucherUser-add')
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
-                                <i class="fa fa-plus"><b> Add New</b></i>
+                                <i class="fa fa-plus"><b> Book voucher</b></i>
                             </button>
                             @endcan
                         </div>
@@ -72,16 +72,19 @@
                                         <td>{{$vou->method_paid}}</td>
 
                                         <td>
-                                            @can('voucherUser-view')
-                                            <a href="user-voucher/show/{{$vou->id}}" class="btn btn-info" data-toggle="modal" data-target="#viewVoucherModal{{$vou->id}}">
+
+
+                                           @can('voucherUser-view')
+                                            <a href="#" class="show-modal btn btn-info btn-sm" data-id="{{$vou->id}}" data-user="{{$vou->user_id}}" data-name="{{$vou->full_name}}"
+                                                data-status="{{$vou->status}} " data-code="{{$vou->code}}" data-method="{{$vou->method_paid}}" data-total="{{$vou->total_voucher}}" >
                                                 <i class="fa fa-eye"></i>
-                                            </a>
-                                            @endcan
+                                              </a>
+                                              @endcan
                                             @can('voucherUser-edit')
                                             <a href="#editVoucherUserModal"  id="{{$vou->id}}" data-target="" class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                                @endcan
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -90,7 +93,7 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <div class="modal fade" id="viewVoucherModal{{$vou->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="show" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -104,24 +107,25 @@
                                             <form  method="post" action="">
                                                 @csrf
                                                 <div class="row">
-                                                    <div class="col-md-12">  <h4>Tên khách hàng:{{$vou->full_name}}</h4></div>
-                                                    <div class="col-md-6">Id:{{$vou->user_id}}</div>
-                                                    <div class="col-md-6">Tổng số voucher:{{$vou->total_voucher}}</div>
-                                                    <div class="col-md-6">Voucher id:{{$vou->voucher_id}}</div>
-                                                    <div class="col-md-6">Code:{{$vou->code}}</div>
-                                                    <div class="col-md-6">Trạng thái:{{$vou->status}}</div>
-                                                    <div class="col-md-6">Phương thức thanh toán:{{$vou->method_paid}}</div>
-                                                    <div class="col-md-6">San golf:{{$vou->golf_course}}</div>
+                                                    <div class="col-md-12">Tên khách hàng:<b id="n"></b></div>
+                                                    <div class="col-md-6">Id:  <b id="i"></b></div>
+                                                    <div class="col-md-6">Tổng số voucher:<b id="t"></b></div>
+                                                    <div class="col-md-6">Voucher id:</div>
+                                                    <div class="col-md-6">Code:</div>
+                                                    <div class="col-md-6">Trạng thái:</div>
+                                                    <div class="col-md-6">Phương thức thanh toán:</div>
+                                                </div>
                                                 </div>
                                                 <table>
                                                     @foreach($voucherWithProperties as $s)
-                                                    <tr>
-
-                                                        <td>{{$s->name}}</td>
-                                                        <td>
-                                                            <input data-id="{{$s->id}}" name="properties[{{$s->id}}]" type="text"  placeholder="value" class="property-value">
-                                                        </td>
-                                                    </tr>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="user"> {{$s->name}}</label>
+                                                                <input type="text" name="properties[{{$s->id}}]" class="form-control" id=""  value="" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     @endforeach
                                                 </table>
                                                 <button type="submit" class="btn btn-primary" >Đồng ý</button>
@@ -205,6 +209,15 @@
                     },
                 });
             });
+
+           // Show function
+                $(document).on('click', '.show-modal', function() {
+                $('#show').modal('show');
+                $('#i').text($(this).data('id'));
+                $('#n').text($(this).data('full_name'));
+                $('#t').text($(this).data('total_voucher'));
+                $('.modal-title').text('Show user voucher');
+                });
         });
     </script>
 

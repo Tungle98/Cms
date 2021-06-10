@@ -28,7 +28,7 @@
                      with font-awesome or any other icon font library -->
                 <li class="nav-item has-treeview">
                     <a href="{{route('home')}}" class="nav-link">
-                        <i class="nav-icon fa fa-dashboard"></i>
+                        <i class="fa fa-home" aria-hidden="true"></i>
                         <p>
                             Dashboard
                         </p>
@@ -37,7 +37,7 @@
 
                     <li class="nav-item">
                     <a href="{{route('admin.voucher')}}" class="nav-link">
-                        <i class="nav-icon fa fa-arrow-right"></i>
+                        <i class="fa fa-suitcase" aria-hidden="true"></i>
                         <p>
                             Voucher
                         </p>
@@ -46,15 +46,15 @@
 
                 <li class="nav-item">
                     <a href="{{route('admin.voucher_user')}}" class="nav-link">
-                        <i class="nav-icon fa fa-arrow-right"></i>
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         <p>
                             List book voucher
                         </p>
                     </a>
                 </li>
-
+            @role('Admin')
                  <li class="nav-item">
-                    <a href="{{url('users')}}" class="nav-link">
+                    <a href="{{route('admin.user')}}" class="nav-link">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <p>
                             User
@@ -77,6 +77,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('logout')}}" class="nav-link">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        <p>
+                            Logout
+                        </p>
+                    </a>
+                </li>
+            @endrole
 
             </ul>
         </nav>

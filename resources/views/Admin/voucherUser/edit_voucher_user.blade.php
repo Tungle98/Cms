@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="voucher_name"> Id khách hàng</label>
+                                <label for="user"> Id khách hàng</label>
                                 <input type="text" name="user_id" class="form-control" id="edit_user_id"  value="" required>
                             </div>
                         </div>

@@ -19,6 +19,7 @@ class UserController extends Controller
         //
         $data = User::orderBy('id','DESC')->paginate(5);
         $roles = Role::pluck('name','name')->all();
+
         return view('Admin.users.list_user',compact('data','roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -58,8 +59,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('users.index')
-                        ->with('success','User created successfully');
+        return back();
     }
 
     /**
@@ -85,10 +85,10 @@ class UserController extends Controller
     {
         //
         $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
-
-        return view('users.edit',compact('user','roles','userRole'));
+       // $roles = Role::pluck('name','name')->all();
+       // $userRole = $user->roles->pluck('name','name')->all();
+       return response()->json($user);
+       // return view('Admin.users.edit',compact('user'));
     }
 
     /**
