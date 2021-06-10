@@ -107,13 +107,13 @@
                                             <form  method="post" action="">
                                                 @csrf
                                                 <div class="row">
-                                                    <div class="col-md-12">Tên khách hàng:<b id="n"></b></div>
-                                                    <div class="col-md-6">Id:  <b id="i"></b></div>
-                                                    <div class="col-md-6">Tổng số voucher:<b id="t"></b></div>
-                                                    <div class="col-md-6">Voucher id:</div>
-                                                    <div class="col-md-6">Code:</div>
-                                                    <div class="col-md-6">Trạng thái:</div>
-                                                    <div class="col-md-6">Phương thức thanh toán:</div>
+                                                    <div class="col-md-12">Tên khách hàng:{{$vou->full_name}}</div>
+                                                    <div class="col-md-6">Id:  {{$vou->user_id}}</div>
+                                                    <div class="col-md-6">Tổng số voucher:{{$vou->total_voucher}}</div>
+                                                    <div class="col-md-6">Voucher id:{{$vou->name_voucher}}</div>
+                                                    <div class="col-md-6">Code:{{$vou->code}}</div>
+                                                    <div class="col-md-6">Trạng thái:{{$vou->status}}</div>
+                                                    <div class="col-md-6">Phương thức thanh toán:{{$vou->method_paid}}</div>
                                                 </div>
                                                 </div>
                                                 <table>
