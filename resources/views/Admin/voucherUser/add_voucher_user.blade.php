@@ -17,7 +17,7 @@
                     </ul>
                 </div>
             @endif
-            <form id="addProductForm" method="post" action="{{ route('user_vouchers.store') }}" enctype="multipart/form-data">
+            <form id="addProductForm" method="post" action="{{ route('admin.voucher_user') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="row">

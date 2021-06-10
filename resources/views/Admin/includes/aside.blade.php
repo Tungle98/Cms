@@ -45,7 +45,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{url('user_vouchers')}}" class="nav-link">
+                    <a href="{{route('admin.voucher_user')}}" class="nav-link">
                         <i class="nav-icon fa fa-arrow-right"></i>
                         <p>
                             List book voucher

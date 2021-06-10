@@ -75,9 +75,6 @@
                                             <a  href="#editVoucherModal"  id="{{$user->id}}" data-toggle="modal" data-target="#editUserModal" class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a id="{{$user->id}}" href="#" class="btn btn-danger delete">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

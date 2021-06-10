@@ -16,26 +16,34 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 //role route
 Route::resource('roles','Backend\RoleController');
-Route::get('roles/edit/{id}','Backend\RoleController@edit');
 //permission route
 Route::resource('permissions','Backend\PermissionController');
-//voucher route
-Route::get('voucher','Backend\VoucherController@index')->name('admin.voucher');
-    Route::post('voucher','Backend\VoucherController@store');
-    Route::get('voucher/edit/{id}','Backend\VoucherController@edit')->name('admin.voucher.edit.id');
-    Route::post('voucher/update','Backend\VoucherController@update');
-    Route::get('voucher/show/{id}','VoucherUserController@show')->name('admin.voucher.show');
-    Route::get('voucher/delete/{id}','VoucherController@delete');
-    Route::get('voucher/publish/{id}','VoucherController@publish');
-    Route::get('voucher/unpublish/{id}','VoucherController@unpublish');
-//userVoucher route
-Route::resource('user_vouchers','Backend\UserVoucherController');
-Route::get('/user_voucher/edit/{id}','UserVoucherController@edit');
+Route::post('permissions/update', 'Backend\PermissionController@update')->name('permissions.update');
+
+Route::get('permissions/destroy/{id}', 'Backend\PermissionController@destroy');
+
+
 //user route
 Route::resource('users','Backend\UserController');
 Route::get('users/{id}/edit/','UserController@edit');
+Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], function (){
+    //voucher route
+    Route::get('/voucher','VoucherController@index')->name('admin.voucher');
+    Route::post('/voucher','VoucherController@store');
+    Route::get('/voucher/edit/{id}','VoucherController@edit');
+    Route::post('/voucher/update','VoucherController@update')->name('admin.voucher.update');
+    Route::get('/voucher/delete/{id}','VoucherController@delete');
+
+    //userVoucher route
+    Route::get('/user_voucher','UserVoucherController@index')->name('admin.voucher_user');
+    Route::post('/user_voucher','UserVoucherController@store');
+    Route::get('/user_voucher/edit/{id}','UserVoucherController@edit');
+    Route::post('/user_voucher/update','UserVoucherController@update')->name('admin.voucher_user.update');
+    Route::get('/user_voucher/delete/{id}','UserVoucherController@delete');
+});

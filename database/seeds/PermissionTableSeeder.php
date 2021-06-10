@@ -20,7 +20,14 @@ class PermissionTableSeeder extends Seeder
             'permission-list',
             'permission-create',
             'permission-edit',
-            'permission-delete'
+            'permission-delete',
+            'voucher-edit',
+            'voucher-add',
+            'voucher-view',
+            'voucherUser-add',
+            'voucherUser-edit',
+            'voucherUser-view',
+
          ];
 
          foreach ($permissions as $permission) {

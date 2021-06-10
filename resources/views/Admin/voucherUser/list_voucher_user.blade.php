@@ -38,11 +38,11 @@
                     <div class="card">
                         <div class="card-header">
                             <span class="h4">Voucher user List</span>
-
+                           @can('voucherUser-add')
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                 <i class="fa fa-plus"><b> Add New</b></i>
                             </button>
-
+                            @endcan
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -72,16 +72,16 @@
                                         <td>{{$vou->method_paid}}</td>
 
                                         <td>
-
+                                            @can('voucherUser-view')
                                             <a href="user-voucher/show/{{$vou->id}}" class="btn btn-info" data-toggle="modal" data-target="#viewVoucherModal{{$vou->id}}">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-
-
+                                            @endcan
+                                            @can('voucherUser-edit')
                                             <a href="#editVoucherUserModal"  id="{{$vou->id}}" data-target="" class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-
+                                                @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -102,6 +102,7 @@
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             <form  method="post" action="">
+                                                @csrf
                                                 <div class="row">
                                                     <div class="col-md-12">  <h4>Tên khách hàng:{{$vou->full_name}}</h4></div>
                                                     <div class="col-md-6">Id:{{$vou->user_id}}</div>
@@ -151,14 +152,14 @@
     @include('Admin.voucherUser.show_voucher_user')
 
 @endsection
-@push('script')
+@push('page_scripts')
 
     <script>
         //for datatable
 
         $(document).ready( function () {
             //for datatable
-            $('#VoucherDatatable').DataTable();
+            $('#userDatatable').DataTable();
 
             //load table via ajax
             //show data for edit modal
@@ -167,27 +168,26 @@
                 e.preventDefault();
                 var id = $(this).attr('id');
                 $.ajax({
-                    url: "{{url('')}}/" + id,
+                    url: "{{url('admin/user_voucher/edit')}}/" + id,
                     method: "GET",
                     success: function (data) {
                         $('#edit_id').val(data.id);
-                        $('#edit_voucher_type').val(data.voucher_type_id);
-                        $('#edit_voucher_name').val(data.name_voucher);
-                        $('#edit_golf_coure').val(data.golf_course);
-                        $('#edit_date_create').val(data.date_create);
-                        $('#edit_date_ex').val(data.date_ex);
-                        $('#previewHolder2').attr('src', "{{asset('')}}" + data.image);
-                        $('#property_id').val(data.property_id);
+                        $('#edit_voucher_id').val(data.voucher_id);
+                        $('#edit_user_id').val(data.user_id);
+                        $('#edit_full_name').val(data.full_name);
+                        $('#edit_total_voucher').val(data.total_voucher);
+                        $('#edit_status').val(data.status);
+                        $('#edit_method_paid').val(data.method_paid);
                     }
                 })
             });
             //update voucher
-            $('#updateVoucherForm').on('submit', function (e) {
+            $('#updateVoucherUserForm').on('submit', function (e) {
                 e.preventDefault();
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     method: "POST",
-                    url: "{{ url('') }}",
+                    url: "{{ route('admin.voucher_user.update') }}",
                     data: new FormData(this),
                     contentType: false,
                     cache: false,

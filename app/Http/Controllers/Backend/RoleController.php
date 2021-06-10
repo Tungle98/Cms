@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\Role;
 use App\Model\Permission;
 use DB;
+use DataTables;
 class RoleController extends Controller
 {
     /**
@@ -20,8 +21,25 @@ class RoleController extends Controller
         $roles = Role::latest()->paginate(10);
         $permission = Permission::get();
 
-        return view('Admin.role.list_role',compact('roles','permission'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+
+
+        if ($request->ajax()) {
+            $data = Role::latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editRole">Edit</a>';
+
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteRole">Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('Admin.role.list_role',compact('roles','permission'));
     }
 
     /**
@@ -71,8 +89,7 @@ class RoleController extends Controller
         $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
             ->where("role_has_permissions.role_id",$id)
             ->get();
-
-        return view('roles.show',compact('role','rolePermissions'));
+        return response()->json($role,$rolePermissions);
     }
 
     /**
@@ -86,12 +103,9 @@ class RoleController extends Controller
         //
 
         $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-            ->all();
 
-        return view('roles.edit',compact('role','permission','rolePermissions'));
+
+        return response()->json($role);
     }
 
     /**
@@ -128,8 +142,8 @@ class RoleController extends Controller
     public function destroy($id)
     {
         //
-        DB::table("roles")->where('id',$id)->delete();
-        return redirect()->route('roles.index')
-            ->with('success','Role deleted successfully');
+        Role::find($id)->delete();
+
+        return response()->json(['success'=>'Role deleted successfully.']);with('success','Role deleted successfully');
     }
 }

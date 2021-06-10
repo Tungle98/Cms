@@ -1,4 +1,4 @@
-<div class="modal fade" id="editVoucherModal{{$vouchers->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editVoucherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -43,7 +43,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="e_quantity">Ten san</label>
-                                    <input type="text" name="golf_course" class="form-control" id="edit_golf_coure" placeholder="">
+                                    <input type="text" name="golf_course" class="form-control" id="edit_golf_course" placeholder="">
                                 </div>
 
                             </div>

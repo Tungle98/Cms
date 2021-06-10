@@ -99,7 +99,8 @@ class UserVoucherController extends Controller
     public function edit($id)
     {
         //
-        return view('user_vouchers.edit',compact('product'));
+        $voucherEdit =VoucherUser::find($id);
+        return response()->json($voucherEdit);
     }
 
     /**

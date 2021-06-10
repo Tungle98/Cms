@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Permission;
+use DataTables;
 class PermissionController extends Controller
 {
     /**
@@ -12,24 +13,28 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $permissions = Permission::latest()->paginate(10);
 
-        return view('Admin.permission.list_permission',compact('permissions'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
-    }
+        $permissions = Permission::latest()->get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        return view('permissions.create');
+        if ($request->ajax()) {
+            $data = Permission::latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editPermission">Edit</a>';
+
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteBook">Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('Admin.permission.list_permission',compact('permissions'));
     }
 
     /**
@@ -40,62 +45,33 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $request->validate([
-            'name' => 'required',
-        ]);
+        Permission::updateOrCreate(['id' => $request->permission_id],
+            ['name' => $request->name]);
 
-        $permissons = new Permission();
-        $permissons->name = $request->name;
-        $permissons->save();
-        return redirect()->route('permissions.index')
-            ->with('success','permission created successfully.');
+        return response()->json(['success'=>'Book saved successfully.']);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Model\Permission  $permision
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
-        $permisisonEdit =Permission::find($id);
-        return response()->json($permisisonEdit);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $permisison = Permission::find($id);
+        return response()->json($permisison);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Model\Permission  $book
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        Permission::find($id)->delete();
+
+        return response()->json(['success'=>'Book deleted successfully.']);
     }
 }

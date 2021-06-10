@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="content-wrapper">
         <section class="content-header">
@@ -38,11 +37,9 @@
                     <div class="card">
                         <div class="card-header">
                             <span class="h4">Voucher List</span>
-
-                                <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
+                            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                 <i class="fa fa-plus"><b> Add New</b></i>
-                                </button>
-
+                            </button>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -75,10 +72,10 @@
 
                                         <td>{{$vouchers->status=='1'?'Active':'Inactive'}}</td>
                                         <td>
-
-                                            <a  href="#editVoucherModal{{$vouchers->id}}" id="{{$vouchers->id}}"  class="edit btn btn-success" title="Edit">
+                                            <a  id="{{$vouchers->id}}" href="#editVoucherModal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -103,7 +100,7 @@
 
 
 @endsection
-@push('script')
+@push('page_scripts')
 
     <script>
         //for datatable
@@ -119,17 +116,17 @@
                 e.preventDefault();
                 var id = $(this).attr('id');
                 $.ajax({
-                    url: "{{url('voucher/edit')}}/" + id,
+                    url: "{{url('admin/voucher/edit')}}/" + id,
                     method: "GET",
                     success: function (data) {
                         $('#edit_id').val(data.id);
                         $('#edit_voucher_type').val(data.voucher_type_id);
                         $('#edit_voucher_name').val(data.name_voucher);
-                        $('#edit_golf_coure').val(data.golf_course);
+                        $('#edit_golf_course').val(data.golf_course);
                         $('#edit_date_create').val(data.date_create);
                         $('#edit_date_ex').val(data.date_ex);
                         $('#previewHolder2').attr('src', "{{asset('')}}" + data.image);
-                        $('#property_id').val(data.property_id);
+                        $('#property_id').val(data.properties);
                     }
                 })
             });
@@ -139,7 +136,7 @@
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     method: "POST",
-                    url: "{{ url('voucher/update') }}",
+                    url: "{{ route('admin.voucher.update') }}",
                     data: new FormData(this),
                     contentType: false,
                     cache: false,
@@ -159,4 +156,5 @@
             });
         });
     </script>
+
 @endpush
