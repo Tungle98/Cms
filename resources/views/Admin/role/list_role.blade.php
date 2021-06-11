@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+
         <a class="btn btn-success" href="javascript:void(0)" id="createNewBook"> Create New role</a>
         <br>
         <table class="table table-bordered data-table" >
@@ -45,6 +46,7 @@
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
                             </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </form>
                 </div>
@@ -81,10 +83,10 @@
             $('body').on('click', '.editRole', function () {
                 var role_id = $(this).data('id');
                 $.get("{{ route('roles.index') }}" +'/' + role_id +'/edit', function (data) {
-                    $('#modelHeading').html("Edit Permisison");
+                    $('#modelHeading').html("Edit role");
                     $('#saveBtn').val("edit-permission");
                     $('#ajaxModel').modal('show');
-                    $('#permission_id').val(data.id);
+                    $('#role_id').val(data.id);
                     $('#name').val(data.name);
                     $('#permission').val(data.permission);
                 })

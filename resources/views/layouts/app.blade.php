@@ -73,13 +73,7 @@
     </div>
 
     <!-- Main Footer -->
-    <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
 
-        </div>
-        <strong>Copyright &copy; 2021 <a href="#">travel vgs</a>.</strong> All rights
-        reserved.
-    </footer>
 </div>
 
 <script src="{{ asset('js/app.js') }}" defer></script>

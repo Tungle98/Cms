@@ -109,7 +109,7 @@
                 e.preventDefault();
                 var id = $(this).attr('id');
                 $.ajax({
-                    url: "{{url('admin/voucher/edit')}}/" + id,
+                    url: "{{url('admin/user/edit')}}/" + id,
                     method: "GET",
                     success: function (data) {
                         $('#edit_id').val(data.id);

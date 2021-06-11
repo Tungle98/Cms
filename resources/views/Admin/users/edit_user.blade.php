@@ -32,17 +32,14 @@
                                     <input type="text" name="email" class="form-control" id="edit_email" placeholder="">
                                 </div>
                                 <div class="form-group">
-                                    <label for="e_quantity">password</label>
-                                    <input type="password" name="password" class="form-control" id="edit_password" placeholder="">
+                                    <label for="product_status">role</label>
+                                    <select class="form-control" name="voucher_type_id" id="edit_voucher_type">
+                                        <option value="">Select role</option>
+                                        @foreach($roles as $vt)
+
+                                        @endforeach
+                                    </select>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="e_quantity">Confirm Password</label>
-                                    <input type="password" name="confirm-password" class="form-control" id="edit_password" placeholder="">
-                                </div>
-
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

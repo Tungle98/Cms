@@ -18,7 +18,7 @@
             @endif
             <form id="updateVoucherUserForm" method="post" action="" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="id" id="edit_user_id">
+                <input type="hidden" name="id" id="edit_id">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -35,7 +35,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="user"> Id khách hàng</label>
-                                <input type="text" name="user_id" class="form-control" id="edit_user_id"  value="" required>
+                                <input type="text" name="user_id" class="form-control" id="edit_user"  value="" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -48,6 +48,13 @@
                             <div class="form-group">
                                 <label for="e_quantity">Số lượng voucher</label>
                                 <input type="text" name="total_voucher" class="form-control" id="edit_total_voucher" placeholder="">
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="e_quantity">Code</label>
+                                <input type="text" name="code" class="form-control" id="edit_code" placeholder="">
                             </div>
 
                         </div>

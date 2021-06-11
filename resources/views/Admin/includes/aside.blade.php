@@ -77,6 +77,7 @@
                         </p>
                     </a>
                 </li>
+            @endrole
                 <li class="nav-item">
                     <a href="{{route('logout')}}" class="nav-link">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -85,7 +86,6 @@
                         </p>
                     </a>
                 </li>
-            @endrole
 
             </ul>
         </nav>

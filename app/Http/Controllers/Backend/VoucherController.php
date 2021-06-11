@@ -20,7 +20,7 @@ class VoucherController extends Controller
         //
         $voucher_db = DB::table('vouchers')
             ->join('voucher_types','vouchers.voucher_type_id', '=', 'voucher_types.id')
-            ->select('vouchers.*','voucher_types.name')
+            ->select('vouchers.*','voucher_types.name')->orderBy('id','DESC')
             ->get();
         //dd($voucher_db);
         $property = Property::all();
@@ -73,6 +73,7 @@ class VoucherController extends Controller
             }
             $voucher_db->gallery_image = json_encode($data);
         }
+
         $voucher_db->name_voucher = $request->name_voucher;
         $voucher_db->date_create = $request->date_create;
         $voucher_db->date_ex = $request->date_ex;
@@ -113,7 +114,7 @@ class VoucherController extends Controller
         return response()->json($voucherEdit);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
         $request->validate([
@@ -141,8 +142,9 @@ class VoucherController extends Controller
         $voucher_db->date_ex = $request->date_ex;
         $voucher_db->golf_course = $request->golf_course;
         $voucher_db->voucher_type_id = $request->voucher_type_id;
+        $voucher_db->properties()->attach($request->properties);
+
         $voucher_db->save();
-        $voucher_db->properties()->sync($request->properties);
 
         echo "done";
     }

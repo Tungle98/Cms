@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Role;
+use App\User;
 use App\Model\Permission;
 use DB;
 use DataTables;
@@ -102,9 +103,7 @@ class RoleController extends Controller
     {
         //
 
-        $role = Role::find($id);
-
-
+        $role =Role::query()->with('permissions')->find($id);
         return response()->json($role);
     }
 

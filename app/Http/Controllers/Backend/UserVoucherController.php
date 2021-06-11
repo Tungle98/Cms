@@ -19,10 +19,10 @@ class UserVoucherController extends Controller
     {
         //
         $voucher_user = DB::table('voucher_users')
-            ->join('vouchers','vouchers.id','=','voucher_users.voucher_id')
+            ->join('vouchers','voucher_users.voucher_id','=','vouchers.id')
             ->get();
-        //dd($voucher_user);
-        $voucher = Voucher::all();
+        $voucher =  DB::table('vouchers')->join('property_voucher','property_voucher.voucher_id','=','vouchers.id')->get();
+
         $voucherWithProperties = Property::query()->with('vouchers')->get();
         //dd($voucherWithProperties->toArray());
         return view('Admin.voucherUser.list_voucher_user',[
@@ -73,7 +73,7 @@ class UserVoucherController extends Controller
         $voucher_user->save();
 
         /*return response()->json(['message'=>'brand Added Successfully']);*/
-        return redirect()->back()->with('message', 'User book voucher Successfully');
+        return redirect()->back()->with('message', 'User  voucher Successfully');
     }
 
     /**
@@ -85,9 +85,8 @@ class UserVoucherController extends Controller
     public function show($id)
     {
         //
-
         $user_v = VoucherUser::find($id);
-        return view('user_vouchers.show',compact('$user_v'));
+        return response()->json(['data'=>$user_v],200);
     }
 
     /**
@@ -110,14 +109,15 @@ class UserVoucherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
         $request->validate([
-            'user_id' => 'required|max:255',
+            'user_id' => '',
             'full_name' => '',
             'total_voucher' => '',
             'voucher_id' => '',
+            'code' => '',
             'method_paid' => '',
             'status' => '',
         ]);
@@ -125,8 +125,9 @@ class UserVoucherController extends Controller
         $voucher_user->user_id = $request->user_id;
         $voucher_user->full_name = $request->full_name;
         $voucher_user->total_voucher = $request->total_voucher;
-        $voucher_user->method_paid = $request->method_paid;
+        $voucher_user->code = $request->code;
         $voucher_user->voucher_id = $request->voucher_id;
+        $voucher_user->method_paid = $request->method_paid;
         $voucher_user->status = $request->status;
         $voucher_user->save();
 

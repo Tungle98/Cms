@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
@@ -60,10 +60,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                @php($sl = 1)
                                 @foreach($voucher_user as $vou)
                                     <tr>
-                                        <td>{{$vou->user_id}}</td>
+                                        <td>{{$sl++}}</td>
                                         <td>{{$vou->full_name}}</td>
                                         <td>{{$vou->total_voucher}}</td>
                                         <td>{{$vou->name_voucher}}</td>
@@ -75,13 +75,13 @@
 
 
                                            @can('voucherUser-view')
-                                            <a href="#" class="show-modal btn btn-info btn-sm" data-id="{{$vou->id}}" data-user="{{$vou->user_id}}" data-name="{{$vou->full_name}}"
-                                                data-status="{{$vou->status}} " data-code="{{$vou->code}}" data-method="{{$vou->method_paid}}" data-total="{{$vou->total_voucher}}" >
+                                            <a  data-url="{{ url('admin/user_voucher/show',$vou->id) }}" type="button" data-target="#show" data-toggle="modal" class="btn btn-info btn-show"  >
                                                 <i class="fa fa-eye"></i>
                                               </a>
                                               @endcan
+
                                             @can('voucherUser-edit')
-                                            <a href="#editVoucherUserModal"  id="{{$vou->id}}" data-target="" class="edit btn btn-success" title="Edit">
+                                            <a id="{{$vou->id}}" href="#editVoucherUserModal"   data-target="" class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             @endcan
@@ -93,51 +93,7 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <div class="modal fade" id="show" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">View User Voucher</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="container-fluid">
-                                            <form  method="post" action="">
-                                                @csrf
-                                                <div class="row">
-                                                    <div class="col-md-12">Tên khách hàng:{{$vou->full_name}}</div>
-                                                    <div class="col-md-6">Id:  {{$vou->user_id}}</div>
-                                                    <div class="col-md-6">Tổng số voucher:{{$vou->total_voucher}}</div>
-                                                    <div class="col-md-6">Voucher id:{{$vou->name_voucher}}</div>
-                                                    <div class="col-md-6">Code:{{$vou->code}}</div>
-                                                    <div class="col-md-6">Trạng thái:{{$vou->status}}</div>
-                                                    <div class="col-md-6">Phương thức thanh toán:{{$vou->method_paid}}</div>
-                                                </div>
-                                                </div>
-                                                <table>
-                                                    @foreach($voucherWithProperties as $s)
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="user"> {{$s->name}}</label>
-                                                                <input type="text" name="properties[{{$s->id}}]" class="form-control" id=""  value="" >
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endforeach
-                                                </table>
-                                                <button type="submit" class="btn btn-primary" >Đồng ý</button>
 
-                                            </form>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
                     </div>
@@ -177,14 +133,16 @@
                     success: function (data) {
                         $('#edit_id').val(data.id);
                         $('#edit_voucher_id').val(data.voucher_id);
-                        $('#edit_user_id').val(data.user_id);
+                        $('#edit_user').val(data.user_id);
                         $('#edit_full_name').val(data.full_name);
                         $('#edit_total_voucher').val(data.total_voucher);
+                        $('#edit_code').val(data.code);
                         $('#edit_status').val(data.status);
                         $('#edit_method_paid').val(data.method_paid);
                     }
                 })
             });
+
             //update voucher
             $('#updateVoucherUserForm').on('submit', function (e) {
                 e.preventDefault();
@@ -203,22 +161,35 @@
                             Swal.fire({
                                 title: 'voucher Updated',
                                 icon: 'success',
-                                timer: 2000
+                                timer: 500
                             })
                         }
                     },
                 });
             });
 
-           // Show function
-                $(document).on('click', '.show-modal', function() {
-                $('#show').modal('show');
-                $('#i').text($(this).data('id'));
-                $('#n').text($(this).data('full_name'));
-                $('#t').text($(this).data('total_voucher'));
-                $('.modal-title').text('Show user voucher');
+            $('.btn-show').click(function () {
+                var url = $(this).attr('data-url');
+                console.log($(this).attr('data-url'));
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    success: function (response) {
+                        console.log(response)
+                        $('b#full_name').text(response.data.full_name)
+                        $('b#user_id').text(response.data.user_id)
+                        $('b#total_voucher').text(response.data.total_voucher)
+                        $('b#name_voucher').text(response.data.voucher_id)
+                        $('b#code').text(response.data.code)
+                        $('b#status').text(response.data.status)
+                        $('b#method_paid').text(response.data.method_paid)
+                        $('b#golf_course').text(response.data.golf_course)
+
+                    },
                 });
+            });
         });
+
     </script>
 
 @endpush

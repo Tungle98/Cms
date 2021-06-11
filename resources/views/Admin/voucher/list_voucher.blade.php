@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
@@ -36,10 +36,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <span class="h4">Voucher List</span>
+                         @can('voucher-add')
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                 <i class="fa fa-plus"><b> Add voucher</b></i>
                             </button>
+                            @endcan
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -58,9 +59,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @php($sl = 1)
                                 @foreach($voucher_db as $vouchers)
                                     <tr>
-                                        <td>{{$vouchers->id}}</td>
+                                        <td>{{$sl++}}</td>
                                         <td>{{$vouchers->name_voucher}}</td>
                                         <td>{{$vouchers->name}}</td>
                                         <td>{{$vouchers->date_create}}</td>
@@ -73,7 +75,7 @@
                                         <td>{{$vouchers->status=='1'?'Active':'Inactive'}}</td>
 
                                         <td>
-                                            @can('edit voucher')
+                                            @can('voucher-edit')
                                             <a  id="{{$vouchers->id}}" href="#editVoucherModal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
@@ -128,7 +130,15 @@
                         $('#edit_date_create').val(data.date_create);
                         $('#edit_date_ex').val(data.date_ex);
                         $('#previewHolder2').attr('src', "{{asset('')}}" + data.image);
-                        $('#property_id').val(data.properties);
+
+                        console.log(data.properties);
+
+                        for ( let property of data.properties) {
+
+                            $('.properties-place').append(`<p>${property.name}</p>`)
+                        }
+                        // <input type="text" id="property_id" name="properties[]" class="form-control" placeholder="">
+                        // $('#property_id').val(data.properties);
                     }
                 })
             });

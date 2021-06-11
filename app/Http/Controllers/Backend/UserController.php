@@ -19,7 +19,6 @@ class UserController extends Controller
         //
         $data = User::orderBy('id','DESC')->paginate(5);
         $roles = Role::pluck('name','name')->all();
-
         return view('Admin.users.list_user',compact('data','roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -50,7 +49,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'roles' => ''
         ]);
 
         $input = $request->all();
@@ -84,11 +83,9 @@ class UserController extends Controller
     public function edit($id)
     {
         //
-        $user = User::find($id);
-       // $roles = Role::pluck('name','name')->all();
-       // $userRole = $user->roles->pluck('name','name')->all();
-       return response()->json($user);
-       // return view('Admin.users.edit',compact('user'));
+
+        $userEdit =User::query()->with('roles')->find($id);
+       return response()->json($userEdit);
     }
 
     /**
@@ -98,12 +95,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,',
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
@@ -115,9 +112,7 @@ class UserController extends Controller
             $input = Arr::except($input,array('password'));
         }
 
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user=User::update($input);
 
         $user->assignRole($request->input('roles'));
 
