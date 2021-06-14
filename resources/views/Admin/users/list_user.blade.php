@@ -132,7 +132,10 @@
                     cache: false,
                     processData: false,
                     success: function (data) {
-                        toastr.success(response.message)
+
+                        $('#addUserForm').trigger("reset");
+                        $('#show').modal('hide');
+                        table.draw();
                     },
                 });
             });

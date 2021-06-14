@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use DB;
+use DataTables;
 use Illuminate\Support\Facades\Redirect;
 class VoucherController extends Controller
 {

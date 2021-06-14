@@ -179,25 +179,27 @@
                 });
             });
             //add function show detail
-            $('#addUserForm').on('submit', function (e) {
-                e.preventDefault();
-                $.ajax({
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    method: "POST",
-                    url: "{{ route('admin.voucher_user.add') }}",
-                    data: new FormData(this),
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function (data) {
+            $('#saveBtn').click(function (e) {
+                    e.preventDefault();
+                    $(this).html('Sending..');
 
+                    $.ajax({
+                    data: $('#addUserForm').serialize(),
+                    url: "{{ route('admin.voucher_user.add') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
                         $('#addUserForm').trigger("reset");
                         $('#show').modal('hide');
                         table.draw();
 
                     },
+                    error: function (data) {
+                        console.log('Error:', data);
+                        $('#saveBtn').html('Save Changes');
+                    }
                 });
-            });
+                });
         });
 
     </script>

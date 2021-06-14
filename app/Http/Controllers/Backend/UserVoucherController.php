@@ -101,7 +101,7 @@ class UserVoucherController extends Controller
     public function addVoucherUser(Request $request)
     {
         $request->validate([
-             'user_id'=>'',
+            'user_id'=>'required',
             'voucher_id' => '',
             'property_id'=>'',
             'value ' =>'',
@@ -109,11 +109,11 @@ class UserVoucherController extends Controller
         $voucher_user_pro = new UserVoucherPro();
         $voucher_user_pro->user_id = $request->user_id;
         $voucher_user_pro->voucher_id = $request->voucher_id;
-        $voucher_user_pro->property_id = $request->property_id;
+        $voucher_user_pro->property_id = $request->property;
         $voucher_user_pro->value = $request->value;
 
         $voucher_user_pro->save();
-
+        return redirect()->back();
     }
 
     /**

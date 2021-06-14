@@ -107,15 +107,6 @@
                     success: function (data) {
                         $('#edit_id').val(data.id);
                         $('#edit_role').val(data.name);
-
-                        //console.log(data.properties);
-
-                        //for ( let property of data.properties) {
-//
-                          //  $('.properties-place').append(`<p>${property.name}</p>`)
-                      //  }
-                        // <input type="text" id="property_id" name="properties[]" class="form-control" placeholder="">
-                        // $('#property_id').val(data.properties);
                     }
                 })
             });
