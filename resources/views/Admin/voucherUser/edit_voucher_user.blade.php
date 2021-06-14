@@ -16,7 +16,7 @@
                     </ul>
                 </div>
             @endif
-            <form id="updateVoucherUserForm" method="post" action="" enctype="multipart/form-data">
+            <form id="updateVoucherUserForm" method="put" action="" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" id="edit_id">
                 <div class="modal-body">

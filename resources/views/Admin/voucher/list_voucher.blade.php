@@ -36,11 +36,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                         @can('voucher-add')
+
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                 <i class="fa fa-plus"><b> Add voucher</b></i>
                             </button>
-                            @endcan
+
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -75,11 +75,11 @@
                                         <td>{{$vouchers->status=='1'?'Active':'Inactive'}}</td>
 
                                         <td>
-                                            @can('voucher-edit')
+
                                             <a  id="{{$vouchers->id}}" href="#editVoucherModal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            @endcan
+
                                         </td>
                                     </tr>
                                 @endforeach

@@ -131,7 +131,8 @@
                     url: "{{url('admin/user_voucher/edit')}}/" + id,
                     method: "GET",
                     success: function (data) {
-                        $('#edit_id').val(data.id);
+
+                       $('#edit_id').val(data.id);
                         $('#edit_voucher_id').val(data.voucher_id);
                         $('#edit_user').val(data.user_id);
                         $('#edit_full_name').val(data.full_name);
@@ -154,7 +155,7 @@
                     contentType: false,
                     cache: false,
                     processData: false,
-                    success: function (data) {
+                   /* success: function (data) {
                         if (data == "done") {
                             $('#editVoucherUserModal').modal('hide');
                             loadDataTable();
@@ -164,6 +165,13 @@
                                 timer: 500
                             })
                         }
+                    },*/
+                    success: function (data) {
+
+                    $('#updateVoucherUserForm').trigger("reset");
+                    $('#editVoucherUserModal').modal('hide');
+                    table.draw();
+
                     },
                 });
             });

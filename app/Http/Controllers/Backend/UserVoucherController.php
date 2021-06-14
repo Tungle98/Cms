@@ -17,12 +17,15 @@ class UserVoucherController extends Controller
      */
     public function index()
     {
-        //
+        //join user voucher voi voucher
         $voucher_user = DB::table('voucher_users')
             ->join('vouchers','voucher_users.voucher_id','=','vouchers.id')
+            //->join('property_voucher','vouchers.id','=','property_voucher.voucher_id')
+            ->select('voucher_users.*','vouchers.name_voucher')->orderBy('id','DESC')
             ->get();
+           // dd($voucher_user);
         $voucher =  DB::table('vouchers')->join('property_voucher','property_voucher.voucher_id','=','vouchers.id')->get();
-
+        //dd($voucher);
         $voucherWithProperties = Property::query()->with('vouchers')->get();
         //dd($voucherWithProperties->toArray());
         return view('Admin.voucherUser.list_voucher_user',[

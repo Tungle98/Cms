@@ -41,26 +41,26 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label for="short_desc">Tên khách hàng</label>
-                                <input type="text" name="full_name" class="form-control" id="product_name"  required>
+                                <label for="full_name">Tên khách hàng</label>
+                                <input type="text" name="full_name" class="form-control" id="full_name"  required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="long_desc">Số lượng voucher</label>
-                                <input type="text" name="total_voucher" class="form-control" id="product_name" required>
+                                <label for="total_voucher">Số lượng voucher</label>
+                                <input type="text" name="total_voucher" class="form-control" id="total_voucher" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="discount_price"> Mã code</label>
-                                <input type="text" name="code" class="form-control" id="product_name"  required>
+                                <label for="code"> Mã code</label>
+                                <input type="text" name="code" class="form-control" id="code"  required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="product_status">Trạng thái</label>
-                                <select class="form-control" name="status" id="product_status">
+                                <label for="status">Trạng thái</label>
+                                <select class="form-control" name="status" id="status">
                                     <option value="Chưa sử dụng">Chưa sử dụng</option>
                                     <option value="Hết hạn">Hết hạn</option>
                                     <option value="Đã sử dụng">Đã sử dụng</option>
