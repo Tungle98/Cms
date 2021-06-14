@@ -22,7 +22,8 @@
 
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-6"><div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="product_status">Loại voucher</label>
                                 <select class="form-control" name="voucher_type_id" id="product_cat">
                                     <option value="">Select type voucher</option>
@@ -30,7 +31,8 @@
                                         <option value="{{$vt->id}}">{{$vt->name}}</option>
                                     @endforeach
                                 </select>
-                            </div></div>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="product_name">Voucher Name</label>
@@ -40,7 +42,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="short_desc">Ngày tạo</label>
-                                <input type="date" name="date_create" class="form-control" id="product_name" placeholder="" required>
+                                <input type="date"  name="date_create" class="form-control" id="product_name" placeholder="" required>
                             </div>
                         </div>
                         <div class="col-md-6">

@@ -155,17 +155,6 @@
                     contentType: false,
                     cache: false,
                     processData: false,
-                   /* success: function (data) {
-                        if (data == "done") {
-                            $('#editVoucherUserModal').modal('hide');
-                            loadDataTable();
-                            Swal.fire({
-                                title: 'voucher Updated',
-                                icon: 'success',
-                                timer: 500
-                            })
-                        }
-                    },*/
                     success: function (data) {
 
                     $('#updateVoucherUserForm').trigger("reset");
@@ -184,14 +173,27 @@
                     url: url,
                     success: function (response) {
                         console.log(response)
-                        $('b#full_name').text(response.data.full_name)
-                        $('b#user_id').text(response.data.user_id)
-                        $('b#total_voucher').text(response.data.total_voucher)
-                        $('b#name_voucher').text(response.data.voucher_id)
-                        $('b#code').text(response.data.code)
-                        $('b#status').text(response.data.status)
-                        $('b#method_paid').text(response.data.method_paid)
-                        $('b#golf_course').text(response.data.golf_course)
+                        $('.content-user').html(response);
+
+                    },
+                });
+            });
+            //add function show detail
+            $('#addUserForm').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    method: "POST",
+                    url: "{{ route('admin.voucher_user.add') }}",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (data) {
+
+                        $('#addUserForm').trigger("reset");
+                        $('#show').modal('hide');
+                        table.draw();
 
                     },
                 });

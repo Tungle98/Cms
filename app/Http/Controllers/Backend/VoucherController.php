@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Support\Facades\Redirect;
 class VoucherController extends Controller
 {
     /**
@@ -80,11 +81,12 @@ class VoucherController extends Controller
         $voucher_db->golf_course = $request->golf_course;
         $voucher_db->voucher_type_id = $request->voucher_type_id;
         $voucher_db->status = $request->status;
+
         $voucher_db->save();
         $voucher_db->properties()->attach($request->properties);
 
 
-        return back();
+        return redirect()->back()->with('message', 'Create voucher Successfully');
     }
 
     /**
@@ -121,11 +123,12 @@ class VoucherController extends Controller
             'name_voucher' => 'required|max:255',
             'date_create' => '',
             'image' => 'image',
-            'date_ex' => '',
+            'date_ex' =>'',
             'golf_course' => '',
             'voucher_type_id' => '',
             'status' => '',
         ]);
+
         $voucher_db = Voucher::find($request->id);
 
         if ($file = $request->file('image')) {
@@ -136,17 +139,17 @@ class VoucherController extends Controller
 
             $voucher_db->image = $imageUrl;
         }
-
         $voucher_db->name_voucher = $request->name_voucher;
         $voucher_db->date_create = $request->date_create;
+        //$newDate = date("dd-mm-YYYY", strtotime($voucher_db->date_create));
         $voucher_db->date_ex = $request->date_ex;
         $voucher_db->golf_course = $request->golf_course;
         $voucher_db->voucher_type_id = $request->voucher_type_id;
         $voucher_db->properties()->attach($request->properties);
 
         $voucher_db->save();
-
         echo "done";
+        //       // return Redirect::back()->with('message', 'Update voucher success');
     }
 
     /**

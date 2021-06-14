@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Model\PropertyVoucher;
 use Illuminate\Http\Request;
 use App\Model\Voucher;
 use App\Model\VoucherUser;
 use App\Model\Property;
 use DB;
+use App\Model\UserVoucherPro;
 class UserVoucherController extends Controller
 {
     /**
@@ -20,18 +22,15 @@ class UserVoucherController extends Controller
         //join user voucher voi voucher
         $voucher_user = DB::table('voucher_users')
             ->join('vouchers','voucher_users.voucher_id','=','vouchers.id')
-            //->join('property_voucher','vouchers.id','=','property_voucher.voucher_id')
             ->select('voucher_users.*','vouchers.name_voucher')->orderBy('id','DESC')
             ->get();
-           // dd($voucher_user);
         $voucher =  DB::table('vouchers')->join('property_voucher','property_voucher.voucher_id','=','vouchers.id')->get();
-        //dd($voucher);
-        $voucherWithProperties = Property::query()->with('vouchers')->get();
+        //$voucherWithProperties = Property::query()->with('vouchers')->get();
         //dd($voucherWithProperties->toArray());
         return view('Admin.voucherUser.list_voucher_user',[
             'voucher_user'=>$voucher_user,
             'voucher'=>$voucher,
-            'voucherWithProperties'=>$voucherWithProperties,
+           // 'voucherWithProperties'=>$voucherWithProperties,
         ]);
     }
 
@@ -75,7 +74,6 @@ class UserVoucherController extends Controller
 
         $voucher_user->save();
 
-        /*return response()->json(['message'=>'brand Added Successfully']);*/
         return redirect()->back()->with('message', 'User  voucher Successfully');
     }
 
@@ -88,8 +86,34 @@ class UserVoucherController extends Controller
     public function show($id)
     {
         //
-        $user_v = VoucherUser::find($id);
-        return response()->json(['data'=>$user_v],200);
+        $user_v = VoucherUser::query()->join('vouchers','voucher_users.voucher_id','vouchers.id')
+            ->select('voucher_users.*','vouchers.name_voucher','vouchers.golf_course')
+            ->find($id);
+      // dd($user_v);
+        //list temp
+        $list_tem =PropertyVoucher::query()->join('properties','property_voucher.property_id','properties.id')
+            ->where('voucher_id', $user_v->voucher_id)
+            ->get();
+//dd($list_tem);
+        return view('Admin.voucherUser.template.show',compact('user_v','list_tem'));
+    }
+
+    public function addVoucherUser(Request $request)
+    {
+        $request->validate([
+             'user_id'=>'',
+            'voucher_id' => '',
+            'property_id'=>'',
+            'value ' =>'',
+        ]);
+        $voucher_user_pro = new UserVoucherPro();
+        $voucher_user_pro->user_id = $request->user_id;
+        $voucher_user_pro->voucher_id = $request->voucher_id;
+        $voucher_user_pro->property_id = $request->property_id;
+        $voucher_user_pro->value = $request->value;
+
+        $voucher_user_pro->save();
+
     }
 
     /**

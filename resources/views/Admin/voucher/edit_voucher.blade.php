@@ -50,7 +50,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="filePhoto5">Ngày hết hạn</label>
-                                    <input type="date" name="date_ex" class="form-control-file" id="edit_date_ex" >
+                                    <input type="date"  name="date_ex" class="form-control-file" id="edit_date_ex" >
                                 </div>
                             </div>
                             <div class="col-md-6">

@@ -18,20 +18,26 @@
                 </div>
             @endif
             <div class="container">
-                <form id="updateRoleForm" method="post" action="{{url('roles.update')}}" enctype="multipart/form-data">
+                <form id="updateRoleForm" method="post" action="" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" id="edit_id">
                     <div class="modal-body">
 
                         <div class="form-group">
                             <label for="voucher_name"> Name </label>
-                            <input type="text" name="name" class="form-control" id="edit_user_name"  value="" required>
+                            <input type="text" name="name" class="form-control" id="edit_role"  value="" required>
                         </div>
 
 
                         <div class="form-group">
-                            <label for="e_quantity">email</label>
-                            <input type="email" name="email" class="form-control" id="edit_user_email" placeholder="">
+                            <strong>Permission:</strong>
+                            <br/>
+                            @foreach($permissions as $value)
+                                <label>
+                                    <input type="checkbox" id="permission_edit" name="permission[]" value="{{$value->id}}" >   {{ $value->name }}</label>
+                                </label>
+                                <br/>
+                            @endforeach
                         </div>
 
 

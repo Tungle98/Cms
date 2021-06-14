@@ -1,14 +1,14 @@
-<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add permission</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Role</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('roles.store')}}" method="post">
+                <form action="{{route('admin.role')}}" method="post">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name role</label>
@@ -17,7 +17,7 @@
                     <div class="form-group">
                         <strong>Permission:</strong>
                         <br/>
-                        @foreach($permission as $value)
+                        @foreach($permissions as $value)
                         <label>
                             <input type="checkbox" name="permission[]" value="{{$value->id}}" >   {{ $value->name }}</label>
                         </label>

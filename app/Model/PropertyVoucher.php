@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PropertyVoucher extends Model
 {
     //
+    protected $table='property_voucher';
+
 }

@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Model\Role;
 use Hash;
+use DB;
+use DataTables;
+
 class UserController extends Controller
 {
     /**
@@ -19,7 +22,8 @@ class UserController extends Controller
         //
         $data = User::orderBy('id','DESC')->paginate(5);
         $roles = Role::pluck('name','name')->all();
-        return view('Admin.users.list_user',compact('data','roles'))
+        $role_add = Role::all();
+        return view('Admin.users.list_user',compact('data','roles','role_add'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -58,7 +62,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
 
-        return back();
+        return redirect()->back()->with('message', 'Add User  Successfully');
     }
 
     /**
@@ -85,6 +89,7 @@ class UserController extends Controller
         //
 
         $userEdit =User::query()->with('roles')->find($id);
+
        return response()->json($userEdit);
     }
 
@@ -98,26 +103,22 @@ class UserController extends Controller
     public function update(Request $request)
     {
         //
+
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,',
+            'email' => 'required|email|:users,email,',
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
 
         $input = $request->all();
-        if(!empty($input['password'])){
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));
-        }
 
-        $user=User::update($input);
-
+        $user = User::find($request->id);
+        $user->update($input);
+        DB::table('model_has_roles')->where('model_id',$request->id)->delete();
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('users.index')
-            ->with('success','User updated successfully');
+        echo "done";
     }
 
     /**

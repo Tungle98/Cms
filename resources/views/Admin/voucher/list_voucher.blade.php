@@ -36,11 +36,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-
+                        @can('voucher-add')
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                 <i class="fa fa-plus"><b> Add voucher</b></i>
                             </button>
-
+                            @endcan
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -65,8 +65,8 @@
                                         <td>{{$sl++}}</td>
                                         <td>{{$vouchers->name_voucher}}</td>
                                         <td>{{$vouchers->name}}</td>
-                                        <td>{{$vouchers->date_create}}</td>
-                                        <td>{{$vouchers->date_ex}}</td>
+                                        <td>{!!date('d/m/y', strtotime($vouchers->date_create))!!}</td>
+                                        <td>{!!date('d/m/y', strtotime($vouchers->date_ex))!!}</td>
                                         <td>{{$vouchers->golf_course}}</td>
                                         <td>
                                             <img src="{{asset($vouchers->image)}}" height="100px" alt="image">
@@ -75,11 +75,11 @@
                                         <td>{{$vouchers->status=='1'?'Active':'Inactive'}}</td>
 
                                         <td>
-
+                                            @can('voucher-edit')
                                             <a  id="{{$vouchers->id}}" href="#editVoucherModal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -131,7 +131,7 @@
                         $('#edit_date_ex').val(data.date_ex);
                         $('#previewHolder2').attr('src', "{{asset('')}}" + data.image);
 
-                        console.log(data.properties);
+                        //console.log(data.properties);
 
                         for ( let property of data.properties) {
 
@@ -156,7 +156,7 @@
                     success: function (data) {
                         if (data == "done") {
                             $('#editVoucherModal').modal('hide');
-                            loadDataTable();
+                           // loadDataTable();
                             Swal.fire({
                                 title: 'voucher Updated',
                                 icon: 'success',

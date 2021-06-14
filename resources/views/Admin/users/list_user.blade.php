@@ -115,7 +115,7 @@
                         $('#edit_id').val(data.id);
                         $('#edit_name').val(data.name);
                         $('#edit_email').val(data.email);
-                        $('#edit_role').val(data.role);
+                        $('#edit_role').val(data.roles);
 
                     }
                 })
@@ -132,15 +132,7 @@
                     cache: false,
                     processData: false,
                     success: function (data) {
-                        if (data == "done") {
-                            $('#editUserModal').modal('hide');
-                            loadDataTable();
-                            Swal.fire({
-                                title: 'voucher Updated',
-                                icon: 'success',
-                                timer: 2000
-                            })
-                        }
+                        toastr.success(response.message)
                     },
                 });
             });

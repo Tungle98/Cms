@@ -19,28 +19,11 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         //
-        $roles = Role::latest()->paginate(10);
-        $permission = Permission::get();
+        $data = Role::orderBy('id','DESC')->paginate(5);
 
-
-
-        if ($request->ajax()) {
-            $data = Role::latest()->get();
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function($row){
-
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editRole">Edit</a>';
-
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteRole">Delete</a>';
-
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
-        return view('Admin.role.list_role',compact('roles','permission'));
+        $permissions = Permission::all();
+        return view('Admin.role.list_role',compact('data','permissions'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -73,8 +56,8 @@ class RoleController extends Controller
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
 
-        return redirect()->route('roles.index')
-            ->with('success','Role created successfully');
+
+        return redirect()->back()->with('message', 'Create role Successfully');
     }
 
     /**
@@ -114,7 +97,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
         $this->validate($request, [
@@ -122,14 +105,13 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
 
-        $role = Role::find($id);
+        $role = Role::find($request->id);
         $role->name = $request->input('name');
-        $role->update();
-
+        $role->save();
         $role->syncPermissions($request->input('permission'));
 
-        return redirect()->route('roles.index')
-            ->with('success','Role updated successfully');
+
+        echo "done";
     }
 
     /**

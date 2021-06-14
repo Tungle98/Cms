@@ -70,7 +70,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{url('roles')}}" class="nav-link">
+                    <a href="{{route('admin.role')}}" class="nav-link">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <p>
                             Role

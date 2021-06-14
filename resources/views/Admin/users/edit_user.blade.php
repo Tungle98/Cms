@@ -33,10 +33,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="product_status">role</label>
-                                    <select class="form-control" name="voucher_type_id" id="edit_voucher_type">
+                                    <select class="form-control" name="roles[]" id="edit_role">
                                         <option value="">Select role</option>
-                                        @foreach($roles as $vt)
-
+                                        @foreach($role_add as $vt)
+                                                <option value="{{$vt->id}}">{{$vt->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

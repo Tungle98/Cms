@@ -14,6 +14,7 @@ class CreatePropertyVouchersTable extends Migration
     public function up()
     {
         Schema::create('property_voucher', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('voucher_id')->unsigned();
             $table->foreign('voucher_id')->references('id')->on('vouchers')->onDelete('cascade');
             $table->integer('property_id')->unsigned();
