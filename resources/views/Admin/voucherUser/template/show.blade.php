@@ -17,13 +17,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="" name="">Id khách hàng</label>
-                <input type="text" name="name" value="{{$user_v->user_id}}" >
+                <input type="text" name="user_voucher_id" value="{{$user_v->user_id}}" >
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="" name="">Id voucher</label>
-                <input type="text" name="detail" value="{{$user_v->voucher_id}}" >
+                <input type="text" name="voucher_id" value="{{$user_v->voucher_id}}" >
             </div>
         </div>
         <div class="col-md-6">
