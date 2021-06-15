@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use DB;
 use DataTables;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 class VoucherController extends Controller
 {
@@ -55,7 +56,7 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
         $voucher_db = new Voucher();
         $imageUrl = '';
         if ($file = $request->file('image')) {
@@ -77,7 +78,7 @@ class VoucherController extends Controller
         }
 
         $voucher_db->name_voucher = $request->name_voucher;
-        $voucher_db->date_create = $request->date_create;
+        $voucher_db->date_create =Carbon::createFromFormat('d/m/Y',$request->date_create)->format('d/m/Y');
         $voucher_db->date_ex = $request->date_ex;
         $voucher_db->golf_course = $request->golf_course;
         $voucher_db->voucher_type_id = $request->voucher_type_id;

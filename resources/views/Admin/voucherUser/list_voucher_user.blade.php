@@ -70,12 +70,10 @@
                                         <td>{{$vou->code}}</td>
                                         <td>{{$vou->status}}</td>
                                         <td>{{$vou->method_paid}}</td>
-
                                         <td>
 
-
                                            @can('voucherUser-view')
-                                            <a  data-url="{{ url('admin/user_voucher/show',$vou->id) }}" type="button" data-target="#show" data-toggle="modal" class="btn btn-info btn-show"  >
+                                            <a  data-url="{{ url('admin/user_voucher/show',$vou->id) }}" type="button" href="#show" data-toggle="modal" class="btn btn-info btn-show"  >
                                                 <i class="fa fa-eye"></i>
                                               </a>
                                               @endcan
@@ -93,8 +91,6 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-
-
 
                     </div>
                 </div>
@@ -159,12 +155,11 @@
 
                     $('#updateVoucherUserForm').trigger("reset");
                     $('#editVoucherUserModal').modal('hide');
-                    table.draw();
 
                     },
                 });
             });
-
+             //show detail
             $('.btn-show').click(function () {
                 var url = $(this).attr('data-url');
                 console.log($(this).attr('data-url'));
@@ -172,35 +167,50 @@
                     type: 'get',
                     url: url,
                     success: function (response) {
-                        console.log(response)
+                        //console.log(response)
                         $('.content-user').html(response);
 
                     },
                 });
             });
             //add function show detail
-            $('#saveBtn').click(function (e) {
-                    e.preventDefault();
-                    $(this).html('Sending..');
+            {{--$('#addUserForm').on('submit', function (e) {--}}
+            {{--    e.preventDefault()--}}
+            {{--    $.ajax({--}}
+            {{--        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},--}}
+            {{--        method: "POST",--}}
+            {{--        url: "{{ route('admin.voucher_user.add') }}",--}}
+            {{--        data: new FormData(this),--}}
+            {{--        contentType: false,--}}
+            {{--        cache: false,--}}
+            {{--        processData: false,--}}
+            {{--        success: function (data) {--}}
+            {{--            $('#addUserForm').trigger("reset");--}}
+            {{--            $('#show').modal('hide');--}}
+            {{--            table.draw();--}}
 
-                    $.ajax({
-                    data: $('#addUserForm').serialize(),
-                    url: "{{ route('admin.voucher_user.add') }}",
-                    type: "POST",
-                    dataType: 'json',
-                    success: function (data) {
-                        $('#addUserForm').trigger("reset");
-                        $('#show').modal('hide');
-                        table.draw();
+            {{--        },--}}
+            {{--    });--}}
+            {{--});--}}
 
-                    },
-                    error: function (data) {
-                        console.log('Error:', data);
-                        $('#saveBtn').html('Save Changes');
-                    }
-                });
-                });
+            {{--$('#user-submit').on('click', function(e) {--}}
+            {{--    e.preventDefault();--}}
+            {{--    $.ajax({--}}
+            {{--        type: "POST",--}}
+            {{--        url: "{{  route('admin.voucher_user.add') }}",--}}
+            {{--        data: $('form.addUserForm').serialize(),--}}
+            {{--        success: function(response) {--}}
+            {{--            alert(response['response']);--}}
+            {{--        },--}}
+            {{--        error: function() {--}}
+            {{--            alert('Error');--}}
+            {{--        }--}}
+            {{--    });--}}
+            {{--    return false;--}}
+            {{--});--}}
         });
+
+
 
     </script>
 

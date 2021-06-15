@@ -133,9 +133,8 @@
                     processData: false,
                     success: function (data) {
 
-                        $('#addUserForm').trigger("reset");
-                        $('#show').modal('hide');
-                        table.draw();
+                        $('#updateUserForm').trigger("reset");
+                        $('#editUserModal').modal('hide');
                     },
                 });
             });

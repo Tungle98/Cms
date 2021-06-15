@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Model\PropertyVoucher;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Model\Voucher;
 use App\Model\VoucherUser;
 use App\Model\Property;
 use DB;
+use App\Product;
 use App\Model\UserVoucherPro;
 class UserVoucherController extends Controller
 {
@@ -25,12 +27,9 @@ class UserVoucherController extends Controller
             ->select('voucher_users.*','vouchers.name_voucher')->orderBy('id','DESC')
             ->get();
         $voucher =  DB::table('vouchers')->join('property_voucher','property_voucher.voucher_id','=','vouchers.id')->get();
-        //$voucherWithProperties = Property::query()->with('vouchers')->get();
-        //dd($voucherWithProperties->toArray());
         return view('Admin.voucherUser.list_voucher_user',[
             'voucher_user'=>$voucher_user,
             'voucher'=>$voucher,
-           // 'voucherWithProperties'=>$voucherWithProperties,
         ]);
     }
 
@@ -39,10 +38,16 @@ class UserVoucherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
-        return view('user_vouchers.create');
+
+    }
+    private function mapProperties($properties)
+    {
+        return collect($properties)->map(function ($i) {
+            return ['value' => $i];
+        });
     }
 
     /**
@@ -89,31 +94,42 @@ class UserVoucherController extends Controller
         $user_v = VoucherUser::query()->join('vouchers','voucher_users.voucher_id','vouchers.id')
             ->select('voucher_users.*','vouchers.name_voucher','vouchers.golf_course')
             ->find($id);
-      // dd($user_v);
+        // dd($user_v);
         //list temp
         $list_tem =PropertyVoucher::query()->join('properties','property_voucher.property_id','properties.id')
             ->where('voucher_id', $user_v->voucher_id)
             ->get();
-//dd($list_tem);
+        //dd($list_tem);
         return view('Admin.voucherUser.template.show',compact('user_v','list_tem'));
     }
 
     public function addVoucherUser(Request $request)
     {
-        $request->validate([
-            'user_id'=>'required',
-            'voucher_id' => '',
-            'property_id'=>'',
-            'value ' =>'',
-        ]);
-        $voucher_user_pro = new UserVoucherPro();
-        $voucher_user_pro->user_id = $request->user_id;
-        $voucher_user_pro->voucher_id = $request->voucher_id;
-        $voucher_user_pro->property_id = $request->property;
-        $voucher_user_pro->value = $request->value;
+////        dd($request->all());
+//        $data = $request->validate([
+//            'voucher_user_id'=>'',
+//            'voucher_id' => 'required',
+//            'property_id'=>'required',
+//           'value ' =>'required',
+//        ]);
+        $voucher_user_pro = Product::create($request->all());
 
-        $voucher_user_pro->save();
-        return redirect()->back();
+        $properties = collect($request->input('properties', []))
+            ->map(function ($property){
+               return ['value' => $property];
+            });
+        //dd($properties);
+        $voucher_user_pro->properties()->sync($properties);
+//        $voucher_user_pro = new UserVoucherPro();
+//        $voucher_user_pro->voucher_user_id = $request->user_id;
+//        $voucher_user_pro->voucher_id = $request->voucher_id;
+//        $voucher_user_pro->property_id = $request->property;
+//        $voucher_user_pro->value = $request->value;
+//
+//        $voucher_user_pro->save();
+        //$voucher_user_pro->properties()->attach($this->mapProperties($data['properties']));
+
+        return redirect()->route('admin.user_voucher.index');
     }
 
     /**

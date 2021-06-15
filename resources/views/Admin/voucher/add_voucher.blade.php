@@ -42,7 +42,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="short_desc">Ngày tạo</label>
-                                <input type="date"  name="date_create" class="form-control" id="product_name" placeholder="" required>
+                                <input type="date"  name="date_create" class="form-control" id="product_name" placeholder="dd/mm/yyyy" required>
                             </div>
                         </div>
                         <div class="col-md-6">

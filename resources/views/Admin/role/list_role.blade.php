@@ -124,7 +124,6 @@
                     success: function (data) {
                         if (data == "done") {
                             $('#editRoleModal').modal('hide');
-                           //loadDataTable();
                             Swal.fire({
                                 title: 'role Updated',
                                 icon: 'success',

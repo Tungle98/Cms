@@ -44,7 +44,7 @@ Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], f
     Route::post('/user_voucher/update','UserVoucherController@update')->name('admin.voucher_user.update');
     Route::get('/user_voucher/delete/{id}','UserVoucherController@delete');
 
-    Route::post('user_voucher/addUserVoucher','UserVoucherController@addVoucherUser')->name('admin.voucher_user.add');
+    Route::post('/user_voucher/addUserVoucher','UserVoucherController@addVoucherUser')->name('admin.voucher_user.add');
 
     //user route
     Route::get('/user','UserController@index')->name('admin.user');
