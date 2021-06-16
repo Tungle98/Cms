@@ -75,9 +75,9 @@
                                             <a  id="{{$user->id}}" href="#editUserModal"   data-toggle="modal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a id="{{$user->id}}" href="" class="btn btn-danger delete">
+                                            {{-- <a id="{{$user->id}}" href="" class="btn btn-danger delete">
                                                 <i class="fa fa-trash"></i>
-                                            </a>
+                                            </a> --}}
                                         </td>
                                     </tr>
                                 @endforeach
