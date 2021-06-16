@@ -14,7 +14,7 @@ class VoucherUser extends Model
         return $this->belongsToMany('App\Model\Voucher');
     }
     public function properties() {
-        return $this->belongsToMany('App\Model\Property' ,'user_voucher_pro', 'voucher_id', 'property_id')
+        return $this->belongsToMany('App\Model\Property' ,'user_p', 'voucher_user_id', 'property_id')
             ->withPivot(['value']);
     }
 }

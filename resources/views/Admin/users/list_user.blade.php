@@ -45,7 +45,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="UserDatatable" class="table table-bordered table-striped">
+                            <table id="UserDatatable" class="table table-bordered table-striped data-table">
                                 <thead>
                                 <tr>
                                     <th>Sl No.</th>
@@ -56,7 +56,7 @@
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tableData">
                                 @php($sl = 1)
                                 @foreach($data as $key => $user)
                                     <tr>
@@ -74,6 +74,9 @@
                                         <td>
                                             <a  id="{{$user->id}}" href="#editUserModal"   data-toggle="modal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a id="{{$user->id}}" href="" class="btn btn-danger delete">
+                                                <i class="fa fa-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -101,7 +104,15 @@
         $(document).ready( function () {
             //for datatable
             $('#UserDatatable').DataTable();
-
+            function loadDataTable(){
+            $.ajax({
+                url: "{{ route('admin.user.getTableData') }}",
+                success: function(data){
+                    $('#tableData').html(data);
+                }
+            })
+                 };
+             loadDataTable();
             //load table via ajax
             //show data for edit modal
             $(document).on('click', '.edit', function (e) {
@@ -131,13 +142,64 @@
                     contentType: false,
                     cache: false,
                     processData: false,
-                    success: function (data) {
-
-                        $('#updateUserForm').trigger("reset");
-                        $('#editUserModal').modal('hide');
-                    },
+                    success: function(data){
+                    if (data == "done") {
+                        $('#editCatModal').modal('hide');
+                        loadDataTable();
+                        Swal.fire({
+                              title: 'user updated success',
+                              icon: 'success',
+                              timer: 2000
+                            })
+                    }
+                },
                 });
             });
+
+             //delete user
+    $(document).on('click', '.delete', function(e){
+        e.preventDefault();
+        var id = $(this).attr('id');
+        Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                  if (result.value) {
+                    $.ajax({
+                        url: "{{url('admin/user/delete')}}/"+id,
+                        method: "GET",
+                        success: function(data){
+                            if (data == "done") {
+                                loadDataTable();
+                            }
+                        }
+                    })
+                    Swal.fire(
+                      'Deleted!',
+                      'User has been deleted.',
+                      'success'
+                    )
+                  }
+                })
+
+    });
+    //inline edit user name
+    $(document).on('blur', '#t_user_name', function(){
+        var id = $(this).data("id1");
+        var text = $(this).text();
+        inlineEdit(id, text, "name");
+    });
+    //inline edit user description
+    $(document).on('blur', '#t_user_email', function(){
+        var id = $(this).data("id2");
+        var text = $(this).text();
+        inlineEdit(id, text, "email");
+    });
         });
     </script>
 

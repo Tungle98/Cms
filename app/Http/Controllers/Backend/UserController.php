@@ -20,11 +20,24 @@ class UserController extends Controller
     public function index(Request $request)
     {
         //
-        $data = User::orderBy('id','DESC')->paginate(5);
-        $roles = Role::pluck('name','name')->all();
-        $role_add = Role::all();
-        return view('Admin.users.list_user',compact('data','roles','role_add'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+
+            $data = User::latest()->get();
+            $roles = Role::pluck('name','name')->all();
+            $role_add = Role::all();
+            if ($request->ajax()) {
+                $data = User::latest()->get();
+                return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
+            }
+
+            return view('Admin.users.list_user',compact('data','roles','role_add'));
+    }
+
+    public function get()
+    {
+        $d['users'] = User::orderby('id', 'DESC')->get();
+        return view('admin.users.getTableData', $d);
     }
 
     /**
@@ -130,8 +143,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
-        User::find($id)->delete();
-        return redirect()->route('users.index')
-            ->with('success','User deleted successfully');
+        $user = User::find($id);
+        if ($user){
+            $user->delete();
+        }
+        echo "done";
+        //return back()->with('message', 'user Deleted Successfully');
     }
 }

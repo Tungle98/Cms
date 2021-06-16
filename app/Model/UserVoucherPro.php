@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class UserVoucherPro extends Pivot
 {
     //
-    protected $table='user_voucher_pro';
-    protected $fillable = ['voucher_id','property_id','value'];
+    protected $table='user_p';
+    protected $fillable = ['voucher_user_id','property_id','value'];
 
 }

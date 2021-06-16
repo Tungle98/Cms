@@ -56,7 +56,6 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $voucher_db = new Voucher();
         $imageUrl = '';
         if ($file = $request->file('image')) {

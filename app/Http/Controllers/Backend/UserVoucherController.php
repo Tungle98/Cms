@@ -105,20 +105,20 @@ class UserVoucherController extends Controller
 
     public function addVoucherUser(Request $request)
     {
-////        dd($request->all());
+//      dd($request->all());
 //        $data = $request->validate([
 //            'voucher_user_id'=>'',
 //            'voucher_id' => 'required',
 //            'property_id'=>'required',
 //           'value ' =>'required',
 //        ]);
-        $voucher_user_pro = Product::create($request->all());
-
+        $voucher_user_pro = VoucherUser::find($request->id);
+//dd($voucher_user_pro);
         $properties = collect($request->input('properties', []))
             ->map(function ($property){
                return ['value' => $property];
             });
-        //dd($properties);
+       //dd($properties);
         $voucher_user_pro->properties()->sync($properties);
 //        $voucher_user_pro = new UserVoucherPro();
 //        $voucher_user_pro->voucher_user_id = $request->user_id;
@@ -129,7 +129,7 @@ class UserVoucherController extends Controller
 //        $voucher_user_pro->save();
         //$voucher_user_pro->properties()->attach($this->mapProperties($data['properties']));
 
-        return redirect()->route('admin.user_voucher.index');
+        return redirect()->back();
     }
 
     /**

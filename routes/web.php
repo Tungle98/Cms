@@ -48,10 +48,11 @@ Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], f
 
     //user route
     Route::get('/user','UserController@index')->name('admin.user');
+    Route::get('/user/getTableData','UserController@get')->name('admin.user.getTableData');
     Route::post('/user','UserController@store');
     Route::get('/user/edit/{id}','UserController@edit');
     Route::post('/user/update','UserController@update')->name('admin.user.update');
-    Route::get('/user/delete/{id}','UserController@delete');
+    Route::get('/user/delete/{id}','UserController@delete')->name('admin.user.delete');
     //role route
     Route::get('/role','roleController@index')->name('admin.role');
     Route::post('/role','roleController@store');

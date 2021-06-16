@@ -17,7 +17,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="" name="">Id khách hàng</label>
-                <input type="text" name="user_voucher_id" value="{{$user_v->user_id}}" >
+                <input type="text" name="id" value="{{$user_v->id}}" >
             </div>
         </div>
         <div class="col-md-6">
@@ -33,8 +33,11 @@
                         <tr>
                             <td><input {{ $list_t->value ? 'checked' : null }} data-id="{{ $list_t->id }}" type="checkbox" class="ingredient-enable"></td>
                             <td>{{ $list_t->name }}</td>
+                            @if($list_t->type ==2)
                             <td><input value="{{ $list_t->value ?? null }}" {{ $list_t->value ? null : 'disabled' }} data-id="{{ $list_t->id }}" name="properties[{{ $list_t->id }}]" type="text" class="property-value form-control" placeholder="Value"></td>
-
+                            @else
+                            <td><input value="{{ $list_t->value ?? null }}" {{ $list_t->value ? null : 'disabled' }} data-id="{{ $list_t->id }}" name="properties[{{ $list_t->id }}]" type="date" class="property-value form-control" placeholder="Value"></td>
+                            @endif
                         </tr>
 {{--                    <div class="col-md-6">--}}
 
