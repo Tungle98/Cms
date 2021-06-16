@@ -25,11 +25,10 @@ class VoucherController extends Controller
             ->join('voucher_types','vouchers.voucher_type_id', '=', 'voucher_types.id')
             ->select('vouchers.*','voucher_types.name')->orderBy('id','DESC')
             ->get();
-        //dd($voucher_db);
+        //get property
         $property = Property::all();
+        //get voucher_type
         $voucher_type = VoucherType::all();
-        //$voucherWithProperties = Voucher::query()->with('properties')->find(14);
-        //dd($voucherWithProperties);
         return view('Admin.voucher.list_voucher',[
             'voucher_db'=>$voucher_db,
             'voucher_type'=>$voucher_type,

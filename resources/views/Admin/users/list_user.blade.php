@@ -52,7 +52,6 @@
                                     <th>User Name</th>
                                     <th>Email</th>
                                     <td>Role</td>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -70,14 +69,13 @@
                                                 @endforeach
                                             @endif
                                         </td>
-                                        <td></td>
                                         <td>
                                             <a  id="{{$user->id}}" href="#editUserModal"   data-toggle="modal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            {{-- <a id="{{$user->id}}" href="" class="btn btn-danger delete">
+                                             <a id="{{$user->id}}" href="" class="btn btn-danger delete">
                                                 <i class="fa fa-trash"></i>
-                                            </a> --}}
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -143,13 +141,13 @@
                     cache: false,
                     processData: false,
                     success: function(data){
-                    if (data == "done") {
-                        $('#editCatModal').modal('hide');
+                    if (data === "done") {
+                        $('#editUserModal').modal('hide');
                         loadDataTable();
                         Swal.fire({
-                              title: 'user updated success',
-                              icon: 'success',
-                              timer: 2000
+                            title: 'User updated',
+                            icon: 'success',
+                            timer: 2000
                             })
                     }
                 },
@@ -157,49 +155,48 @@
             });
 
              //delete user
-    $(document).on('click', '.delete', function(e){
-        e.preventDefault();
-        var id = $(this).attr('id');
-        Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                  if (result.value) {
-                    $.ajax({
-                        url: "{{url('admin/user/delete')}}/"+id,
-                        method: "GET",
-                        success: function(data){
-                            if (data == "done") {
-                                loadDataTable();
-                            }
-                        }
-                    })
-                    Swal.fire(
-                      'Deleted!',
-                      'User has been deleted.',
-                      'success'
-                    )
-                  }
-                })
+            $(document).on('click', '.delete', function(e){
+                e.preventDefault();
+                var id = $(this).attr('id');
+                Swal.fire({
+                        title: 'Are you sure?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                          if (result.value) {
+                            $.ajax({
+                                url: "{{url('admin/user/delete')}}/"+id,
+                                method: "GET",
+                                success: function(data){
+                                    if (data == "done") {
+                                        loadDataTable();
+                                    }
+                                }
+                            })
+                            Swal.fire(
+                              'Deleted!',
+                              'User has been deleted.',
+                              'success'
+                            )
+                          }
+                        })
 
-    });
-    //inline edit user name
-    $(document).on('blur', '#t_user_name', function(){
-        var id = $(this).data("id1");
-        var text = $(this).text();
-        inlineEdit(id, text, "name");
-    });
-    //inline edit user description
-    $(document).on('blur', '#t_user_email', function(){
-        var id = $(this).data("id2");
-        var text = $(this).text();
-        inlineEdit(id, text, "email");
-    });
+            });
+                    //inline edit user name
+                    $(document).on('blur', '#t_user_name', function(){
+                        var id = $(this).data("id1");
+                        var text = $(this).text();
+                        inlineEdit(id, text, "name");
+                    });
+                    //inline edit user description
+                    $(document).on('blur', '#t_user_email', function(){
+                        var id = $(this).data("id2");
+                        var text = $(this).text();
+                        inlineEdit(id, text, "email");
+                    });
         });
     </script>
 

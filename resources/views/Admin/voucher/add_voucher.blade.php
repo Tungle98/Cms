@@ -42,13 +42,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="short_desc">Ngày tạo</label>
-                                <input type="date"  name="date_create" class="form-control" id="product_name" placeholder="dd/mm/yyyy" required>
+                                <input type="date"  name="date_create" class="form-control checkIn" id="date_create" placeholder="dd/mm/yyyy" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="long_desc">Ngày hết hạn</label>
-                                <input type="date" name="date_ex" class="form-control" id="product_name" placeholder="" required>
+                                <input type="date" name="date_ex" class="form-control checkOut" id="date_ex" placeholder="" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -93,15 +93,31 @@
     </div>
 </div>
 <script>
-    $("input[type=date]").datepicker({
-  dateFormat: 'yy-mm-dd',
-  onSelect: function(dateText, inst) {
-    $(inst).val(dateText); // Write the value in the input
-  }
-});
-
-// Code below to avoid the classic date-picker
-$("input[type=date]").on('click', function() {
-  return false;
-});
+//     function check() {
+//         if(document.getElementById('date_create').value < document.getElementById('date_ex').value)
+//         { console.log('ok')}
+//         else{
+//             alert("Ngày hết hạn phải lớn hơn ngày tạo");
+//         }
+//
+//     }
+// var date = new Date();
+// $(".checkIn").datepicker({
+//     format: "yyyy-mm-dd",
+//     todayBtn: true,
+//     autoclose: true,
+//     startDate: date
+// })
+//     .on("changeDate", function(e) {
+//         var checkInDate = e.date, $checkOut = $(".checkOut");
+//         checkInDate.setDate(checkInDate.getDate() + 1);
+//         $checkOut.datepicker("setStartDate", checkInDate);
+//         $checkOut.datepicker("setDate", checkInDate).focus();
+//     });
+//
+// $(".checkOut").datepicker({
+//     format: "yyyy-mm-dd",
+//     todayBtn: true,
+//     autoclose: true
+// });
 </script>

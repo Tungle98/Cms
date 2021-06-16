@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Customer information</h1>
+                        <h1>Customer Information</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -37,7 +37,6 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <span class="h4">Voucher user List</span>
                            @can('voucherUser-add')
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                 <i class="fa fa-plus"><b> Book voucher</b></i>
@@ -54,12 +53,13 @@
                                     <th>Tổng số vé</th>
                                     <th>voucher</th>
                                     <th>code</th>
+                                    <th>Phone</th>
                                     <th>Trạng thái</th>
                                     <th>Phương thức TT</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tableData">
                                 @php($sl = 1)
                                 @foreach($voucher_user as $vou)
                                     <tr>
@@ -68,6 +68,7 @@
                                         <td>{{$vou->total_voucher}}</td>
                                         <td>{{$vou->name_voucher}}</td>
                                         <td>{{$vou->code}}</td>
+                                        <td>{{$vou->phone}}</td>
                                         <td>{{$vou->status}}</td>
                                         <td>{{$vou->method_paid}}</td>
                                         <td>
@@ -118,6 +119,14 @@
             $('#userDatatable').DataTable();
 
             //load table via ajax
+            function loadDataTable(){
+                $.ajax({
+                    url: "{{ route('admin.voucher_user.getTableData') }}",
+                    success: function(data){
+                        $('#tableData').html(data);
+                    }
+                })
+            };
             //show data for edit modal
             $(document).on('click', '.edit', function (e) {
                 $('#editVoucherUserModal').modal('show');
@@ -134,6 +143,9 @@
                         $('#edit_full_name').val(data.full_name);
                         $('#edit_total_voucher').val(data.total_voucher);
                         $('#edit_code').val(data.code);
+                        $('#edit_phone').val(data.phone);
+                        $('#edit_check_in').val(data.check_in);
+                        $('#edit_check_out').val(data.check_out);
                         $('#edit_status').val(data.status);
                         $('#edit_method_paid').val(data.method_paid);
                     }
@@ -153,8 +165,15 @@
                     processData: false,
                     success: function (data) {
 
-                    $('#updateVoucherUserForm').trigger("reset");
-                    $('#editVoucherUserModal').modal('hide');
+                        if (data == "done") {
+                            $('#editVoucherUserModal').modal('hide');
+                            loadDataTable();
+                            Swal.fire({
+                                title: 'user voucher updated',
+                                icon: 'success',
+                                timer: 2000
+                            })
+                        }
 
                     },
                 });

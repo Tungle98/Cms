@@ -22,5 +22,5 @@
                                             </td>
                                         </tr>
                                         {{--Edit  modal here--}}
-        @include('admin.users.edit-user')
+        @include('Admin.users.edit_user')
                                         @endforeach

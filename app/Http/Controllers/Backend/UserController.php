@@ -36,8 +36,9 @@ class UserController extends Controller
 
     public function get()
     {
+        $role_add = Role::all();
         $d['users'] = User::orderby('id', 'DESC')->get();
-        return view('admin.users.getTableData', $d);
+        return view('Admin.users.getTableDate', $d,compact('role_add'));
     }
 
     /**
@@ -140,7 +141,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         //
         $user = User::find($id);

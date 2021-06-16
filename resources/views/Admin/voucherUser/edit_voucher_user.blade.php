@@ -60,6 +60,24 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="code"> Số điện thoại</label>
+                                <input type="number" name="phone" class="form-control" id="edit_phone"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Ngày đến </label>
+                                <input type="date" name="check_in" class="form-control" id="edit_check_in"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Ngày đi</label>
+                                <input type="date" name="check_out" class="form-control" id="edit_check_out"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="product_status">Trạng thái</label>
                                 <select class="form-control" name="status" id="edit_status">
                                     <option value="Chưa sử dụng">Chưa sử dụng</option>

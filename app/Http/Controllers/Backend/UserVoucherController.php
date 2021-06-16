@@ -26,13 +26,20 @@ class UserVoucherController extends Controller
             ->join('vouchers','voucher_users.voucher_id','=','vouchers.id')
             ->select('voucher_users.*','vouchers.name_voucher')->orderBy('id','DESC')
             ->get();
-        $voucher =  DB::table('vouchers')->join('property_voucher','property_voucher.voucher_id','=','vouchers.id')->get();
+        //dd($voucher_user);
+        //$voucher =  DB::table('vouchers')->join('property_voucher','property_voucher.voucher_id','=','vouchers.id')->get();
+        //dd($voucher);
+        $voucher = Voucher::all();
         return view('Admin.voucherUser.list_voucher_user',[
             'voucher_user'=>$voucher_user,
             'voucher'=>$voucher,
         ]);
     }
-
+    public function get()
+    {
+        $d['v_users'] = VoucherUser::orderby('id', 'DESC')->get();
+        return view('Admin.voucherUser.getTableDate', $d);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -65,6 +72,9 @@ class UserVoucherController extends Controller
             'total_voucher' => '',
             'voucher_id' => '',
             'code' => '',
+            'phone'=>'',
+            'check_in'=> 'required|date',
+            'check_out'=>'required|date|after_or_equal:check_in',
             'status' => '',
             'method_paid'
         ]);
@@ -74,6 +84,9 @@ class UserVoucherController extends Controller
         $voucher_user->total_voucher = $request->total_voucher;
         $voucher_user->voucher_id = $request->voucher_id;
         $voucher_user->code = $request->code;
+        $voucher_user->phone = $request->phone;
+        $voucher_user->check_in = $request->check_in;
+        $voucher_user->check_out = $request->check_out;
         $voucher_user->status = $request->status;
         $voucher_user->method_paid = $request->method_paid;
 
@@ -99,37 +112,22 @@ class UserVoucherController extends Controller
         $list_tem =PropertyVoucher::query()->join('properties','property_voucher.property_id','properties.id')
             ->where('voucher_id', $user_v->voucher_id)
             ->get();
-        //dd($list_tem);
+       // dd($list_tem);
         return view('Admin.voucherUser.template.show',compact('user_v','list_tem'));
     }
 
     public function addVoucherUser(Request $request)
     {
-//      dd($request->all());
-//        $data = $request->validate([
-//            'voucher_user_id'=>'',
-//            'voucher_id' => 'required',
-//            'property_id'=>'required',
-//           'value ' =>'required',
-//        ]);
         $voucher_user_pro = VoucherUser::find($request->id);
-//dd($voucher_user_pro);
+
         $properties = collect($request->input('properties', []))
             ->map(function ($property){
                return ['value' => $property];
             });
        //dd($properties);
         $voucher_user_pro->properties()->sync($properties);
-//        $voucher_user_pro = new UserVoucherPro();
-//        $voucher_user_pro->voucher_user_id = $request->user_id;
-//        $voucher_user_pro->voucher_id = $request->voucher_id;
-//        $voucher_user_pro->property_id = $request->property;
-//        $voucher_user_pro->value = $request->value;
-//
-//        $voucher_user_pro->save();
-        //$voucher_user_pro->properties()->attach($this->mapProperties($data['properties']));
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'User create value properties successfully');;
     }
 
     /**
@@ -161,6 +159,9 @@ class UserVoucherController extends Controller
             'total_voucher' => '',
             'voucher_id' => '',
             'code' => '',
+            'phone'=>'',
+            'check_in'=>'',
+            'check_out'=>'',
             'method_paid' => '',
             'status' => '',
         ]);
@@ -169,6 +170,9 @@ class UserVoucherController extends Controller
         $voucher_user->full_name = $request->full_name;
         $voucher_user->total_voucher = $request->total_voucher;
         $voucher_user->code = $request->code;
+        $voucher_user->phone = $request->phone;
+        $voucher_user->check_in = $request->check_in;
+        $voucher_user->check_out = $request->check_out;
         $voucher_user->voucher_id = $request->voucher_id;
         $voucher_user->method_paid = $request->method_paid;
         $voucher_user->status = $request->status;

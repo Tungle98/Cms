@@ -21,6 +21,9 @@ class CreateVoucherUsersTable extends Migration
             $table->integer('voucher_id')->unsigned();
             $table->foreign('voucher_id')->references('id')->on('vouchers')->onDelete('cascade');
             $table->string('code');
+            $table->date('check_in');
+            $table->date('check_out');
+            $table->string('phone');
             $table->string('status');
             $table->string('method_paid');
             $table->timestamps();

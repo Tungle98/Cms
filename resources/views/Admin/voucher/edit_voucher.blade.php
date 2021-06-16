@@ -68,6 +68,16 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="product_status">Trạng thái </label>
+                                    <select class="form-control" name="status" id="edit_status">
+                                        <option value="1">Published</option>
+                                        <option value="0">Unpublished</option>
+                                        <option value="2">Time-expired</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group ">
                                     <label for="e_quantity">Thuộc tính </label>
                                     <div class="properties-place">
@@ -101,15 +111,15 @@
     </div>
 </div>
 <script>
-    $("input[type=date]").datepicker({
-  dateFormat: 'yy-mm-dd',
-  onSelect: function(dateText, inst) {
-    $(inst).val(dateText); // Write the value in the input
-  }
-});
-
-// Code below to avoid the classic date-picker
-$("input[type=date]").on('click', function() {
-  return false;
-});
+//     $("input[type=date]").datepicker({
+//   dateFormat: 'yy-mm-dd',
+//   onSelect: function(dateText, inst) {
+//     $(inst).val(dateText); // Write the value in the input
+//   }
+// });
+//
+// // Code below to avoid the classic date-picker
+// $("input[type=date]").on('click', function() {
+//   return false;
+// });
 </script>

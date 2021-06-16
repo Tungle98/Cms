@@ -58,7 +58,7 @@
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tableData">
                                 @php($sl = 1)
                                 @foreach($voucher_db as $vouchers)
                                     <tr>
@@ -114,6 +114,14 @@
             $('#VoucherDatatable').DataTable();
 
             //load table via ajax
+            function loadDataTable(){
+                $.ajax({
+                    url: "{{ route('admin.voucher.getTableData') }}",
+                    success: function(data){
+                        $('#tableData').html(data);
+                    }
+                })
+            };
             //show data for edit modal
             $(document).on('click', '.edit', function (e) {
                 $('#editVoucherModal').modal('show');
@@ -130,7 +138,7 @@
                         $('#edit_date_create').val(data.date_create);
                         $('#edit_date_ex').val(data.date_ex);
                         $('#previewHolder2').attr('src', "{{asset('')}}" + data.image);
-
+                        $('#edit_status').val(data.status);
                         //console.log(data.properties);
 
                         for ( let property of data.properties) {
@@ -156,7 +164,7 @@
                     success: function (data) {
                         if (data == "done") {
                             $('#editVoucherModal').modal('hide');
-                           // loadDataTable();
+                           loadDataTable();
                             Swal.fire({
                                 title: 'voucher Updated',
                                 icon: 'success',
