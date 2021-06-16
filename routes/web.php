@@ -25,7 +25,8 @@ Route::resource('permissions','Backend\PermissionController');
 Route::post('permissions/update', 'Backend\PermissionController@update')->name('permissions.update');
 
 Route::get('permissions/destroy/{id}', 'Backend\PermissionController@destroy');
-
+//property route
+Route::resource('properties','Backend\PropertyController');
 
 
 Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], function (){

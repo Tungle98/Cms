@@ -35,7 +35,15 @@
                     </a>
                 </li>
 
-                    <li class="nav-item">
+                <li class="nav-item">
+                    <a href="{{url('properties')}}" class="nav-link">
+                        <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        <p>
+                            Thuộc tính voucher
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{route('admin.voucher')}}" class="nav-link">
                         <i class="fa fa-suitcase" aria-hidden="true"></i>
                         <p>

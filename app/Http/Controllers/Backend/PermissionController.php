@@ -48,7 +48,7 @@ class PermissionController extends Controller
         Permission::updateOrCreate(['id' => $request->permission_id],
             ['name' => $request->name]);
 
-        return response()->json(['success'=>'Book saved successfully.']);
+        return response()->json(['success'=>'Permission saved successfully.']);
     }
     /**
      * Show the form for editing the specified resource.
@@ -72,6 +72,6 @@ class PermissionController extends Controller
     {
         Permission::find($id)->delete();
 
-        return response()->json(['success'=>'Book deleted successfully.']);
+        return response()->json(['success'=>'Permission deleted successfully.']);
     }
 }
