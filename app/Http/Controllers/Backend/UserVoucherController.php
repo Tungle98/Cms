@@ -26,9 +26,6 @@ class UserVoucherController extends Controller
             ->join('vouchers','voucher_users.voucher_id','=','vouchers.id')
             ->select('voucher_users.*','vouchers.name_voucher')->orderBy('id','DESC')
             ->get();
-        //dd($voucher_user);
-        //$voucher =  DB::table('vouchers')->join('property_voucher','property_voucher.voucher_id','=','vouchers.id')->get();
-        //dd($voucher);
         $voucher = Voucher::all();
         return view('Admin.voucherUser.list_voucher_user',[
             'voucher_user'=>$voucher_user,
@@ -67,14 +64,13 @@ class UserVoucherController extends Controller
     {
         //
         $request->validate([
-            'user_id' => 'required|unique:voucher_users|max:255',
+            'user_id' => '',
             'full_name' => '',
             'total_voucher' => '',
             'voucher_id' => '',
             'code' => '',
             'phone'=>'',
-            'check_in'=> 'required|date',
-            'check_out'=>'required|date|after_or_equal:check_in',
+            'email'=> 'required|email|:voucher_users,email,',
             'status' => '',
             'method_paid'
         ]);
@@ -85,8 +81,7 @@ class UserVoucherController extends Controller
         $voucher_user->voucher_id = $request->voucher_id;
         $voucher_user->code = $request->code;
         $voucher_user->phone = $request->phone;
-        $voucher_user->check_in = $request->check_in;
-        $voucher_user->check_out = $request->check_out;
+        $voucher_user->email = $request->email;
         $voucher_user->status = $request->status;
         $voucher_user->method_paid = $request->method_paid;
 
@@ -160,8 +155,7 @@ class UserVoucherController extends Controller
             'voucher_id' => '',
             'code' => '',
             'phone'=>'',
-            'check_in'=>'',
-            'check_out'=>'',
+            'email'=>'required|email|:voucher_users,email,',
             'method_paid' => '',
             'status' => '',
         ]);
@@ -171,9 +165,7 @@ class UserVoucherController extends Controller
         $voucher_user->total_voucher = $request->total_voucher;
         $voucher_user->code = $request->code;
         $voucher_user->phone = $request->phone;
-        $voucher_user->check_in = $request->check_in;
-        $voucher_user->check_out = $request->check_out;
-        $voucher_user->voucher_id = $request->voucher_id;
+        $voucher_user->email = $request->email;
         $voucher_user->method_paid = $request->method_paid;
         $voucher_user->status = $request->status;
         $voucher_user->save();

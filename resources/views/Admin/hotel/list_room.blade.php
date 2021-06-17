@@ -6,12 +6,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Customer Information</h1>
+                        <h1>Room</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item active">user voucher</li>
+                            <li class="breadcrumb-item active">hotel</li>
                         </ol>
                     </div>
                 </div>
@@ -37,53 +37,45 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                           @can('voucherUser-add')
-                            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
-                                <i class="fa fa-plus"><b> Book voucher</b></i>
-                            </button>
-                            @endcan
+
+                                <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
+                                    <i class="fa fa-plus"><b> Book Hotel</b></i>
+                                </button>
+
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="userDatatable" class="table table-bordered table-striped">
+                            <table id="hotelDatatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Tên khách</th>
-                                    <th>Tổng số vé</th>
-                                    <th>voucher</th>
-                                    <th>code</th>
-                                    <th>Phone</th>
-                                    <th>Trạng thái</th>
-                                    <th>Phương thức TT</th>
+                                    <th>Tên khách sạn</th>
+                                    <th>Loại phòng</th>
+                                    <th>Ghi chú</th>
+                                    <th>Người đại diện mua</th>
+                                    <th>Ngày vào</th>
+                                    <th>Ngày đi</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="tableData">
                                 @php($sl = 1)
-                                @foreach($voucher_user as $vou)
+                                @foreach($hotels as $h)
                                     <tr>
                                         <td>{{$sl++}}</td>
-                                        <td>{{$vou->full_name}}</td>
-                                        <td>{{$vou->total_voucher}}</td>
-                                        <td>{{$vou->name_voucher}}</td>
-                                        <td>{{$vou->code}}</td>
-                                        <td>{{$vou->phone}}</td>
-                                        <td>{{$vou->status}}</td>
-                                        <td>{{$vou->method_paid}}</td>
+                                        <td>{{$h->name_hotel}}</td>
+                                        <td>{{$h->type_room}}</td>
+                                        <td>{{$h->description}}</td>
+                                        <td>{{$h->full_name}}</td>
+                                        <td>{!!date('d/m/y', strtotime($h->check_in))!!}</td>
+                                        <td>{!!date('d/m/y', strtotime($h->check_out))!!}</td>
                                         <td>
 
-                                           @can('voucherUser-view')
-                                            <a  data-url="{{ url('admin/user_voucher/show',$vou->id) }}" type="button" href="#show" data-toggle="modal" class="btn btn-info btn-show"  >
-                                                <i class="fa fa-eye"></i>
-                                              </a>
-                                              @endcan
 
-                                            @can('voucherUser-edit')
-                                            <a id="{{$vou->id}}" href="#editVoucherUserModal"   data-target="" class="edit btn btn-success" title="Edit">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            @endcan
+                                                <a id="{{$h->id}}" href="#editHotelModal"   data-target="" class="edit btn btn-success" title="Edit">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -99,14 +91,12 @@
         </section>
     </div>
 
-    {{--Add Product modal here--}}
-    @include('Admin.voucherUser.add_voucher_user')
+    {{--Add room modal here--}}
+    @include('Admin.hotel.add_room')
 
-    {{--Edit Product modal here--}}
-    @include('Admin.voucherUser.edit_voucher_user')
+    {{--Edit room modal here--}}
+    @include('Admin.hotel.edit')
 
-    {{--View Product modal here--}}
-    @include('Admin.voucherUser.show_voucher_user')
 
 @endsection
 @push('page_scripts')
@@ -116,12 +106,12 @@
 
         $(document).ready( function () {
             //for datatable
-            $('#userDatatable').DataTable();
+            $('#hotelDatatable').DataTable();
 
             //load table via ajax
             function loadDataTable(){
                 $.ajax({
-                    url: "{{ route('admin.voucher_user.getTableData') }}",
+                    url: "{{ route('admin.hotel.getTableData') }}",
                     success: function(data){
                         $('#tableData').html(data);
                     }
@@ -129,35 +119,33 @@
             };
             //show data for edit modal
             $(document).on('click', '.edit', function (e) {
-                $('#editVoucherUserModal').modal('show');
+                $('#editHotelModal').modal('show');
                 e.preventDefault();
                 var id = $(this).attr('id');
                 $.ajax({
-                    url: "{{url('admin/user_voucher/edit')}}/" + id,
+                    url: "{{url('admin/hotel/edit')}}/" + id,
                     method: "GET",
                     success: function (data) {
 
-                       $('#edit_id').val(data.id);
-                        $('#edit_voucher_id').val(data.voucher_id);
-                        $('#edit_user').val(data.user_id);
-                        $('#edit_full_name').val(data.full_name);
-                        $('#edit_total_voucher').val(data.total_voucher);
-                        $('#edit_code').val(data.code);
-                        $('#edit_phone').val(data.phone);
-                        $('#edit_email').val(data.email);
-                        $('#edit_status').val(data.status);
-                        $('#edit_method_paid').val(data.method_paid);
+                        $('#edit_id').val(data.id);
+                        $('#edit_name_hotel').val(data.name_hotel);
+                        $('#edit_type_room').val(data.type_room);
+                        $('#edit_description').val(data.description);
+                        $('#edit_voucher_user_id').val(data.voucher_user_id);
+                        $('#edit_check_in').val(data.check_in);
+                        $('#edit_check_out').val(data.check_out);
+
                     }
                 })
             });
 
             //update voucher
-            $('#updateVoucherUserForm').on('submit', function (e) {
+            $('#updateHotelForm').on('submit', function (e) {
                 e.preventDefault();
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     method: "POST",
-                    url: "{{ route('admin.voucher_user.update') }}",
+                    url: "{{ route('admin.hotel.update') }}",
                     data: new FormData(this),
                     contentType: false,
                     cache: false,
@@ -165,7 +153,7 @@
                     success: function (data) {
 
                         if (data == "done") {
-                            $('#editVoucherUserModal').modal('hide');
+                            $('#editHotelModal').modal('hide');
                             loadDataTable();
                             Swal.fire({
                                 title: 'user voucher updated',
@@ -177,20 +165,6 @@
                     },
                 });
             });
-             //show detail
-            $('.btn-show').click(function () {
-                var url = $(this).attr('data-url');
-                console.log($(this).attr('data-url'));
-                $.ajax({
-                    type: 'get',
-                    url: url,
-                    success: function (response) {
-                        //console.log(response)
-                        $('.content-user').html(response);
-
-                    },
-                });
-            });
             //select2 option add voucher
             $('#voucher_id').select2({
                 dropdownParent: $("#addProductModal")
@@ -198,7 +172,7 @@
 
             //select2 option edit voucher
             $('.voucher_edit').select2({
-                dropdownParent: $("#editVoucherUserModal")
+                dropdownParent: $("#editHotelModal")
             });
         });
 

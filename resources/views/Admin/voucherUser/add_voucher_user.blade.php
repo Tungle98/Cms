@@ -24,8 +24,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="product_status">Voucher</label>
-                                <select class="form-control" name="voucher_id" id="product_cat">
-                                    <option value="">Select voucher</option>
+                                <select class="form-control" name="voucher_id" id="voucher_id" style="width: 200px">
                                     @foreach($voucher as $v)
                                         <option value="{{$v->id}}">{{$v->name_voucher}}</option>
                                     @endforeach
@@ -64,29 +63,12 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-{{--                            <div class="form-group">--}}
-{{--                                <label for="code"> Ngày đến </label>--}}
-{{--                                <input type="date" name="check_in" class="form-control" id="check_in"  required>--}}
-{{--                            </div>--}}
-                            <label for="checkin">Check-in</label>
-                            <div class="input-group date" id="datetimepicker1">
-                                <input type="text" class="form-control" id="from_date" name="check_in" />
-                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon">
-                                </span></span>
+                            <div class="form-group">
+                                <label for="code"> Email </label>
+                                <input type="email" name="email" class="form-control" id="email"  required>
                             </div>
                         </div>
-                        <div class="col-md-6">
-{{--                            <div class="form-group">--}}
-{{--                                <label for="code"> Ngày đi</label>--}}
-{{--                                <input type="date" name="check_out" class="form-control" id="check_out"  required>--}}
-{{--                            </div>--}}
-                            <label for="checkout">Check-out</label>
-                            <div class="input-group date" id="datetimepicker2">
-                                <input type="text" class="form-control" id="to_date" name="check_out" />
-                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon">
-    </span></span>
-                            </div>
-                        </div>
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -119,29 +101,4 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function(){
-        let $checkIn = $('#datetimepicker1');
-        let $checkOut = $('#datetimepicker2');
 
-        $checkIn.datetimepicker({
-            useCurrent: false,
-            format: 'dd/mm/yyyy',
-            minDate: moment()
-        });
-
-        $checkOut.datetimepicker({
-            useCurrent: false,
-            format: 'dd/mm/yyyy',
-        });
-
-        $checkIn.on("dp.change", function(e) {
-            $checkOut.data("DateTimePicker").minDate(e.date.add(1, 'day'));
-        });
-
-        $checkOut.on("dp.change", function(e) {
-            $checkIn.data("DateTimePicker").maxDate(e.date);
-        });
-
-    });
-</script>

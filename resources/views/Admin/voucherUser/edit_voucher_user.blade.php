@@ -24,7 +24,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="product_status">voucher</label>
-                                <select class="form-control" name="voucher_id" id="edit_voucher_id">
+                                <select class="form-control voucher_edit" name="voucher_id" id="edit_voucher_id">
                                     <option value="">Select voucher</option>
                                     @foreach($voucher as $v)
                                         <option value="{{$v->id}}">{{$v->name_voucher}}</option>
@@ -66,14 +66,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="code"> Ngày đến </label>
-                                <input type="date" name="check_in" class="form-control" id="edit_check_in"  required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="code"> Ngày đi</label>
-                                <input type="date" name="check_out" class="form-control" id="edit_check_out"  required>
+                                <label for="code"> Email </label>
+                                <input type="email" name="email" class="form-control" id="edit_email"  required>
                             </div>
                         </div>
                         <div class="col-md-6">

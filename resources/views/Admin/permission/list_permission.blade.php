@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <a class="btn btn-success" href="javascript:void(0)" id="createNewBook"> Create New permisison</a>
         <br>
         <table class="table table-bordered data-table">

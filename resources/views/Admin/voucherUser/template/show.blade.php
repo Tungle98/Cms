@@ -7,8 +7,7 @@
         <div class="col-md-6">Voucher id: <b >{{$user_v->name_voucher}}</b></div>
         <div class="col-md-6">Code: <b id="code">{{$user_v->code}}</b></div>
         <div class="col-md-6">Số điện thoại: <b id="code">{{$user_v->phone}}</b></div>
-        <div class="col-md-6">Check_in: <b id="code">{!!date('d/m/y', strtotime($user_v->check_in))!!}</b></div>
-        <div class="col-md-6">Check_out: <b id="code">{!!date('d/m/y', strtotime($user_v->check_out))!!}</b></div>
+        <div class="col-md-6">Email: <b id="code">{{$user_v->email}}</b></div>
         <div class="col-md-6">Trạng thái: <b id="status">{{$user_v->status}}</b></div>
         <div class="col-md-6">Phương thức thanh toán: <b id="method_paid">{{$user_v->method_paid}}</b></div>
         <div class="col-md-6">Tên sân: <b id="golf_course">{{$user_v->golf_course}}</b></div>
@@ -40,9 +39,9 @@
                             </div>
                             <div class="col-md-6">
                             @if($list_t->type ==2)
-                            <td><input value="{{ $list_t->value ?? null }}" {{ $list_t->value ? null : 'disabled' }} data-id="{{ $list_t->id }}" name="properties[{{ $list_t->id }}]" type="text" class="property-value form-control" placeholder="Value"></td>
+                            <td><input value="{{ $list_t->value ?? null }}" {{ $list_t->value ? null : 'disabled' }} data-id="{{ $list_t->id }}" name="properties[{{ $list_t->id }}]" type="text" class="property-value form-control" placeholder="Value" required></td>
                             @else
-                            <td><input value="{{ $list_t->value ?? null }}" {{ $list_t->value ? null : 'disabled' }} data-id="{{ $list_t->id }}" name="properties[{{ $list_t->id }}]" type="date" class="property-value form-control" placeholder="Value"></td>
+                            <td><input value="{{ $list_t->value ?? null }}" {{ $list_t->value ? null : 'disabled' }} data-id="{{ $list_t->id }}" name="properties[{{ $list_t->id }}]" type="date" class="property-value form-control" placeholder="Value" required></td>
                             @endif
                             </div>
                         </tr>

@@ -62,4 +62,13 @@ Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], f
     Route::get('/role/edit/{id}','roleController@edit');
     Route::post('/role/update','roleController@update')->name('admin.role.update');
     Route::get('/role/delete/{id}','roleController@delete');
+
+    //route hotel
+    Route::get('/hotel','HotelController@index')->name('admin.hotel');
+    Route::get('/hotel/getTableData','HotelController@get')->name('admin.hotel.getTableData');
+    Route::post('/hotel','HotelController@store');
+    Route::get('/hotel/edit/{id}','HotelController@edit');
+    Route::get('/hotel/show/{id}','HotelController@show');
+    Route::post('/hotel/update','HotelController@update')->name('admin.hotel.update');
+    Route::get('/hotel/delete/{id}','HotelController@delete');
 });

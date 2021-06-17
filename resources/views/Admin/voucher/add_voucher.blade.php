@@ -48,7 +48,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="long_desc">Ngày hết hạn</label>
-                                <input type="date" name="date_ex" class="form-control checkOut" id="date_ex" placeholder="" required>
+                                <input type="date" name="date_ex" class="form-control checkOut" id="date_ex" onchange="check()" placeholder="" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -93,14 +93,14 @@
     </div>
 </div>
 <script>
-//     function check() {
-//         if(document.getElementById('date_create').value < document.getElementById('date_ex').value)
-//         { console.log('ok')}
-//         else{
-//             alert("Ngày hết hạn phải lớn hơn ngày tạo");
-//         }
-//
-//     }
+    function check() {
+        if(document.getElementById('date_create').value < document.getElementById('date_ex').value)
+        { console.log('pass')}
+        else{
+            alert("Ngày hết hạn phải lớn hơn ngày tạo");
+        }
+
+    }
 // var date = new Date();
 // $(".checkIn").datepicker({
 //     format: "yyyy-mm-dd",

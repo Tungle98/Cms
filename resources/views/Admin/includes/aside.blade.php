@@ -2,9 +2,9 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-        <img src="{{asset('/admin/images')}}/logo.png"
+        <img src="{{asset('/admin/images')}}/logo.jpg"
              alt="logo"
-             class="brand-image img-circle elevation-3"
+             class="brand-image  elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light">Vgs Travel</span>
     </a>
@@ -57,6 +57,22 @@
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         <p>
                             List book voucher
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                        <p>
+                            Quản lý Tour
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.hotel')}}" class="nav-link">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                        <p>
+                            Quản lý khách sạn
                         </p>
                     </a>
                 </li>

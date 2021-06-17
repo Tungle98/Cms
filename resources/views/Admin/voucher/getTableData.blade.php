@@ -1,5 +1,5 @@
 @php($sl = 1)
-                                        @foreach($vouchers as $voucher)
+                                        @foreach($hotels as $hotel)
                                         <tr>
                                             <td>{{ $sl++ }}</td>
                                             <td id="t_name_voucher" data-id1="{{ $voucher->id }}" ondblclick="this.contentEditable=true" onblur="this.contentEditable=false">{{ $voucher->name }}</td>

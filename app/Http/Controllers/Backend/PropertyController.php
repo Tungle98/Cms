@@ -18,7 +18,6 @@ class PropertyController extends Controller
     {
         //
         $properties = Property::latest()->get();
-
         if ($request->ajax()) {
             $data = Property::latest()->get();
             return Datatables::of($data)
@@ -57,10 +56,23 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         //
+//        $this->validate($request, [
+//            'name' => 'required',
+//            'type' => 'required',
+//
+//        ]);
+//
+//        $property = new Property();
+//        $property->name = $request->name;
+//        $property->type = $request->type;
+//
+//        $property->save();
+//
+//        return response()->json(['success'=>'Property saved successfully.']);
         Property::updateOrCreate(['id' => $request->property_id],
-        ['name' => $request->name], ['type' => $request->type]);
+            ['name' => $request->name, 'type' => $request->type]);
 
-    return response()->json(['success'=>'Property saved successfully.']);
+        return response()->json(['success'=>'Customer saved successfully!']);
     }
 
     /**
@@ -94,9 +106,22 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $this->validate($request, [
+            'name' => 'required',
+            'type' => 'required',
+
+        ]);
+
+        $property = Property::find($request->id);
+        $property->name = $request->name;
+        $property->type = $request->type;
+
+        $property->save();
+
+        return response()->json(['success'=>'Property saved successfully.']);
     }
 
     /**
