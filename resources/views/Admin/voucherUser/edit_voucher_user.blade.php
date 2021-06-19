@@ -90,7 +90,50 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Check in</label>
+                                <input type="date" name="check_in" class="form-control" id="edit_check_in"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Check out </label>
+                                <input type="date" name="check_out" class="form-control" id="edit_check_out"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Số lượng người lớn </label>
+                                <input type="text" name="number_adult" class="form-control" id="edit_number_adult"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Số lượng trẻ em (dưới 12 tuổi) </label>
+                                <input type="text" name="number_children" class="form-control" id="edit_number_children" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Số lượng em bé (dưới 2 tuổi)</label>
+                                <input type="text" name="number_babie" class="form-control" id="edit_number_babie" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Dịch vụ đặt thêm (nếu có) </label>
+                                <input type="text" name="booking_service" class="form-control" id="edit_booking_service"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Ghi chú (nếu có)</label>
+                                <input type="text" name="note" class="form-control" id="edit_note"  >
+                            </div>
+                        </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -25,6 +25,13 @@ class CreateVoucherUsersTable extends Migration
             $table->string('phone');
             $table->string('status');
             $table->string('method_paid');
+            $table->date('check_in')->nullable();
+            $table->date('check_out')->nullable();
+            $table->string('number_adult')->nullable();
+            $table->string('number_children')->nullable();
+            $table->string('number_babie')->nullable();
+            $table->string('booking_service')->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

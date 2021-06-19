@@ -18,11 +18,12 @@
 ### Getting started
 Clone project git: git clone https://github.com/vgsholding/WEB_TRAVEL.git
 Go to folder: cd ./
-Run command: cp .env.example .env (change config connect database)
-Run command: php artisan key:generate
-Run command: php artisan jwt:secret (generate a key for project)
 Run command: composer install
 Run command: npm install
+Run command: cp .env.example .env (change config connect database)
+Run command: php artisan key:generate
+Run command: php artisan migrate
+Run command: php artisan jwt:secret (generate a key for project)
 Run command: php artisan db:seed --class=PermissionTableSeeder --tao permission
 Run command: php artisan db:seed --class=CreateAdminUserSeeder --tao useradmin
 Run command: php artisan serve 

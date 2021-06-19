@@ -36,13 +36,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="product_name">Voucher Name</label>
-                                <input type="text" name="name_voucher" class="form-control"  id="product_name" placeholder="Enter voucher Name" required>
+                                <input type="text" name="name_voucher" class="form-control"  id="product_name" placeholder="Enter voucher Name" value="" required>
                             </div></div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="short_desc">Ngày tạo</label>
-                                <input type="date"  name="date_create" class="form-control checkIn" id="date_create" placeholder="dd/mm/yyyy" required>
+                                <label for="short_desc">Ngày bắt đầu</label>
+                                <input type="date"  name="date_create" class="form-control checkIn" id="date_create"  required  >
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -59,6 +59,24 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="discount_price">Giá tiền</label>
+                                <input type="text" name="money" class="form-control price_format" id="product_name" placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="discount_price">Nội dung giới thiệu</label>
+                                <textarea id="voucher_content" name="voucher_content" rows="6" cols="50"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="discount_price">Số voucher bán ra</label>
+                                <input type="text" name="voucher_number" class="form-control" id="product_name" placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="filePhoto">Voucher Image</label>
                                 <input type="file" name="image" class="form-control-file" id="filePhoto4" >
                                 <img src="" id="previewHolder" width="150px">
@@ -68,25 +86,38 @@
                             <div class="form-group">
                                 <label for="product_status">Trạng thái </label>
                                 <select class="form-control" name="status" id="product_status">
-                                    <option value="1">Published</option>
+                                    <option value="1">Publish</option>
                                     <option value="0">Unpublished</option>
                                     <option value="2">Time-expired</option>
                                 </select>
                             </div>
                         </div>
+{{--                        <div class="col-md-12">--}}
+{{--                            <div class="form-group" >--}}
+{{--                                <label for="product_status">Thuộc tính: </label>--}}
+{{--                                @foreach($property as $pro)--}}
+{{--                                    <label style="padding-right: 30px"><input type="checkbox" name="properties[]"  value="{{$pro->id}}" >{{$pro->name}} </label>--}}
+{{--                                @endforeach--}}
+
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        <div class="col-md-12" >
+                            <table class="table table-bordered" id="dynamicAddRemove" style="border: none">
+                                <tr>
+                                </tr>
+
+                            </table>
+                            <button type="button" name="add" id="add-btn" class="btn btn-outline-primary">Thêm ưu đãi</button>
+                        </div>
                     </div>
 
 
                 </div>
-                <div class="form-group">
-                    <label for="product_status">Thuộc tính: </label>
-                    @foreach($property as $pro)
-                        <label style="padding-right: 30px"><input type="checkbox" name="properties[]"  value="{{$pro->id}}" >{{$pro->name}} </label>
-                    @endforeach
-                </div>
+
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add Voucher</button>
+                    <button type="submit" class="btn btn-primary">Tạo Voucher</button>
                 </div>
             </form>
         </div>
@@ -101,23 +132,15 @@
         }
 
     }
-// var date = new Date();
-// $(".checkIn").datepicker({
-//     format: "yyyy-mm-dd",
-//     todayBtn: true,
-//     autoclose: true,
-//     startDate: date
-// })
-//     .on("changeDate", function(e) {
-//         var checkInDate = e.date, $checkOut = $(".checkOut");
-//         checkInDate.setDate(checkInDate.getDate() + 1);
-//         $checkOut.datepicker("setStartDate", checkInDate);
-//         $checkOut.datepicker("setDate", checkInDate).focus();
-//     });
-//
-// $(".checkOut").datepicker({
-//     format: "yyyy-mm-dd",
-//     todayBtn: true,
-//     autoclose: true
-// });
+//dynamicAddField
+    var i = 0;
+    $("#add-btn").click(function(){
+        ++i;
+        $("#dynamicAddRemove").append('<tr><td style="padding-right: 10px;padding-bottom: 15px"><input type="text" name="addMoreInputFields[]" placeholder="Nhập ưu đãi" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">X</button></td></tr>');
+    });
+    $(document).on('click', '.remove-tr', function(){
+        $(this).parents('tr').remove();
+    });
+//format date
+
 </script>

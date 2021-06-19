@@ -34,7 +34,14 @@
                         </p>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="{{url('voucher_types')}}" class="nav-link">
+                        <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        <p>
+                            Loại voucher
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{url('properties')}}" class="nav-link">
                         <i class="fa fa-suitcase" aria-hidden="true"></i>
@@ -56,7 +63,7 @@
                     <a href="{{route('admin.voucher_user')}}" class="nav-link">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         <p>
-                            List book voucher
+                            Danh sách mua voucher
                         </p>
                     </a>
                 </li>
@@ -73,6 +80,14 @@
                         <i class="fa fa-building" aria-hidden="true"></i>
                         <p>
                             Quản lý khách sạn
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.airport')}}" class="nav-link">
+                        <i class="fa fa-plane" aria-hidden="true"></i>
+                        <p>
+                            Quản lý dịch vụ sân bay
                         </p>
                     </a>
                 </li>

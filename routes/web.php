@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+Route::post('/login-firebase', 'LoginController@loginByFirebase');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Auth::routes();
 
@@ -28,7 +29,7 @@ Route::get('permissions/destroy/{id}', 'Backend\PermissionController@destroy');
 //property route
 Route::resource('properties','Backend\PropertyController');
 
-
+Route::resource('voucher_types','Backend\VoucherTypeController');
 Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], function (){
     //voucher route
     Route::get('/voucher','VoucherController@index')->name('admin.voucher');
@@ -37,6 +38,8 @@ Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], f
     Route::get('/voucher/edit/{id}','VoucherController@edit');
     Route::post('/voucher/update','VoucherController@update')->name('admin.voucher.update');
     Route::get('/voucher/delete/{id}','VoucherController@delete');
+    Route::get('/voucher/publish/{id}','VoucherController@publish')->name('voucher.publish');
+    Route::get('/voucher/unpublish/{id}','VoucherController@unpublish')->name('voucher.unpublish');
 
     //userVoucher route
     Route::get('/user_voucher','UserVoucherController@index')->name('admin.voucher_user');
@@ -71,4 +74,13 @@ Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], f
     Route::get('/hotel/show/{id}','HotelController@show');
     Route::post('/hotel/update','HotelController@update')->name('admin.hotel.update');
     Route::get('/hotel/delete/{id}','HotelController@delete');
+
+    //route manager service airport
+    Route::get('/airport','AirportController@index')->name('admin.airport');
+    Route::get('/airport/getTableData','AirportController@get')->name('admin.airport.getTableData');
+    Route::post('/airport','AirportController@store');
+    Route::get('/airport/edit/{id}','AirportController@edit');
+    Route::get('/airport/show/{id}','AirportController@show');
+    Route::post('/airport/update','AirportController@update')->name('admin.airport.update');
+    Route::get('/airport/delete/{id}','AirportController@delete');
 });

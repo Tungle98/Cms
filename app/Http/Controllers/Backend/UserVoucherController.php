@@ -34,8 +34,9 @@ class UserVoucherController extends Controller
     }
     public function get()
     {
-        $d['v_users'] = VoucherUser::orderby('id', 'DESC')->get();
-        return view('Admin.voucherUser.getTableDate', $d);
+        $voucher = Voucher::all();
+        $d['user_vouchers'] = VoucherUser::orderby('id', 'DESC')->get();
+        return view('Admin.voucherUser.getDataTable', $d,['voucher'=>$voucher]);
     }
     /**
      * Show the form for creating a new resource.
@@ -72,7 +73,7 @@ class UserVoucherController extends Controller
             'phone'=>'',
             'email'=> 'required|email|:voucher_users,email,',
             'status' => '',
-            'method_paid'
+            'method_paid' => '',
         ]);
         $voucher_user = new VoucherUser();
         $voucher_user->user_id = $request->user_id;
@@ -84,7 +85,6 @@ class UserVoucherController extends Controller
         $voucher_user->email = $request->email;
         $voucher_user->status = $request->status;
         $voucher_user->method_paid = $request->method_paid;
-
         $voucher_user->save();
 
         return redirect()->back()->with('message', 'User  voucher Successfully');
@@ -100,9 +100,8 @@ class UserVoucherController extends Controller
     {
         //
         $user_v = VoucherUser::query()->join('vouchers','voucher_users.voucher_id','vouchers.id')
-            ->select('voucher_users.*','vouchers.name_voucher','vouchers.golf_course')
+            ->select('voucher_users.*','vouchers.name_voucher','vouchers.golf_course','vouchers.voucher_field')
             ->find($id);
-        // dd($user_v);
         //list temp
         $list_tem =PropertyVoucher::query()->join('properties','property_voucher.property_id','properties.id')
             ->where('voucher_id', $user_v->voucher_id)
@@ -158,6 +157,13 @@ class UserVoucherController extends Controller
             'email'=>'required|email|:voucher_users,email,',
             'method_paid' => '',
             'status' => '',
+            'check_in'=>'',
+            'check_out'=>'',
+            'number_adult'=>'',
+            'number_children'=>'',
+            'number_babie'=>'',
+            'booking_service'=>'',
+            'note'=>'',
         ]);
         $voucher_user = VoucherUser::find($request->id);
         $voucher_user->user_id = $request->user_id;
@@ -168,6 +174,13 @@ class UserVoucherController extends Controller
         $voucher_user->email = $request->email;
         $voucher_user->method_paid = $request->method_paid;
         $voucher_user->status = $request->status;
+        $voucher_user->check_in = $request->check_in;
+        $voucher_user->check_out = $request->check_out;
+        $voucher_user->number_adult = $request->number_adult;
+        $voucher_user->number_children = $request->number_children;
+        $voucher_user->number_babie = $request->number_babie;
+        $voucher_user->booking_service = $request->booking_service;
+        $voucher_user->note = $request->note;
         $voucher_user->save();
 
         echo "done";

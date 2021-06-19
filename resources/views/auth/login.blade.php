@@ -67,6 +67,15 @@
                     </div>
 
                 </div>
+
+{{--                <label>Phone Number:</label>--}}
+
+{{--                <input type="text" id="number" class="form-control" placeholder="+84 ********">--}}
+
+{{--                <div id="recaptcha-container"></div>--}}
+
+{{--                <button type="button" class="btn btn-primary mt-3" onclick="sendOTP();">Send OTP</button>--}}
+            </form>
             </form>
 
         </div>

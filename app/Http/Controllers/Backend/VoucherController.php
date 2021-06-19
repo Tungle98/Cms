@@ -35,6 +35,13 @@ class VoucherController extends Controller
             'property'=>$property,
         ]);
     }
+    public function get()
+    {
+        $property = Property::all();
+        $voucher_type = VoucherType::all();
+        $d['vouchers'] = Voucher::orderby('id', 'DESC')->get();
+        return view('Admin.voucher.getTableData', $d,['voucher_type'=>$voucher_type,'property'=>$property]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -55,6 +62,12 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
+//        $addMoreInputFields = $request->addMoreInputFields;
+//        $convert = json_encode($addMoreInputFields);
+//        $request->validate([
+//            'addMoreInputFields.*.voucher_field' => 'required'
+//        ]);
         $voucher_db = new Voucher();
         $imageUrl = '';
         if ($file = $request->file('image')) {
@@ -76,11 +89,15 @@ class VoucherController extends Controller
         }
 
         $voucher_db->name_voucher = $request->name_voucher;
-        $voucher_db->date_create =Carbon::createFromFormat('d/m/Y',$request->date_create)->format('d/m/Y');
+        $voucher_db->date_create =$request->date_create;
         $voucher_db->date_ex = $request->date_ex;
         $voucher_db->golf_course = $request->golf_course;
+        $voucher_db->money = $request->money;
+        $voucher_db->voucher_content = $request->voucher_content;
+        $voucher_db->voucher_number = $request->voucher_number;
         $voucher_db->voucher_type_id = $request->voucher_type_id;
         $voucher_db->status = $request->status;
+        $voucher_db->voucher_field = json_encode($request->addMoreInputFields);
 
         $voucher_db->save();
         $voucher_db->properties()->attach($request->properties);
@@ -127,6 +144,10 @@ class VoucherController extends Controller
             'golf_course' => '',
             'voucher_type_id' => '',
             'status' => '',
+            'money' => '',
+            'voucher_content' => '',
+            'voucher_number' => '',
+
         ]);
 
         $voucher_db = Voucher::find($request->id);
@@ -141,10 +162,14 @@ class VoucherController extends Controller
         }
         $voucher_db->name_voucher = $request->name_voucher;
         $voucher_db->date_create = $request->date_create;
-        //$newDate = date("dd-mm-YYYY", strtotime($voucher_db->date_create));
         $voucher_db->date_ex = $request->date_ex;
         $voucher_db->golf_course = $request->golf_course;
+        $voucher_db->money = $request->money;
+        $voucher_db->status = $request->status;
+        $voucher_db->voucher_content = $request->voucher_content;
+        $voucher_db->voucher_number = $request->voucher_number;
         $voucher_db->voucher_type_id = $request->voucher_type_id;
+        $voucher_db->voucher_field = json_decode($request->addMoreInputFields);
         $voucher_db->properties()->attach($request->properties);
 
         $voucher_db->save();
@@ -163,5 +188,22 @@ class VoucherController extends Controller
         //
 
 
+    }
+    public function publish($id){
+        $voucher = Voucher::find($id);
+        $voucher->status = 1;
+        $voucher->save();
+
+        echo "done";
+        //return back()->with('message', 'voucher Status Published');
+    }
+
+    public function unpublish($id){
+        $voucher = Voucher::find($id);
+        $voucher->status = 0;
+        $voucher->save();
+
+        echo "done";
+        //return back()->with('message', 'voucher Status Unpublished');
     }
 }

@@ -19,6 +19,9 @@ class CreateVouchersTable extends Migration
             $table->date('date_create');
             $table->date('date_ex');
             $table->string('golf_course');
+            $table->string('money');
+            $table->string('voucher_number');
+            $table->text('voucher_content');
             $table->string('image');
             $table->string('status');
             $table->integer('voucher_type_id')->unsigned();

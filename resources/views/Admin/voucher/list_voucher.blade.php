@@ -38,7 +38,7 @@
                         <div class="card-header">
                         @can('voucher-add')
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
-                                <i class="fa fa-plus"><b> Add voucher</b></i>
+                                <i class="fa fa-plus"><b> Tạo voucher</b></i>
                             </button>
                             @endcan
                         </div>
@@ -47,14 +47,15 @@
                             <table id="VoucherDatatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>STT</th>
                                     <th>Tên voucher</th>
-                                    <th>Loai voucher</th>
-                                    <th>Ngày tạo</th>
+                                    <th>Loại voucher</th>
+                                    <th>Ngày bắt đầu</th>
                                     <th>Ngày hết hạn</th>
                                     <th>Sân golf</th>
-                                    <th>Image</th>
-                                    <th>Status</th>
+                                    <th>Giá tiền</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Trạng thái</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -68,11 +69,22 @@
                                         <td>{!!date('d/m/y', strtotime($vouchers->date_create))!!}</td>
                                         <td>{!!date('d/m/y', strtotime($vouchers->date_ex))!!}</td>
                                         <td>{{$vouchers->golf_course}}</td>
+                                        <td>{{$vouchers->money}} VND</td>
                                         <td>
                                             <img src="{{asset($vouchers->image)}}" height="100px" alt="image">
                                         </td>
 
-                                        <td>{{$vouchers->status=='1'?'Active':'Inactive'}}</td>
+                                        <td>
+                                            @if($vouchers->status == 1)
+                                                <a id="{{$vouchers->id}}" href="" class="btn btn-primary unpublish" data-toggle="tooltip" title="Published">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </a>
+                                            @else
+                                                <a id="{{$vouchers->id}}" href="" class="btn btn-warning publish" data-toggle="tooltip" title="Unpublished">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </a>
+                                            @endif
+                                        </td>
 
                                         <td>
                                             @can('voucher-edit')
@@ -139,6 +151,10 @@
                         $('#edit_date_ex').val(data.date_ex);
                         $('#previewHolder2').attr('src', "{{asset('')}}" + data.image);
                         $('#edit_status').val(data.status);
+                        $('#edit_money').val(data.money);
+                        $('#edit_voucher_number').val(data.voucher_number);
+                        $('#edit_voucher_content').val(data.voucher_content);
+                        $('#edit_voucher_field').val(data.voucher_field);
                         //console.log(data.properties);
 
                         for ( let property of data.properties) {
@@ -174,6 +190,52 @@
                     },
                 });
             });
+            //status change
+            //category publish
+            $(document).on('click', '.publish', function(e){
+                e.preventDefault();
+                var id = $(this).attr('id');
+                $.ajax({
+                    url: "{{url('admin/voucher/publish')}}/"+id,
+                    method: "GET",
+                    beforeSend: function(){
+                        $('.loader').show();
+                    },
+                    complete: function(){
+                        $('.loader').hide();
+                    },
+                    success: function(data){
+                        if (data == "done") {
+                            loadDataTable();
+                        };
+                    }
+                })
+            });
+            //category unpublish
+            $(document).on('click', '.unpublish', function(e){
+                e.preventDefault();
+                var id = $(this).attr('id');
+                $.ajax({
+                    url: "{{url('admin/voucher/unpublish')}}/"+id,
+                    method: "GET",
+                    beforeSend: function(){
+                        $('.loader').show();
+
+                    },
+                    complete: function(){
+                        $('.loader').hide();
+                    },
+                    success: function(data){
+                        if (data == "done") {
+                            loadDataTable();
+                        };
+                    }
+                })
+            });
+            //format money
+            $('.price_format').simpleMoneyFormat();
+
+
         });
     </script>
 

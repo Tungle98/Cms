@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Voucher</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Cập nhật thông tin voucher</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -43,7 +43,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="filePhoto5">Ngày tạo</label>
+                                    <label for="filePhoto5">Ngày bắt đầu</label>
                                     <input type="date" name="date_create" class="form-control-file" id="edit_date_create" >
                                 </div>
                             </div>
@@ -62,6 +62,24 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="discount_price">Giá tiền</label>
+                                    <input type="text" name="money" class="form-control price_format" id="edit_money" placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="discount_price">Nội dung giới thiệu</label>
+                                    <textarea id="edit_voucher_content" name="voucher_content" rows="6" cols="50"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="discount_price">Số voucher bán ra</label>
+                                    <input type="text" name="voucher_number" class="form-control" id="edit_voucher_number" placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="filePhoto">Hình ảnh</label>
                                     <input type="file" name="image" class="form-control-file" id="filePhoto2">
                                     <img src="" id="previewHolder2" width="150px">
@@ -77,32 +95,33 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label for="e_quantity">Thuộc tính </label>
-                                    <div class="properties-place">
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group ">--}}
+{{--                                    <label for="e_quantity">Thuộc tính </label>--}}
+{{--                                    <div class="properties-place">--}}
 
-                                    </div>
+{{--                                    </div>--}}
 
-                                </div>
+{{--                                </div>--}}
 
-                            </div>
-                            <div class="col-md-6">
+{{--                            </div>--}}
+{{--                            <div class="col-md-6">--}}
 
-                                <div class="form-group">
-                                    <label for="product_status">Option: </label>
-                                    @foreach($property as $pro)
-                                        <label style="padding-right: 30px"><input type="checkbox" name="properties[]"  value="{{$pro->id}}" id="property_id" >{{$pro->name}} </label>
-                                    @endforeach
-                                </div>
-                            </div>
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="product_status">Option: </label>--}}
+{{--                                    @foreach($property as $pro)--}}
+{{--                                        <label style="padding-right: 30px"><input type="checkbox" name="properties[]"  value="{{$pro->id}}" id="property_id" >{{$pro->name}} </label>--}}
+{{--                                    @endforeach--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
                         </div>
 
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Update voucher</button>
+                        <button type="submit" class="btn btn-primary">Sửa voucher</button>
                     </div>
                 </form>
             </div>
@@ -122,4 +141,6 @@
 // $("input[type=date]").on('click', function() {
 //   return false;
 // });
+//dynamicAddField
+
 </script>

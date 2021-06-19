@@ -37,11 +37,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-
+                            @can('edit-hotel')
                                 <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                     <i class="fa fa-plus"><b> Book Hotel</b></i>
                                 </button>
-
+                            @endcan
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -71,11 +71,11 @@
                                         <td>{!!date('d/m/y', strtotime($h->check_out))!!}</td>
                                         <td>
 
-
+                                            @can('edit-hotel')
                                                 <a id="{{$h->id}}" href="#editHotelModal"   data-target="" class="edit btn btn-success" title="Edit">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

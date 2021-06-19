@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
+use App\Model\Voucher;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Model\Hotel;
 use App\Model\VoucherUser;
@@ -93,6 +95,8 @@ class HotelController extends Controller
     public function edit($id)
     {
         //
+        $hotel =Hotel::find($id);
+        return response()->json($hotel);
     }
 
     /**
@@ -102,9 +106,28 @@ class HotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $request->validate([
+            'name_hotel' => '',
+            'type_room' => '',
+            'description' => '',
+            'voucher_user_id' => '',
+            'check_in' => '',
+            'check_out'=>'',
+        ]);
+        $hotel = Hotel::find($request->id);
+        $hotel->name_hotel = $request->name_hotel;
+        $hotel->type_room = $request->type_room;
+        $hotel->description = $request->description;
+        $hotel->voucher_user_id = $request->voucher_user_id;
+        $hotel->check_in = $request->check_in;
+        $hotel->check_out = $request->check_out;
+
+        $hotel->save();
+
+        echo "done";
     }
 
     /**

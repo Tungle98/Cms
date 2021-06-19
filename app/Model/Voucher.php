@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class Voucher extends Model
 {
     //
-    protected $fillable = ['name_voucher', 'date_create','date_ex','golf_course','image','status','voucher_type_id'];
+    protected $fillable = ['name_voucher', 'date_create','date_ex','golf_course','image','status','voucher_type_id','money','voucher_content','voucher_number','voucher_field'];
 
     public function voucherType()
     {

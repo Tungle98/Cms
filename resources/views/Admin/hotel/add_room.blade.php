@@ -53,13 +53,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="code"> Check In</label>
-                                <input type="date" name="check_in" class="form-control" id="code"  required>
+                                <input type="date" name="check_in" class="form-control" id="check_in"  required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="code"> Check out</label>
-                                <input type="date" name="check_out" class="form-control" id="phone"  required>
+                                <input type="date" name="check_out" class="form-control" id="check_out"  required>
                             </div>
                         </div>
 
@@ -68,8 +68,19 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Book room</button>
                 </div>
-            </form>
+
+                </div></form>
         </div>
     </div>
 </div>
 
+<script>
+    function check() {
+        if(document.getElementById('').value < document.getElementById('').value)
+        { console.log('pass')}
+        else{
+            alert("Ngày hết hạn phải lớn hơn ngày tạo");
+        }
+
+    }
+</script>

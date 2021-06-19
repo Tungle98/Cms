@@ -6,12 +6,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Customer Information</h1>
+                        <h1>Thông tin khách hàng</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item active">user voucher</li>
+                            <li class="breadcrumb-item active">customer</li>
                         </ol>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                         <div class="card-header">
                            @can('voucherUser-add')
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
-                                <i class="fa fa-plus"><b> Book voucher</b></i>
+                                <i class="fa fa-plus"><b> Mua voucher</b></i>
                             </button>
                             @endcan
                         </div>
@@ -48,12 +48,12 @@
                             <table id="userDatatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Tên khách</th>
+                                    <th>STT</th>
+                                    <th>Mã khách hàng</th>
+                                    <th>Tên khách hàng</th>
                                     <th>Tổng số vé</th>
                                     <th>voucher</th>
-                                    <th>code</th>
-                                    <th>Phone</th>
+                                    <th>Số điện thoại</th>
                                     <th>Trạng thái</th>
                                     <th>Phương thức TT</th>
                                     <th>Action</th>
@@ -64,10 +64,10 @@
                                 @foreach($voucher_user as $vou)
                                     <tr>
                                         <td>{{$sl++}}</td>
+                                        <td>{{$vou->id}}</td>
                                         <td>{{$vou->full_name}}</td>
                                         <td>{{$vou->total_voucher}}</td>
                                         <td>{{$vou->name_voucher}}</td>
-                                        <td>{{$vou->code}}</td>
                                         <td>{{$vou->phone}}</td>
                                         <td>{{$vou->status}}</td>
                                         <td>{{$vou->method_paid}}</td>
@@ -147,6 +147,13 @@
                         $('#edit_email').val(data.email);
                         $('#edit_status').val(data.status);
                         $('#edit_method_paid').val(data.method_paid);
+                        $('#edit_check_out').val(data.check_out);
+                        $('#edit_check_in').val(data.check_in);
+                        $('#edit_number_adult').val(data.number_adult);
+                        $('#edit_number_babie').val(data.number_children);
+                        $('#edit_number_children').val(data.number_babie);
+                        $('#edit_note').val(data.note);
+                        $('#edit_booking_service').val(data.booking_service);
                     }
                 })
             });
