@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Room</h1>
+                        <h1>Phòng khách sạn</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -37,11 +37,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            @can('edit-hotel')
+
                                 <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                     <i class="fa fa-plus"><b> Book Hotel</b></i>
                                 </button>
-                            @endcan
+
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -55,12 +55,15 @@
                                     <th>Người đại diện mua</th>
                                     <th>Ngày vào</th>
                                     <th>Ngày đi</th>
+                                    <th>Số khách</th>
+                                    <th>Số phòng</th>
+                                    <th>Số tiền</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="tableData">
                                 @php($sl = 1)
-                                @foreach($hotels as $h)
+                                @foreach($hotel as $h)
                                     <tr>
                                         <td>{{$sl++}}</td>
                                         <td>{{$h->name_hotel}}</td>
@@ -69,13 +72,14 @@
                                         <td>{{$h->full_name}}</td>
                                         <td>{!!date('d/m/y', strtotime($h->check_in))!!}</td>
                                         <td>{!!date('d/m/y', strtotime($h->check_out))!!}</td>
+                                        <td>{{$h->number_customer}}</td>
+                                        <td>{{$h->number_room}}</td>
+                                        <td>{{$h->money}}</td>
                                         <td>
-
-                                            @can('edit-hotel')
                                                 <a id="{{$h->id}}" href="#editHotelModal"   data-target="" class="edit btn btn-success" title="Edit">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                            @endcan
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -130,10 +134,13 @@
                         $('#edit_id').val(data.id);
                         $('#edit_name_hotel').val(data.name_hotel);
                         $('#edit_type_room').val(data.type_room);
-                        $('#edit_description').val(data.description);
                         $('#edit_voucher_user_id').val(data.voucher_user_id);
                         $('#edit_check_in').val(data.check_in);
                         $('#edit_check_out').val(data.check_out);
+                        $('#edit_number_customer').val(data.number_customer);
+                        $('#edit_number_room').val(data.number_room);
+                        $('#edit_money').val(data.money);
+                        $('#edit_description').val(data.description);
 
                     }
                 })

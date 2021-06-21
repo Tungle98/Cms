@@ -13,19 +13,22 @@
                                            <td>
                                                <img src="{{asset($voucher->image)}}" height="100px" alt="image">
                                            </td>
-<td>
+                                            <td>
                                                 @if($voucher->status == 1)
                                                 <a id="{{$voucher->id}}" href="" class="btn btn-primary unpublish" data-toggle="tooltip" title="Published">
-                                                    <i class="fa fa-arrow-up"></i>
+                                                  <i class="fa fa-toggle-off" aria-hidden="true"></i>
                                                 </a>
                                                 @else
                                                 <a id="{{$voucher->id}}" href="" class="btn btn-warning publish" data-toggle="tooltip" title="Unpublished">
-                                                    <i class="fa fa-arrow-down"></i>
+                                                 <i class="fa fa-toggle-on" aria-hidden="true"></i>
                                                 </a>
                                                 @endif
                                             </td>
 
                                             <td>
+                                              <a  data-url="{{ url('admin/voucher/show',$voucher->id) }}" type="button" href="#show" data-toggle="modal" class="btn btn-info btn-show"  >
+                                                    <i class="fa fa-eye"></i>
+                                              </a>
                                                 <a id="{{$voucher->id}}" href="#editUserModal" class="btn btn-success edit" data-toggle="modal">
                                                     <i class="fa fa-edit"></i>
                                                 </a>

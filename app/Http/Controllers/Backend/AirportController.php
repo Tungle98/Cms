@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Model\Airport;
 use App\User;
-
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 class AirportController extends Controller
 {
     //
@@ -78,4 +79,12 @@ class AirportController extends Controller
         $airport_db->save();
         echo "done";
     }
+
+    //export ra file excell
+    //thêm export sau đường dẫn để export file
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'airports.xlsx');
+    }
+
 }

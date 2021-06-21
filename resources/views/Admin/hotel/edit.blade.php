@@ -46,13 +46,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="e_quantity">Ghi chú</label>
-                                <input type="text" name="description" class="form-control" id="edit_description" placeholder="">
-                            </div>
-
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="e_quantity">check in</label>
                                 <input type="date" name="check_in" class="form-control" id="edit_check_in" placeholder="">
                             </div>
@@ -63,6 +56,31 @@
                                 <label for="code"> check out</label>
                                 <input type="date" name="check_out" class="form-control" id="edit_check_out"  required>
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Số khách</label>
+                                <input type="text" name="number_customer" class="form-control" id="edit_number_customer"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Số phòng cần đặt</label>
+                                <input type="text" name="number_room" class="form-control" id="edit_number_room"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Số tiền</label>
+                                <input type="text" name="money" class="form-control" id="edit_money"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="e_quantity">Ghi chú</label>
+                                <input type="text" name="description" class="form-control" id="edit_description" placeholder="">
+                            </div>
+
                         </div>
                     </div>
                 </div>

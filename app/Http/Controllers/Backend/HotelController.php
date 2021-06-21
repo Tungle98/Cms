@@ -19,20 +19,21 @@ class HotelController extends Controller
     {
         //
         //join user voucher voi voucher
-        $hotels = DB::table('hotels')
+        $hotel = DB::table('hotels')
             ->join('voucher_users','hotels.voucher_user_id','=','voucher_users.id')
             ->select('hotels.*','voucher_users.full_name')->orderBy('id','DESC')
             ->get();
         $voucher_user = VoucherUser::all();
         return view('Admin.hotel.list_room',[
-            'hotels'=>$hotels,
+            'hotel'=>$hotel,
             'voucher_user'=>$voucher_user,
         ]);
     }
     public function get()
     {
+        $voucher_user = VoucherUser::all();
         $d['hotels'] = Hotel::orderby('id', 'DESC')->get();
-        return view('Admin.hotel.getTableDate', $d);
+        return view('Admin.hotel.getTableData', $d,compact('voucher_user'));
     }
 
     /**
@@ -61,6 +62,9 @@ class HotelController extends Controller
             'voucher_user_id' => '',
             'check_in' => '',
             'check_out'=>'',
+            'number_room'=>'',
+            'number_customer'=>'',
+            'money'=>'',
         ]);
         $hotel = new Hotel();
         $hotel->name_hotel = $request->name_hotel;
@@ -69,6 +73,9 @@ class HotelController extends Controller
         $hotel->voucher_user_id = $request->voucher_user_id;
         $hotel->check_in = $request->check_in;
         $hotel->check_out = $request->check_out;
+        $hotel->number_room = $request->number_room;
+        $hotel->number_customer = $request->number_customer;
+        $hotel->money = $request->money;
 
         $hotel->save();
 
@@ -116,6 +123,9 @@ class HotelController extends Controller
             'voucher_user_id' => '',
             'check_in' => '',
             'check_out'=>'',
+            'number_room'=>'',
+            'number_customer'=>'',
+            'money'=>'',
         ]);
         $hotel = Hotel::find($request->id);
         $hotel->name_hotel = $request->name_hotel;
@@ -124,6 +134,9 @@ class HotelController extends Controller
         $hotel->voucher_user_id = $request->voucher_user_id;
         $hotel->check_in = $request->check_in;
         $hotel->check_out = $request->check_out;
+        $hotel->number_room = $request->number_room;
+        $hotel->number_customer = $request->number_customer;
+        $hotel->money = $request->money;
 
         $hotel->save();
 

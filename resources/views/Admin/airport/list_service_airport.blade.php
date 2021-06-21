@@ -36,10 +36,22 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-
+{{--                            export data--}}
+{{--                            <a class="btn btn-warning" href="{{url('admin/airport/export')}}">Export User Data</a>--}}
                                 <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addProductModal">
                                     <i class="fa fa-plus"><b> Tạo đơn</b></i>
                                 </button>
+                            <form name="FilterForm" id="FilterForm" action="" method="">
+                                <h2></h2>
+                                <input type="checkbox" name="filterStatus" value="0 " />
+                                <label for="filter_1" style="padding-right: 30px">Giữ chỗ</label>
+                                <input type="checkbox" name="filterStatus" value="1" />
+                                <label for="filter_2"  style="padding-right: 30px">Đang thanh toán</label>
+                                <input type="checkbox" name="filterStatus" value="2" />
+                                <label for="filter_3"  style="padding-right: 30px">Thanh toán sau</label>
+                                <input type="checkbox" name="filterStatus" value="3" />
+                                <label for="filter_3">Đã thanh toán</label>
+                            </form>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -71,15 +83,12 @@
                                         <td>{{$value->flight_hour}}/{{$value->flight_number}}</td>
                                         <td>{{$value->bundled_service}}</td>
                                         <td>{{$value->status}}</td>
-
                                         <td>{{$value->money}}</td>
                                         <td>{{$value->user_id}}</td>
                                         <td>
-
-                                                <a  id="{{$value->id}}" href="#editAirportModal"  class="edit btn btn-success" title="Edit">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-
+                                            <a  id="{{$value->id}}" href="#editAirportModal"  class="edit btn btn-success" title="Edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -173,6 +182,29 @@
             //format money
             $('.price_format').simpleMoneyFormat();
 
+            //filter checkbox
+            $("input[name='filterStatus']").change(function () {
+                var classes = [];
+
+                $("input[name='filterStatus']").each(function () {
+                    if ($(this).is(":checked")) { classes.push('.' + $(this).val()); }
+                });
+
+                if (classes == "") { // if no filters selected, show all items
+                    $("#AirportDatatable tbody tr").show();
+                } else { // otherwise, hide everything...
+                    $("#AirportDatatable tbody tr").hide();
+
+                    $("#AirportDatatable tr").each(function () {
+                        var show = true;
+                        var row = $(this);
+                        classes.forEach(function (className) {
+                            if (row.find('td' + className).html() == '&nbsp;') { show = false; }
+                        });
+                        if (show) { row.show(); }
+                    });
+                }
+            });
 
         });
     </script>

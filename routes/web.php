@@ -37,9 +37,11 @@ Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], f
     Route::post('/voucher','VoucherController@store');
     Route::get('/voucher/edit/{id}','VoucherController@edit');
     Route::post('/voucher/update','VoucherController@update')->name('admin.voucher.update');
+    Route::get('/voucher/show/{id}','VoucherController@show');
     Route::get('/voucher/delete/{id}','VoucherController@delete');
     Route::get('/voucher/publish/{id}','VoucherController@publish')->name('voucher.publish');
     Route::get('/voucher/unpublish/{id}','VoucherController@unpublish')->name('voucher.unpublish');
+    Route::get('/voucher/update', 'VoucherController@updateStatus')->name('admin.voucher.update-status');
 
     //userVoucher route
     Route::get('/user_voucher','UserVoucherController@index')->name('admin.voucher_user');
@@ -83,4 +85,6 @@ Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], f
     Route::get('/airport/show/{id}','AirportController@show');
     Route::post('/airport/update','AirportController@update')->name('admin.airport.update');
     Route::get('/airport/delete/{id}','AirportController@delete');
+
+    Route::get('airport/export/', 'AirportController@export');
 });

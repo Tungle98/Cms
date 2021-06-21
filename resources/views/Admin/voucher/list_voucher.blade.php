@@ -73,20 +73,16 @@
                                         <td>
                                             <img src="{{asset($vouchers->image)}}" height="100px" alt="image">
                                         </td>
-
-                                        <td>
-                                            @if($vouchers->status == 1)
-                                                <a id="{{$vouchers->id}}" href="" class="btn btn-primary unpublish" data-toggle="tooltip" title="Published">
-                                                    <i class="fa fa-arrow-up"></i>
-                                                </a>
-                                            @else
-                                                <a id="{{$vouchers->id}}" href="" class="btn btn-warning publish" data-toggle="tooltip" title="Unpublished">
-                                                    <i class="fa fa-arrow-down"></i>
-                                                </a>
-                                            @endif
+                                        <td style="text-align: center">
+                                            <input type="checkbox" data-id="{{ $vouchers->id }}" name="status" class="js-switch" {{ $vouchers->status == 1 ? 'checked' : '' }}>
                                         </td>
 
+
+
                                         <td>
+                                            <a  data-url="{{ url('admin/voucher/show',$vouchers->id) }}" type="button" href="#show" data-toggle="modal" class="btn btn-info btn-show"  >
+                                                <i class="fa fa-eye"></i>
+                                            </a>
                                             @can('voucher-edit')
                                             <a  id="{{$vouchers->id}}" href="#editVoucherModal"  class="edit btn btn-success" title="Edit">
                                                 <i class="fa fa-edit"></i>
@@ -113,7 +109,8 @@
     {{--Edit Product modal here--}}
     @include('Admin.voucher.edit_voucher')
 
-
+    {{--View Product modal here--}}
+    @include('Admin.voucher.show_voucher')
 
 @endsection
 @push('page_scripts')
@@ -211,7 +208,7 @@
                     }
                 })
             });
-            //category unpublish
+            //voucher unpublish
             $(document).on('click', '.unpublish', function(e){
                 e.preventDefault();
                 var id = $(this).attr('id');
@@ -234,7 +231,46 @@
             });
             //format money
             $('.price_format').simpleMoneyFormat();
+            //show detail
+            $('.btn-show').click(function () {
+                var url = $(this).attr('data-url');
+                console.log($(this).attr('data-url'));
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    success: function (response) {
+                        //console.log(response)
+                        $('.voucher-show').html(response);
 
+                    },
+                });
+            });
+            //toggle
+            let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+            elems.forEach(function(html) {
+                let switchery = new Switchery(html,  { size: 'small' });
+            });
+            //ajax change toggle
+            $(document).ready(function(){
+                $('.js-switch').change(function () {
+                    let status = $(this).prop('checked') === true ? 1 : 0;
+                    let voucherId = $(this).data('id');
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: '{{ route('admin.voucher.update-status') }}',
+                        data: {'status': status, 'voucher_id': voucherId},
+                        success: function (data) {
+                            // console.log(data.message);
+                            toastr.options.closeButton = true;
+                            toastr.options.closeMethod = 'fadeOut';
+                            toastr.options.closeDuration = 100;
+                            toastr.success(data.message);
+                        }
+                    });
+                });
+            });
 
         });
     </script>

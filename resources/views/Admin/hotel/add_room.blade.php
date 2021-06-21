@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="product_status">Voucher</label>
+                                <label for="product_status">Ngươi mua</label>
                                 <select class="form-control" name="voucher_user_id" id="voucher_id" style="width: 200px">
                                     @foreach($voucher_user as $v)
                                         <option value="{{$v->id}}">{{$v->full_name}}</option>
@@ -46,12 +46,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="total_voucher">Ghi chú</label>
-                                <input type="text" name="description" class="form-control" id="total_voucher" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="code"> Check In</label>
                                 <input type="date" name="check_in" class="form-control" id="check_in"  required>
                             </div>
@@ -60,6 +54,30 @@
                             <div class="form-group">
                                 <label for="code"> Check out</label>
                                 <input type="date" name="check_out" class="form-control" id="check_out"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Số khách</label>
+                                <input type="text" name="number_customer" class="form-control" id="check_out"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Số phòng cần đặt</label>
+                                <input type="text" name="number_room" class="form-control" id="check_out"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code"> Số tiền</label>
+                                <input type="text" name="money" class="form-control" id="check_out"  required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="total_voucher">Ghi chú</label>
+                                <input type="text" name="description" class="form-control" id="total_voucher" required>
                             </div>
                         </div>
 

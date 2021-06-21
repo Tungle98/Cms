@@ -13,7 +13,10 @@ class Hotel extends Model
         'description',
         'voucher_user_id',
         'check_in',
-        'check_out'
+        'check_out',
+        'number_customer',
+        'number_room',
+        'money'
     ];
 
     public function voucherUser()

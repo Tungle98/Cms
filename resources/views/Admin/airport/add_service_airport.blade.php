@@ -81,8 +81,8 @@
                             <div class="form-group">
                                 <label for="product_status">Trạng thái </label>
                                 <select class="form-control" name="status" id="product_status">
-                                    <option value="1">Giữ chỗ</option>
-                                    <option value="0">Đang thanh toán</option>
+                                    <option value="0">Giữ chỗ</option>
+                                    <option value="1">Đang thanh toán</option>
                                     <option value="2">Thanh toán sau</option>
                                     <option value="3">Đã thanh toán</option>
                                 </select>

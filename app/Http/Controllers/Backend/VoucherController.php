@@ -115,8 +115,9 @@ class VoucherController extends Controller
     public function show($id)
     {
         //
-        $voucher_find = Voucher::where('id', '=', $id)->select('*')->first();
-        return view('admin.voucher.view-voucher',[ 'voucher_find'=>$voucher_find,]);
+        $voucher_find = Voucher::find($id);
+
+        return view('Admin.voucher.template.show',compact('voucher_find'));
     }
 
     /**
@@ -130,6 +131,7 @@ class VoucherController extends Controller
         //
 
         $voucherEdit =Voucher::query()->with('properties')->find($id);
+
         return response()->json($voucherEdit);
     }
 
@@ -205,5 +207,13 @@ class VoucherController extends Controller
 
         echo "done";
         //return back()->with('message', 'voucher Status Unpublished');
+    }
+    public function updateStatus(Request $request)
+    {
+        $voucher = Voucher::findOrFail($request->voucher_id);
+        $voucher->status = $request->status;
+        $voucher->save();
+
+        return response()->json(['message' => 'Voucher status updated successfully.']);
     }
 }
