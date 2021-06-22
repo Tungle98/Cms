@@ -76,7 +76,7 @@ Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], f
     Route::get('/hotel/show/{id}','HotelController@show');
     Route::post('/hotel/update','HotelController@update')->name('admin.hotel.update');
     Route::get('/hotel/delete/{id}','HotelController@delete');
-
+    Route::get('/hotel/create','HotelController@create');
     //route manager service airport
     Route::get('/airport','AirportController@index')->name('admin.airport');
     Route::get('/airport/getTableData','AirportController@get')->name('admin.airport.getTableData');

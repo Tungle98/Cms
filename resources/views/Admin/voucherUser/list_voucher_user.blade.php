@@ -203,10 +203,6 @@
                 dropdownParent: $("#addProductModal")
             });
 
-            //select2 option edit voucher
-            $('.voucher_edit').select2({
-                dropdownParent: $("#editVoucherUserModal")
-            });
         });
 
 

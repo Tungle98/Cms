@@ -173,14 +173,10 @@
                 });
             });
             //select2 option add voucher
-            $('#voucher_id').select2({
+            $(".address_id").select2({
                 dropdownParent: $("#addProductModal")
             });
 
-            //select2 option edit voucher
-            $('.voucher_edit').select2({
-                dropdownParent: $("#editHotelModal")
-            });
         });
 
 

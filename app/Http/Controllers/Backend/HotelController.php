@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Model\Hotel;
 use App\Model\VoucherUser;
+use Illuminate\Support\Facades\Http;
 use DB;
 class HotelController extends Controller
 {
@@ -15,7 +16,7 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request  $request)
     {
         //
         //join user voucher voi voucher
@@ -23,10 +24,15 @@ class HotelController extends Controller
             ->join('voucher_users','hotels.voucher_user_id','=','voucher_users.id')
             ->select('hotels.*','voucher_users.full_name')->orderBy('id','DESC')
             ->get();
+        //call api search address
+        $collection = Http::get('https://api-dev.vgstravel.com/api/v1/hotel/recent_search_keyword?uid=99999&token=7374b1bb58d5fade098d579d5e1f6285&language=vi&timezone=Asia/Ho_Chi_Minh');
+        //convert string to array
+      $coll = (json_decode($collection));
         $voucher_user = VoucherUser::all();
         return view('Admin.hotel.list_room',[
             'hotel'=>$hotel,
             'voucher_user'=>$voucher_user,
+            'coll'=>$coll
         ]);
     }
     public function get()
@@ -44,6 +50,7 @@ class HotelController extends Controller
     public function create()
     {
         //
+
     }
 
     /**

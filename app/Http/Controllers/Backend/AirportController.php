@@ -15,6 +15,7 @@ class AirportController extends Controller
     public function index()
     {
         $airports = Airport::all();
+        //dd($airports);
         return view('Admin.airport.list_service_airport',[
             'airports'=>$airports,
         ]);
