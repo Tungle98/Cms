@@ -101,4 +101,18 @@
         </div>
     </div>
 </div>
+<style type="text/css">
+    .select2-container--default .select2-selection--single {
+        background-color: #fff;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        height: 50px;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #444;
+        line-height: 35px;
+    }
+</style>
+<script>
 
+</script>

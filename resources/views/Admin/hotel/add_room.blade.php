@@ -17,36 +17,41 @@
                     </ul>
                 </div>
             @endif
-            <form id="addProductForm" method="post" action="{{ route('admin.hotel') }}" enctype="multipart/form-data">
+            <form id="addProductForm" method="post" action="" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <label>Địa điểm </label>
+                            <label style="text-align: center">Địa điểm </label>
                             <div class="form-group">
-                                <select class="js-example-basic-single">
-{{--                                    @foreach($coll as $item)--}}
-{{--                                        <h1>{{$item->name}}</h1>--}}
-{{--                                    @endforeach--}}
-
-                                    <option value="AL">Alabama</option>
-                                    ...
-                                    <option value="WY">Wyoming</option>
+                                <select class="js-example-basic-single" name="address">
+                                    <option></option>
+                                    @foreach($addRess as $item)
+                                        <option>{{$item->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-5">
-                            <label>Ngày nhận & trả phòng</label>
-                            <div class="form-group">
-                                <input id="button-picker" />
-                                <button id="show-picker">Show picker</button>
-                            </div>
+                        <div class="col-md-4">
+                            <label style="text-align: center">Ngày đến & ngày đi</label>
+                           <input type="text" id="rangeDate" name="date-range" placeholder="Please select date" data-input>
                         </div>
-                        <div class="col-md-3">
-                            <label>Phòng & khách</label>
-                            <div class="form-group">
-                                <input type="text" placeholder="Số khách">
-
+                        <div class="col-md-4">
+                            <label style="text-align: center">Phòng & khách</label>
+                            <div class="form-group" style="border: 1px solid gray">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <h6>Phòng và khách</h6>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3"><i class="fa fa-key" aria-hidden="true"></i> 1</div>
+                                    <div class="col-md-3"><i class="fa fa-users" aria-hidden="true"></i> 0</div>
+                                    <div class="col-md-3"><i class="fa fa-child" aria-hidden="true"></i> 1</div>
+                                </div>
                             </div>
                         </div>
 
@@ -54,14 +59,32 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Tìm khách sạn</button>
+                        <button type="button" class="btn btn-primary">Tìm khách sạn</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
+<style type="text/css">
+    input {
+        border: 2px solid #aaa;
+        border-radius: 5px;
+        padding: 12px 10px;
+        text-align: center;
+        width: 250px;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #444;
+        line-height: 35px;
+    }
+    .select2-container--default .select2-selection--single {
+        background-color: #fff;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+        height: 50px;
+    }
+</style>
 <script>
     function check() {
         if(document.getElementById('').value < document.getElementById('').value)
@@ -73,21 +96,17 @@
     }
     $(document).ready(function() {
         $(".js-example-basic-single").select2({
-            dropdownParent: $("#addProductModal")
+            dropdownParent: $("#addProductModal"),
+            placeholder: "Select a address",
+            allowClear: true
         });
-    });
-    mobiscroll.datepicker('#button-picker', {
-        controls: ['calendar'],
-        select:'range',
-        touchUi: true,
-        showOnClick: false,
-        showOnFocus: false
     });
 
-    document
-        .getElementById('show-picker')
-        .addEventListener('click', function () {
-            instance.open();
-            return false;
-        });
+//thu vien flatpickr của datetimepicker
+    $("#rangeDate").flatpickr({
+        mode: 'range',
+        dateFormat: "d-m-Y"
+    });
+
+
 </script>

@@ -17,6 +17,21 @@
                     </ul>
                 </div>
             @endif
+{{--            @if ($message = Session::get('success'))--}}
+{{--                <div class="alert alert-success">--}}
+{{--                    <strong>{{ $message }}</strong>--}}
+{{--                </div>--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-md-4">--}}
+{{--                        <h3>Primary Image:</h3>--}}
+{{--                        <img src="/images/{{ Session::get('image') }}" />--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-4">--}}
+{{--                        <h3>Thumbnail:</h3>--}}
+{{--                        <img src="/thumbnails/{{ Session::get('image') }}" />--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            @endif--}}
             <form id="addProductForm" method="post" action="{{ route('admin.voucher') }}" enctype="multipart/form-data">
                 @csrf
 

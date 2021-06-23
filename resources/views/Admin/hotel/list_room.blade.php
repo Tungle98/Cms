@@ -51,11 +51,11 @@
                                     <th>Id</th>
                                     <th>Tên khách sạn</th>
                                     <th>Loại phòng</th>
-                                    <th>Ghi chú</th>
-                                    <th>Người đại diện mua</th>
+                                    <th>BookingNumber</th>
+                                    <th>Booking_id</th>
                                     <th>Ngày vào</th>
                                     <th>Ngày đi</th>
-                                    <th>Số khách</th>
+                                    <th>Booking code</th>
                                     <th>Số phòng</th>
                                     <th>Số tiền</th>
                                     <th>Action</th>
@@ -63,26 +63,27 @@
                                 </thead>
                                 <tbody id="tableData">
                                 @php($sl = 1)
-                                @foreach($hotel as $h)
+                                @foreach($coll as $item)
                                     <tr>
                                         <td>{{$sl++}}</td>
-                                        <td>{{$h->name_hotel}}</td>
-                                        <td>{{$h->type_room}}</td>
-                                        <td>{{$h->description}}</td>
-                                        <td>{{$h->full_name}}</td>
-                                        <td>{!!date('d/m/y', strtotime($h->check_in))!!}</td>
-                                        <td>{!!date('d/m/y', strtotime($h->check_out))!!}</td>
-                                        <td>{{$h->number_customer}}</td>
-                                        <td>{{$h->number_room}}</td>
-                                        <td>{{$h->money}}</td>
+                                        <td>{{$item->bookingDetail->hotelName}}</td>
+                                        <td>{{$item->bookingType}}</td>
+                                        <td>{{$item->bookingNumber}}</td>
+                                        <td>{{$item->booking_id}}</td>
+                                        <td>{!!date('d/m/y', strtotime($item->checkin))!!}</td>
+                                        <td>{!!date('d/m/y', strtotime($item->bookingDetail->checkout))!!}</td>
+                                        <td>{{$item->bookingCode}}</td>
+                                        <td>{{$item->bookingDetail->roomNumber}}</td>
+                                        <td>{{$item->price}}</td>
                                         <td>
-                                                <a id="{{$h->id}}" href="#editHotelModal"   data-target="" class="edit btn btn-success" title="Edit">
+                                                <a id="{{$item->id}}" href="#editHotelModal"   data-target="" class="edit btn btn-success" title="Edit">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
 
                                         </td>
                                     </tr>
                                 @endforeach
+
                                 </tbody>
 
                             </table>

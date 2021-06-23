@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use DB;
 use DataTables;
+use Image;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 class VoucherController extends Controller
@@ -68,14 +69,32 @@ class VoucherController extends Controller
 //        $request->validate([
 //            'addMoreInputFields.*.voucher_field' => 'required'
 //        ]);
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpg,jpeg,png,svg,gif|max:2048',
+        ]);
+
         $voucher_db = new Voucher();
         $imageUrl = '';
         if ($file = $request->file('image')) {
             $fileName = date("YmdHis")."_".$file->getClientOriginalName();
-            $directory = 'admin/images/product_images/';
-            $imageUrl = $directory.$fileName;
-            $file->move($directory, $fileName);
+            $filePath = 'thumbnails/';
+            $image_resize = Image::make($file->getRealPath());
+
+            dd($image_resize->height());
+            //check height <= 960 khong can resize
+            $image_resize->resize(null,960, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($filePath.'/'.$fileName);
+            $imageUrl = $filePath.$fileName;
+          $file->move($filePath, $fileName);
+          //dd($file);
             $voucher_db->image = $imageUrl;
+           // dd($voucher_db);
+//            $fileName = date("YmdHis")."_".$file->getClientOriginalName();
+//            $directory = 'admin/images/product_images/';
+//            $imageUrl = $directory.$fileName;
+//            $file->move($directory, $fileName);
+//            $voucher_db->image = $imageUrl;
         }
         if ($request->file('gallery_image')) {
             foreach ($request->file('gallery_image') as $image) {

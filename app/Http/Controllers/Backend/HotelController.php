@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-use App\Model\Voucher;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Model\Hotel;
 use App\Model\VoucherUser;
@@ -25,14 +23,19 @@ class HotelController extends Controller
             ->select('hotels.*','voucher_users.full_name')->orderBy('id','DESC')
             ->get();
         //call api search address
-        $collection = Http::get('https://api-dev.vgstravel.com/api/v1/hotel/recent_search_keyword?uid=99999&token=7374b1bb58d5fade098d579d5e1f6285&language=vi&timezone=Asia/Ho_Chi_Minh');
+        $collection = Http::get('https://api-dev.vgstravel.com/api/v1/hotel/history_booking?uid=20736&token=7374b1bb58d5fade098d579d5e1f6285&language=vi&timezone=Asia/Ho_Chi_Minh&page=1&number=10');
+        $address = Http::get('https://api-dev.vgstravel.com/api/v1/hotel/recent_search_keyword?uid=99999&token=7374b1bb58d5fade098d579d5e1f6285&language=vi&timezone=Asia/Ho_Chi_Minh');
         //convert string to array
-      $coll = (json_decode($collection));
+        $coll = json_decode($collection);
+        $addRess = json_decode($address);
+//        dd($addRess->data);
         $voucher_user = VoucherUser::all();
-        return view('Admin.hotel.list_room',[
+        return response()->view('Admin.hotel.list_room',[
             'hotel'=>$hotel,
             'voucher_user'=>$voucher_user,
-            'coll'=>$coll
+//            goi data 2 lan
+            'coll'=>$coll->data->data,
+            'addRess'=>$addRess->data
         ]);
     }
     public function get()
