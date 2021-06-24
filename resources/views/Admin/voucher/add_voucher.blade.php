@@ -94,7 +94,7 @@
                             <div class="form-group">
                                 <label for="filePhoto">Voucher Image</label>
                                 <input type="file" name="image" class="form-control-file" id="filePhoto4" >
-                                <img src="" id="previewHolder" width="150px">
+                                <img src="" id="previewHolder" >
                             </div>
                         </div>
                         <div class="col-md-6">

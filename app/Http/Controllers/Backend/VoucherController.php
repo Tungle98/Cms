@@ -76,25 +76,17 @@ class VoucherController extends Controller
         $voucher_db = new Voucher();
         $imageUrl = '';
         if ($file = $request->file('image')) {
-            $fileName = date("YmdHis")."_".$file->getClientOriginalName();
-            $filePath = 'thumbnails/';
-            $image_resize = Image::make($file->getRealPath());
 
-            dd($image_resize->height());
-            //check height <= 960 khong can resize
-            $image_resize->resize(null,960, function ($constraint) {
+            $fileName = date("YmdHis")."_".$file->getClientOriginalName();
+            $directory = 'admin/images/product_images/';
+            $img = Image::make($file->path());
+            $img->resize(null, 960, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($filePath.'/'.$fileName);
-            $imageUrl = $filePath.$fileName;
-          $file->move($filePath, $fileName);
-          //dd($file);
+            })->save($directory.'/'.$fileName);
+            $imageUrl = $directory.$fileName;
+            //dd($imageUrl);
+            //$file->move($directory, $fileName);
             $voucher_db->image = $imageUrl;
-           // dd($voucher_db);
-//            $fileName = date("YmdHis")."_".$file->getClientOriginalName();
-//            $directory = 'admin/images/product_images/';
-//            $imageUrl = $directory.$fileName;
-//            $file->move($directory, $fileName);
-//            $voucher_db->image = $imageUrl;
         }
         if ($request->file('gallery_image')) {
             foreach ($request->file('gallery_image') as $image) {
@@ -117,7 +109,7 @@ class VoucherController extends Controller
         $voucher_db->voucher_type_id = $request->voucher_type_id;
         $voucher_db->status = $request->status;
         $voucher_db->voucher_field = json_encode($request->addMoreInputFields);
-
+        $voucher_db->status = $request->status;
         $voucher_db->save();
         $voucher_db->properties()->attach($request->properties);
 
