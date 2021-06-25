@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\apiService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Hotel;
@@ -13,13 +14,16 @@ use function App\Helpers\search_address;
 class HotelController extends Controller
 {
 
-    public $base_url;
 
+
+    public $base_url;
+    public $apiService;
 
 
     function __construct()
     {
         $this->base_url = env("SERVICE_DOMAIN_BONUS", "") . "/api/v1/hotel/";
+        $this->apiService = new apiService("hotel/");
     }
 
     /**
@@ -31,17 +35,11 @@ class HotelController extends Controller
     {
         try{
             $url = $this->base_url . "/history_booking";
-            //join user voucher voi voucher
-            $hotel = DB::table('hotels')
-                ->join('voucher_users', 'hotels.voucher_user_id', '=', 'voucher_users.id')
-                ->select('hotels.*', 'voucher_users.full_name')->orderBy('id', 'DESC')
-                ->get();
             //call api search address
 //        .'/history_booking?uid=20736&token=7374b1bb58d5fade098d579d5e1f6285&language=vi&timezone=Asia/Ho_Chi_Minh&page=1&number=10'
             $uid = 20736;
             $token = "7374b1bb58d5fade098d579d5e1f6285";
             $language = "VN";
-
             $collection = Http::get($url, [
                 "uid" => $uid,
                 "token" => $token,
@@ -50,18 +48,16 @@ class HotelController extends Controller
                 "page" => $page ?? 0,
                 "number" => $number ?? 10
             ]);
-
-            // dd($collection);
             //convert string to array
             $coll = json_decode($collection);
-            //dd($addRess->data);
-            $voucher_user = VoucherUser::all();
+            $hotel = DB::table('hotels')
+                ->join('voucher_users', 'hotels.voucher_user_id', '=', 'voucher_users.id')
+                ->select('hotels.*', 'voucher_users.full_name')->orderBy('id', 'DESC')
+                ->get();
             return response()->view('Admin.hotel.list_room', [
                 'hotel' => $hotel,
-                'voucher_user' => $voucher_user,
 //            goi data 2 lan
                 'coll' => $coll->data->data,
-//            'addRess'=>$addRess->data
             ]);
         }catch (\Exception $exception){
             var_dump($exception->getMessage());
@@ -71,17 +67,30 @@ class HotelController extends Controller
 
     public function find(Request $request)
     {
-        $address = Http::get('https://api-dev.vgstravel.com/api/v1/hotel/recent_search_keyword?uid=99999&token=7374b1bb58d5fade098d579d5e1f6285&language=vi&timezone=Asia/Ho_Chi_Minh');
-        $addRess = json_decode($address);
-        $dataAddress = $addRess->data;
-        $needle = search_address($request, $dataAddress);
-        dd($needle);
-        $filter = in_array($request, $dataAddress);
-        dd($filter, $dataAddress);
-        $hotels = Hotel::where('name_hotel', 'like', '%' . $request->get('q') . '%')->get();
-        return response()->json($hotels, $addRess);
+
+        //https://api-dev.vgstravel.com/api/v1/hotel/search_hotel_keyword?uid=20736&token=3d187a618fe34e736bc0a538ed12cca1&language=vi&timezone=Asia/Ho_Chi_Minh&token_wallet=&keyword=A&page=0&pageSize=10
+        //config api
+        $url = $this->base_url . "search_hotel_keyword";
+        $uid = 20736;
+        $token = "3d187a618fe34e736bc0a538ed12cca1";
+        $language = "vi";
+        $address = Http::get($url, [
+            "uid" => $uid,
+            "token" => $token,
+            "language" => $language,
+            "timezone" => $timezone ?? "Asia/Ho_Chi_Minh",
+            "keyword"=> $request->get('query') ?? "",
+        ]);
+        $addRess = (object)json_decode($address,true);
+        return view('Admin/ajax/search-address', [
+            'addRess' => $addRess->data,
+        ]);
     }
 
+    public  function search()
+    {
+
+    }
     public function get()
     {
         $voucher_user = VoucherUser::all();

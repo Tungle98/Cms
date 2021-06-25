@@ -24,12 +24,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="product_status">Người mua</label>
-                                <select class="form-control voucher_edit" name="voucher_user_id" id="edit_voucher_user_id">
-                                    <option value="">Select voucher</option>
-                                    @foreach($voucher_user as $v)
-                                        <option value="{{$v->id}}">{{$v->full_name}}</option>
-                                    @endforeach
-                                </select>
+
                             </div>
                         </div>
                         <div class="col-md-6">

@@ -24,14 +24,12 @@
                         <div class="col-md-4">
                             <label style="text-align: center">Địa điểm </label>
                             <div class="form-group">
-{{--                                <select class="js-example-basic-single" name="address">--}}
-{{--                                    <option></option>--}}
-{{--                                    @foreach($addRess as $item)--}}
-{{--                                        <option>{{$item->name}}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
                                 <input type="name" class="form-control search-input" name="address_name" id="address_name" autocomplete="off" placeholder="Nhập địa điểm">
-                                <div id="countryList"></div>
+
+                                <div id="countryList">
+
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -53,8 +51,8 @@
 
                                 <div class="row">
                                     <div class="col-md-3"><i class="fa fa-key" aria-hidden="true"></i> 1</div>
-                                    <div class="col-md-3"><i class="fa fa-users" aria-hidden="true"></i> 0</div>
-                                    <div class="col-md-3"><i class="fa fa-child" aria-hidden="true"></i> 1</div>
+                                    <div class="col-md-6 "  id="counter"><i class="fa fa-users" aria-hidden="true"></i><input aria-label="quantity" class="input-qty" max="8" min="1" name="" type="number" value="1"></div>
+                                    <div class="col-md-3"><i class="fa fa-child" aria-hidden="true"></i> 0</div>
                                 </div>
                             </div>
 
@@ -67,41 +65,85 @@
                                             <div>
                                                 Người lớn:
                                             </div>
-                                            <div class=" flex-container">
-                                                <div style="padding-right: 20px;padding-left: 30px;"><button onclick="buttonClick()">-</button></div>
-                                                <div style="padding-right: 20px;" id="inc" value="0" >1</div>
-                                                <div style=""><button onclick="buttonAddClick()">+</button></div>
+                                            <div class="buttons_added" style="padding-left: 20px">
+                                                <input class="minus is-form" type="button" value="-">
+                                                <input aria-label="quantity" class="input-qty" max="8" min="1" name="" type="number" value="1">
+                                                <input class="plus is-form" type="button" value="+">
                                             </div>
                                         </div>
                                         <div class="col-lg-12  flex-container" style="padding-top: 30px">
                                             <div>
                                                 Trẻ em:
                                             </div>
-                                            <div class=" flex-container">
-                                                <div style="padding-right: 20px;padding-left: 60px;"><button onclick="buttonClick()">-</button></div>
-                                                <div style="padding-right: 20px;">0</div>
-                                                <div style=""><a onclick="buttonAddClick()">+</a></div>
+                                            <div class="buttons_added" style="padding-left: 50px">
+                                                <input class="minus is-form" type="button" value="-">
+                                                <input aria-label="quantity" class="input-qty" max="4" min="0" name="" type="number" value="0">
+                                                <input class="plus is-form" type="button" value="+">
                                             </div>
                                         </div>
-                                        <div class="col-lg-12" style="display: none">
+                                        <div class="col-lg-12" style="display: none" id="addChild">
                                            <span>Độ tuổi của trẻ em</span>
-                                            <ul>
-                                                <li>1</li>
-                                            </ul>
+
                                         </div>
                                     </div>
-
-
-
                                     <hr>
                                     <span>+ Thêm phòng</span>
                                 </div>
                             </div>
+                        <div id="show-hidden-menu">Click Me!</div>
+                        <div class="hidden-menu" style="display: none;">
+                            <label style="text-align: center">Phòng & khách</label>
+                            <div class="form-group panel-heading collapsed"  data-toggle="collapse" data-target="#collapseOrderItems1" style="border: 1px solid gray">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <h6>Phòng và khách</h6>
+                                    </div>
+                                    <div class="col-md-3 ">
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                    </div>
 
+                                </div>
 
+                                <div class="row">
+                                    <div class="col-md-3"><i class="fa fa-key" aria-hidden="true"></i> 1</div>
+                                    <div class="col-md-6 "  id="counter"><i class="fa fa-users" aria-hidden="true"></i><input aria-label="quantity" class="input-qty" max="8" min="1" name="" type="number" value="1"></div>
+                                    <div class="col-md-3"><i class="fa fa-child" aria-hidden="true"></i> 0</div>
+                                </div>
+                            </div>
 
+                            <div class="collapse" id="collapseOrderItems1" style="border: 1px solid gray">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>Phòng: 1</p>
+                                    </div>
+                                    <div class="col-lg-12 flex-container" >
+                                        <div>
+                                            Người lớn:
+                                        </div>
+                                        <div class="buttons_added" style="padding-left: 20px">
+                                            <input class="minus is-form" type="button" value="-">
+                                            <input aria-label="quantity" class="input-qty" max="8" min="1" name="" type="number" value="1">
+                                            <input class="plus is-form" type="button" value="+">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12  flex-container" style="padding-top: 30px">
+                                        <div>
+                                            Trẻ em:
+                                        </div>
+                                        <div class="buttons_added" style="padding-left: 50px">
+                                            <input class="minus is-form" type="button" value="-">
+                                            <input aria-label="quantity" class="input-qty" max="4" min="0" name="" type="number" value="0">
+                                            <input class="plus is-form" type="button" value="+">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12" style="display: none" id="addChild">
+                                        <span>Độ tuổi của trẻ em</span>
 
-
+                                    </div>
+                                </div>
+                                <hr>
+                                <span>+ Thêm phòng</span>
+                        </div>
                     </div>
 
 
@@ -150,9 +192,57 @@
         line-height: 15px;
         font-size: 20px;
     }
+/**/
+    .buttons_added {
+        opacity:1;
+        display:inline-block;
+        display:-ms-inline-flexbox;
+        display:inline-flex;
+        white-space:nowrap;
+        vertical-align:top;
+                       }
+    .is-form {
+        overflow:hidden;
+        position:relative;
+        background-color:#f9f9f9;
+        height:2.2rem;
+        width:1.9rem;
+        padding:0;
+        text-shadow:1px 1px 1px #fff;
+        border:1px solid #ddd;
+    }
+    .is-form:focus,.input-text:focus {
+        outline:none;
+    }
+    .is-form.minus {
+        border-radius:4px 0 0 4px;
+    }
+    .is-form.plus {
+        border-radius:0 4px 4px 0;
+    }
+    .input-qty {
+        width: 50px;
+        background-color:#fff;
+        height:2.2rem;
+        text-align:center;
+        font-size:1rem;
+        display:inline-block;
+        vertical-align:top;
+        margin:0;
+        border-top:1px solid #ddd;
+        border-bottom:1px solid #ddd;
+        border-left:0;
+        border-right:0;
+        padding:0;
+    }
+    .input-qty::-webkit-outer-spin-button,.input-qty::-webkit-inner-spin-button {
+        -webkit-appearance:none;
+        margin:0;
+    }
 
 </style>
 <script>
+    //check date input
     function check() {
         if(document.getElementById('').value < document.getElementById('').value)
         { console.log('pass')}
@@ -161,19 +251,13 @@
         }
 
     }
-    $(document).ready(function() {
-        $(".js-example-basic-single").select2({
-            dropdownParent: $("#addProductModal"),
-            placeholder: "Select a address",
-            allowClear: true
-        });
-    });
 
 //thu vien flatpickr của datetimepicker
     $("#rangeDate").flatpickr({
         mode: 'range',
         dateFormat: "d-m-Y"
     });
+
     //Toggle chevrons
     $(document).ready(function() {
         $('div.accordion-body').on('shown', function () {
@@ -187,13 +271,25 @@
 
     });
 //    js them ng
-    var i = 0;
-    function buttonAddClick() {
-        document.getElementById('inc').value = ++i;
-    }
-    function buttonClick() {
-        document.getElementById('inc').value = --i;
-    }
+    $('input.input-qty').each(function() {
+        var $this = $(this),
+            qty = $this.parent().find('.is-form'),
+            min = Number($this.attr('min')),
+            max = Number($this.attr('max'))
+        if (min == 0) {
+            var d = 0
+        } else d = min
+        $(qty).on('click', function() {
+            if ($(this).hasClass('minus')) {
+                if (d > min) d += -1
+            } else if ($(this).hasClass('plus')) {
+                var x = Number($this.val()) + 1
+                if (x <= max) d += 1
+            }
+            $this.attr('value', d).val(d)
+        })
+    })
+
     //ajax call api search
     $(document).ready(function(){
 
@@ -207,17 +303,27 @@
                     method:"POST", // phương thức gửi dữ liệu.
                     data:{query:query, _token:_token},
                     success:function(data){ //dữ liệu nhận về
-                        $('#countryList').fadeIn();
-                        $('#countryList').html(data); //nhận dữ liệu dạng html và gán vào cặp thẻ có id là countryList
+                        // $('#countryList').fadeIn();
+                        // $('#countryList').html(data); //nhận dữ liệu dạng html và gán vào cặp thẻ có id là countryList
+                        return data;
                     }
+                }).done(function (response){
+                    $("#countryList").empty();
+                    $("#countryList").prepend(response);
                 });
             }
         });
-
         $(document).on('click', 'li', function(){
             $('#address_name').val($(this).text());
-            $('#countryList').fadeOut();
+            $('#countryList').fadeIn();
         });
 
+    });
+    $(document).ready(function() {
+        $('#show-hidden-menu').click(function() {
+            $('.hidden-menu').slideToggle("slow");
+            // Alternative animation for example
+            // slideToggle("fast");
+        });
     });
 </script>
