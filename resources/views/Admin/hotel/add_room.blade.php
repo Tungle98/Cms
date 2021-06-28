@@ -17,142 +17,90 @@
                     </ul>
                 </div>
             @endif
-            <form id="addProductForm" method="post" action="" enctype="multipart/form-data">
+            <form id="addProductForm" method="post" action="{{ route('admin.search') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <label style="text-align: center">Địa điểm </label>
+{{--                            <label style="text-align: center">Địa điểm </label>--}}
                             <div class="form-group">
                                 <input type="name" class="form-control search-input" name="address_name" id="address_name" autocomplete="off" placeholder="Nhập địa điểm">
 
-                                <div id="countryList">
+                                <div id="countryList" >
 
                                 </div>
 
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label style="text-align: center">Ngày đến & ngày đi</label>
-                           <input type="text" id="rangeDate" name="date-range" placeholder="Please select date" data-input>
+{{--                            <label style="text-align: center">Ngày đến & ngày đi</label>--}}
+{{--                           <input type="text" id="rangeDate" name="date-range" placeholder="Please select date" data-input height="75px">--}}
+                            <input type="date" name="checkin">
+                            <input type="date" name="checkout">
                         </div>
                         <div class="col-md-4">
-                            <label style="text-align: center">Phòng & khách</label>
-                            <div class="form-group panel-heading collapsed"  data-toggle="collapse" data-target="#collapseOrderItems1" style="border: 1px solid gray">
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <h6>Phòng và khách</h6>
-                                    </div>
-                                    <div class="col-md-3 ">
-                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-3"><i class="fa fa-key" aria-hidden="true"></i> 1</div>
-                                    <div class="col-md-6 "  id="counter"><i class="fa fa-users" aria-hidden="true"></i><input aria-label="quantity" class="input-qty" max="8" min="1" name="" type="number" value="1"></div>
-                                    <div class="col-md-3"><i class="fa fa-child" aria-hidden="true"></i> 0</div>
-                                </div>
-                            </div>
-
-                                <div class="collapse" id="collapseOrderItems1" style="border: 1px solid gray">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <p>Phòng: 1</p>
-                                        </div>
-                                        <div class="col-lg-12 flex-container" >
-                                            <div>
-                                                Người lớn:
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <h6>Số khách và phòng</h6>
                                             </div>
-                                            <div class="buttons_added" style="padding-left: 20px">
-                                                <input class="minus is-form" type="button" value="-">
-                                                <input aria-label="quantity" class="input-qty" max="8" min="1" name="" type="number" value="1">
-                                                <input class="plus is-form" type="button" value="+">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12  flex-container" style="padding-top: 30px">
-                                            <div>
-                                                Trẻ em:
-                                            </div>
-                                            <div class="buttons_added" style="padding-left: 50px">
-                                                <input class="minus is-form" type="button" value="-">
-                                                <input aria-label="quantity" class="input-qty" max="4" min="0" name="" type="number" value="0">
-                                                <input class="plus is-form" type="button" value="+">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12" style="display: none" id="addChild">
-                                           <span>Độ tuổi của trẻ em</span>
-
+                                            <div class="col-md-3">  <i class="arrow fas fa-chevron-down"></i></div>
+                                            <div class="col-md-3"><i class="fa fa-key" aria-hidden="true"></i> 1</div>
+                                            <div class="col-md-6 "  id="counter"><i class="fa fa-users" aria-hidden="true"> 1</i></div>
+                                            <div class="col-md-3"><i class="fa fa-child" aria-hidden="true"></i> 0</div>
                                         </div>
                                     </div>
-                                    <hr>
-                                    <span>+ Thêm phòng</span>
-                                </div>
-                            </div>
-                        <div id="show-hidden-menu">Click Me!</div>
-                        <div class="hidden-menu" style="display: none;">
-                            <label style="text-align: center">Phòng & khách</label>
-                            <div class="form-group panel-heading collapsed"  data-toggle="collapse" data-target="#collapseOrderItems1" style="border: 1px solid gray">
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <h6>Phòng và khách</h6>
-                                    </div>
-                                    <div class="col-md-3 ">
-                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                    </div>
+                                    <div class="accordion-body" >
+                                        <div id="dynamicAddRemove">
+                                            <h6>Số phòng 1:</h6>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    Người lớn:
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="buttons_added">
+                                                        <input class="minus is-form" type="button" value="-">
+                                                        <input aria-label="quantity" class="input-qty" max="8" min="1" name="adult" type="number" value="1">
+                                                        <input class="plus is-form" type="button" value="+">
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                </div>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    Trẻ em:
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="buttons_added">
+                                                        <input class="minus is-form" type="button" value="-">
+                                                        <input aria-label="quantity" class="input-qty" max="4" min="0" name="child" type="number" value="0">
+                                                        <input class="plus is-form" type="button" value="+">
+                                                    </div>
 
-                                <div class="row">
-                                    <div class="col-md-3"><i class="fa fa-key" aria-hidden="true"></i> 1</div>
-                                    <div class="col-md-6 "  id="counter"><i class="fa fa-users" aria-hidden="true"></i><input aria-label="quantity" class="input-qty" max="8" min="1" name="" type="number" value="1"></div>
-                                    <div class="col-md-3"><i class="fa fa-child" aria-hidden="true"></i> 0</div>
-                                </div>
-                            </div>
-
-                            <div class="collapse" id="collapseOrderItems1" style="border: 1px solid gray">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <p>Phòng: 1</p>
-                                    </div>
-                                    <div class="col-lg-12 flex-container" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
                                         <div>
-                                            Người lớn:
-                                        </div>
-                                        <div class="buttons_added" style="padding-left: 20px">
-                                            <input class="minus is-form" type="button" value="-">
-                                            <input aria-label="quantity" class="input-qty" max="8" min="1" name="" type="number" value="1">
-                                            <input class="plus is-form" type="button" value="+">
+                                            <button type="button" name="add" id="add-btn" class="btn btn-outline-primary">+ Thêm Phòng</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12  flex-container" style="padding-top: 30px">
-                                        <div>
-                                            Trẻ em:
-                                        </div>
-                                        <div class="buttons_added" style="padding-left: 50px">
-                                            <input class="minus is-form" type="button" value="-">
-                                            <input aria-label="quantity" class="input-qty" max="4" min="0" name="" type="number" value="0">
-                                            <input class="plus is-form" type="button" value="+">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12" style="display: none" id="addChild">
-                                        <span>Độ tuổi của trẻ em</span>
 
-                                    </div>
                                 </div>
-                                <hr>
-                                <span>+ Thêm phòng</span>
+                            </div>
+
                         </div>
-                    </div>
-
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Tìm khách sạn</button>
+                        <button type="submit" class="btn btn-primary">Tìm khách sạn</button>
                     </div>
                 </div>
+                </div>
             </form>
+
         </div>
     </div>
 </div>
@@ -239,7 +187,42 @@
         -webkit-appearance:none;
         margin:0;
     }
+    .accordion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border: 1px solid;
+    }
+    /*down up icon*/
+    .accordion-item.active .accordion-header {
 
+    }
+
+    .arrow {
+        transition: all 0.3s;
+    }
+
+    .accordion-item.active .arrow {
+        transform: rotate(180deg);
+    }
+
+    .accordion-body {
+        padding: 10px 10px;
+        display: none;
+        border: 1px solid gray;
+    }
+
+    .buttons_added {
+        opacity:1;
+        display:inline-block;
+        display:-ms-inline-flexbox;
+        display:inline-flex;
+        white-space:nowrap;
+        vertical-align:top;
+    }
 </style>
 <script>
     //check date input
@@ -258,18 +241,7 @@
         dateFormat: "d-m-Y"
     });
 
-    //Toggle chevrons
-    $(document).ready(function() {
-        $('div.accordion-body').on('shown', function () {
-            $(this).parent("div").find(".icon-chevron-down").removeClass("icon-chevron-down").addClass("icon-chevron-up");
 
-        });
-
-        $('div.accordion-body').on('hidden', function () {
-            $(this).parent("div").find(".icon-chevron-up").removeClass("icon-chevron-up").addClass("icon-chevron-down");
-        });
-
-    });
 //    js them ng
     $('input.input-qty').each(function() {
         var $this = $(this),
@@ -289,7 +261,14 @@
             $this.attr('value', d).val(d)
         })
     })
-
+    //js hidden/show
+    $(document).ready(function() {
+        $('.accordion-item.active .accordion-body').slideDown();
+        $('.accordion-header').click(function() {
+            $(this).parent().toggleClass('active');
+            $(this).parent().children('.accordion-body').slideToggle();
+        });
+    });
     //ajax call api search
     $(document).ready(function(){
 
@@ -319,11 +298,15 @@
         });
 
     });
-    $(document).ready(function() {
-        $('#show-hidden-menu').click(function() {
-            $('.hidden-menu').slideToggle("slow");
-            // Alternative animation for example
-            // slideToggle("fast");
-        });
-    });
+    // $(document).ready(function() {
+    //     $('#show-hidden-menu').click(function() {
+    //         $('.hidden-menu').slideToggle("slow");
+    //         // Alternative animation for example
+    //         // slideToggle("fast");
+    //     });
+    // });
+//gán giá trị option cho thẻ input
+    function run() {
+        document.getElementById("address_name").value = document.getElementById("address").value;
+    }
 </script>

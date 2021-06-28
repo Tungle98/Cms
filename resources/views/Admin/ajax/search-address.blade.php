@@ -1,13 +1,14 @@
 <div class="countryList">
-    <select name="address">
+    <select id="address" name="address" size="8" style="width: 235px; padding-top: 5px" onchange="run()">
         @if(empty($addRess))
-            <option disabled>Không có kết quả</option>
+            <option value="">Địa điểm không tìm thấy</option>
         @else
-            @foreach($addRess as $item)
-                <option>{{$item['name']}}</option>
-            @endforeach
+        @foreach($addRess as $item)
+        <option value="{{$item['searchCode']}}">{{$item['name']}}</option>
+        @endforeach
         @endif
     </select>
+
 </div>
 
 

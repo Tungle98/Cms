@@ -79,6 +79,7 @@ Route::group(['prefix'=>'admin','namespace'=>'Backend', 'middleware'=>'auth'], f
     Route::get('/hotel/create','HotelController@create');
 //    find address by api
     Route::post('find', 'HotelController@find')->name('search');
+    Route::post('search', 'HotelController@search')->name('admin.search');
 
 
 

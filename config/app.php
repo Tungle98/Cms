@@ -167,6 +167,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Ixudra\Curl\CurlServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -236,7 +237,8 @@ return [
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Curl'          => Ixudra\Curl\Facades\Curl::class,
     ],
 
 ];

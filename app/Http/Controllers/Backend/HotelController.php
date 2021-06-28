@@ -10,14 +10,14 @@ use App\Model\VoucherUser;
 use Illuminate\Support\Facades\Http;
 use DB;
 use function App\Helpers\search_address;
-
+use Ixudra\Curl\Facades\Curl;
 class HotelController extends Controller
 {
 
 
 
     public $base_url;
-    public $apiService;
+//    public $apiService;
 
 
     function __construct()
@@ -33,34 +33,16 @@ class HotelController extends Controller
      */
     public function index(Request $request)
     {
-        try{
-            $url = $this->base_url . "/history_booking";
-            //call api search address
-//        .'/history_booking?uid=20736&token=7374b1bb58d5fade098d579d5e1f6285&language=vi&timezone=Asia/Ho_Chi_Minh&page=1&number=10'
-            $uid = 20736;
-            $token = "7374b1bb58d5fade098d579d5e1f6285";
-            $language = "VN";
-            $collection = Http::get($url, [
-                "uid" => $uid,
-                "token" => $token,
-                "language" => $language,
-//            "timezone" => $timezone ?? "Asia/Ho_Chi_Minh",
-                "page" => $page ?? 0,
-                "number" => $number ?? 10
-            ]);
-            //convert string to array
-            $coll = json_decode($collection);
-            $hotel = DB::table('hotels')
-                ->join('voucher_users', 'hotels.voucher_user_id', '=', 'voucher_users.id')
-                ->select('hotels.*', 'voucher_users.full_name')->orderBy('id', 'DESC')
-                ->get();
-            return response()->view('Admin.hotel.list_room', [
-                'hotel' => $hotel,
-//            goi data 2 lan
-                'coll' => $coll->data->data,
-            ]);
-        }catch (\Exception $exception){
-            var_dump($exception->getMessage());
+        try {
+            $coll = Curl::to($this->base_url . "/history_booking")->get();
+            if (check_code($coll)) {
+                $coll = json_decode($coll);
+                return view('Admin.hotel.list_room', compact('coll'));
+            } else {
+                return view('Admin.hotel.list_room', compact('coll'));
+            }
+        } catch (\Exception $exception) {
+            return back()->with('error', $exception->getMessage());
         }
 
     }
@@ -82,14 +64,37 @@ class HotelController extends Controller
             "keyword"=> $request->get('query') ?? "",
         ]);
         $addRess = (object)json_decode($address,true);
+    //    dd($addRess);
         return view('Admin/ajax/search-address', [
             'addRess' => $addRess->data,
         ]);
     }
 
-    public  function search()
+    public  function search(Request $request)
     {
 
+        dd($request->all());
+        //https://api-dev.vgstravel.com/api/v1/hotel/search_best_hotel?uid=99999&token=069d2483f6f94e306cea25b01d0d6771&language=vi&timezone=Asia/Ho_Chi_Minh&token_wallet=&searchCode=6034264&searchType=MULTI_CITY_VICINITY&checkin=2021-04-23&checkout=2021-04-24&supplier=EXPEDIA&paxInfos=2-1&page=0&pageSize=10
+        $url = $this->base_url . "search_best_hotel";
+        $uid = 99999;
+        $token = "069d2483f6f94e306cea25b01d0d6771";
+        $language = "vi";
+        $room = Http::get($url, [
+            "uid" => $uid,
+            "token" => $token,
+            "language" => $language,
+            "timezone" => $timezone ?? "Asia/Ho_Chi_Minh",
+            "searchCode"=>$request->get('address_name') ?? "",
+            "checkin"=>$request->get('checkin') ?? "",
+            "checkout"=>$request->get('checkout') ?? "",
+            "paxInfos"=>$request->get('adult') ?? "",
+        ]);
+        //dd($room);
+        $room = (object)json_decode($room,true);
+        //dd($room);
+        return view('Admin/hotel/result_room', [
+            'room' => $room->data,
+        ]);
     }
     public function get()
     {
@@ -118,6 +123,7 @@ class HotelController extends Controller
     public function store(Request $request)
     {
         //
+
         $request->validate([
             'name_hotel' => '',
             'type_room' => '',
